@@ -7,30 +7,16 @@
 # -------------------------------------------------------------------------------------
 
 # ---------  SET SMK PARAMS  ----------
-configfile: "config/config.yaml"
-report: "report/workflow.rst" # Experimented with this but not currently using
-
-# ----------  SET VARIABLES  ----------
-SCRATCH = "/scratch/c.c1477909/"
-LDSC_DIR = SCRATCH + "ldsc/"
-REF_DIR = LDSC_DIR + "reference_files/"
-RESULTS_DIR = SCRATCH + "results/"
-MARKDOWN_DIR = SCRATCH + "markdown/"
-MAGMA_DIR = SCRATCH + "magma_celltyping/"
-ANN_DIR = RESULTS_DIR + "LDSR_annotation_files/RNA/"
-PART_HERIT_DIR = RESULTS_DIR + "LDSR_part_herit_files/RNA/"
-GWAS_DIR = LDSC_DIR + "GWAS_for_ldsc/"
-QUANTILES_DIR = MAGMA_DIR + "ldsc_gene_lists/"
-
+configfile: "../config/config.yaml"
 
 # -------------  RULES  ---------------
 
 rule make_annot:
-    input:   gene_set = "../results/{CELL_TYPE}_Q{QUANTILE}_genes.tsv",
+    input:   gene_set = "../results/q10_gene_lists_for_LDSC/{CELL_TYPE}_Q{QUANTILE}_genes.tsv",
              gene_coord = "../resources/snRNAseq_LDSC_gene_coords.tsv",
              bim_file = "../resources/ldsc/reference_files/1000G_EUR_Phase3_plink/1000G.EUR.QC.{CHR}.bim" 
     output:  "../results/LDSR_annotation_files/snRNAseq.{CELL_TYPE}.Q{QUANTILE}.{CHR}.annot.gz"
-    conda:   "envs/ldsc.yml"    
+    conda:   "../envs/ldsc.yml"    
     message: "Creating annotation files for snRNAseq: {wildcards.CELL_TYPE} Quantile {wildcards.QUANTILE}, Chr {wildcards.CHR} "
     log:     "../results/logs/ldsc/make_annot.snRNAseq.{CELL_TYPE}.Q{QUANTILE}.Chr{CHR}.log"
     shell:
@@ -50,10 +36,10 @@ rule ldsr:
              bfile_folder = "../resources/ldsc/reference_files/1000G_EUR_Phase3_plink",
              snps_folder = "../resources/ldsc/reference_files/hapmap3_snps"
     output:  "../results/LDSR_annotation_files/snRNAseq.{CELL_TYPE}.Q{QUANTILE}.{CHR}.l2.ldscore.gz"
-    conda:   "envs/ldsc.yml"
+    conda:   "../envs/ldsc.yml"
     params:  bfile = "../resources/ldsc/reference_files/1000G_EUR_Phase3_plink/1000G.EUR.QC.{CHR}",
              ldscores = "../results/LDSR_annotation_files/snRNAseq.{CELL_TYPE}.Q{QUANTILE}.{CHR}",
-             snps = ""../resources/ldsc/reference_files/w_hm3.snplist_rsIds"
+             snps = "../resources/ldsc/reference_files/w_hm3.snplist_rsIds"
     message: "Running LDSR Phase 3 for {wildcards.CELL_TYPE} Quantile {wildcards.QUANTILE} CHR {wildcards.CHR}" 
     log:     "../results/logs/LDSR/snRNAseq.{CELL_TYPE}.Q{QUANTILE}.Chr{CHR}_ldsc.log"
     shell:
@@ -61,10 +47,10 @@ rule ldsr:
         "--annot {input.annot} --out {params.ldscores} --print-snps {params.snps} 2> {log}"
 
 rule partitioned_heritability_baseline_v12:
-    input:   GWAS = "../resources/ldsc/GWAS_for_ldsc/{GWAS}_hg19_ldsc_ready.sumstats.gz",
+    input:   GWAS = "../results/GWAS_for_ldsc/{GWAS}_hg19_ldsc_ready.sumstats.gz",
              LDSR = expand("../results/LDSR_annotation_files/snRNAseq.{CELL_TYPE}.Q{QUANTILE}.{CHR}.l2.ldscore.gz", CELL_TYPE = config["RNA_CELL_TYPES"], QUANTILE = '10', CHR = range(1,23))
     output:  "../results/LDSR_part_herit/snRNAseq_LDSC_{CELL_TYPE}_Q{QUANTILE}_{GWAS}_baseline.v1.2.results"
-    conda:   "envs/ldsc.yml"
+    conda:   "../envs/ldsc.yml"
     params:  weights = "../resources/ldsc/reference_files/weights_hm3_no_hla/weights.",
              baseline = "../resources/ldsc/reference_files/baseline_v1.2_1000G_Phase3/baseline.",
              frqfile = "../resources/ldsc/reference_files/1000G_Phase3_frq/1000G.EUR.QC.",
@@ -79,24 +65,24 @@ rule partitioned_heritability_baseline_v12:
 
 rule create_partHerit_summary:
     # This is still optimised for multiple quantiles so creating > 100 single line files
-    input:   expand("../results/LDSR_part_herit/snRNAseq_LDSC_{CELL_TYPE}_Q{QUANTILE}_{GWAS}_baseline.v1.2.results", CELL_TYPE = config["RNA_CELL_TYPES"], QUANTILE = 10, GWAS = config$
+    input:   expand("../results/LDSR_part_herit/snRNAseq_LDSC_{CELL_TYPE}_Q{QUANTILE}_{GWAS}_baseline.v1.2.results", CELL_TYPE = config["RNA_CELL_TYPES"], QUANTILE = '10', GWAS = config["SUMSTATS"])
     output:  "../results/LDSR_part_herit/snRNAseq_LDSC_{CELL_TYPE}_{GWAS}_baseline.v1.2_summary.tsv"
     message: "Creating summary file for {wildcards.CELL_TYPE} and {wildcards.GWAS} GWAS"
-    params:  dir = ../results/LDSR_part_herit/
+    params:  dir = "../results/LDSR_part_herit/"
     log:     "../results/logs/LDSR/snRNAseq.{CELL_TYPE}.{GWAS}_baseline.v1.2_partHerit.summary.log"
     shell:
-	"""
+             """
 
-	head -1 {params.dir}snRNAseq_LDSC_Cer-RG-1_Q1_SCZ_baseline.v1.2.results > {output}
-        grep L2_1 {params.dir}snRNAseq_LDSC_{wildcards.CELL_TYPE}_Q*_{wildcards.GWAS}_baseline.v1.2.results >> {output}
+             head -1 {params.dir}snRNAseq_LDSC_Cer-RG-1_Q1_SCZ_baseline.v1.2.results > {output}
+             grep L2_1 {params.dir}snRNAseq_LDSC_{wildcards.CELL_TYPE}_Q*_{wildcards.GWAS}_baseline.v1.2.results >> {output}
 
-        """
+             """
 
 rule create_top_decile_tables:
-    input:   expand("../results/LDSR_part_herit/snRNAseq_LDSC_{CELL_TYPE}_{GWAS}_baseline.v1.2_summary.tsv", CELL_TYPE = config["RNA_CELL_TYPES"], GWAS = config["LDSC_GWAS"])
+    input:   expand("../results/LDSR_part_herit/snRNAseq_LDSC_{CELL_TYPE}_{GWAS}_baseline.v1.2_summary.tsv", CELL_TYPE = config["RNA_CELL_TYPES"], GWAS = config["SUMSTATS"])
     output:  "../results/LDSR_part_herit/snRNAseq_LDSC_{GWAS}_baseline.v1.2_top10pc.tsv"
     message: "Creating LDSC top decile tables for {wildcards.GWAS} GWAS"
-    params:  dir = ../results/LDSR_part_herit/
+    params:  dir = "../results/LDSR_part_herit/"
     log:     "../results/logs/LDSR/snRNAseq.{GWAS}_partHerit_baseline.v1.2_top10pc_summary.log"
     shell:
              """
