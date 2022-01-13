@@ -1,0 +1,12 @@
+
+
+include: "rules/snRNAseq_magma_cellTyping.smk"
+
+rule all:
+    input:
+#        expand(ROBJ_DIR + "{REGION}_MHC_overlapping_genes.rds", REGION = config["RNA_REGIONS"])
+#        expand("../resources/ctd_objects/CellTypeData_{REGION}.rda", REGION = config["RNA_REGIONS"]),
+#        expand(MAGMA_OUTDIR + "{GWAS}_hg19_magma_ready.sumstats.tsv.10UP.1.5DOWN/{GWAS}_hg19_magma_ready.sumstats.tsv.10UP.1.5DOWN.genes.raw", GWAS = config["SUMSTATS"]),
+#        expand(MAGMA_OUTDIR + "{GWAS}_hg19_magma_ready.sumstats.tsv.10UP.1.5DOWN/{GWAS}_hg19_magma_ready.sumstats.tsv.10UP.1.5DOWN.level2.{REGION}_top10.gsa.out", GWAS = config["SUMSTATS"], REGION = config["RNA_REGIONS"])
+        expand("results/magma_celltyping/{GWAS}_hg19_magma_ready.sumstats.tsv.10UP.1.5DOWN/", GWAS = config["SUMSTATS"]),
+        expand("results/q10_gene_lists_for_LDSC/{REGION}_complete.file", REGION = config["RNA_REGIONS"])

@@ -1,0 +1,23 @@
+# -------------------------------------------------------------------------------------
+#
+#    Config file for gene expression in dev human brain study - 110121 cell type IDs
+#
+# -------------------------------------------------------------------------------------
+
+# ---------  MAGMA  ----------
+
+RNA_REGIONS:
+    cer:
+    hip:
+    pfc:
+    tha:
+    wge:
+
+SUMSTATS:
+#    ADHD: GWAS_sumstats/GWAS_sumstats_RAW/demontis-walters-martin-2017-eur-adhd-summaryqc.tsv
+#    ASD: GWAS_sumstats/GWAS_sumstats_RAW/grove-ripke-als-2017-eur-asd-summaryqc.tsv
+#    BPD: GWAS_sumstats/GWAS_sumstats_RAW/daner_bip_pgc3_nm.tsv
+#    MDD: GWAS_sumstats/GWAS_sumstats_RAW/wray-ripke-mattheisen-2017-mdd-23me-summaryqc.tsv
+    SCZ: GWAS_sumstats/GWAS_sumstats_RAW/PGC3_SCZ_wave3_public.v2.tsv
+    HEIGHT: GWAS_sumstats/GWAS_sumstats_RAW/Meta-analysis_Wood_et_al+UKBiobank_2018.txt
+#    INTELLEGENCE: GWAS_sumstats/GWAS_sumstats_RAW/SavageJansen_2018_intelligence_metaanalysis.txt
