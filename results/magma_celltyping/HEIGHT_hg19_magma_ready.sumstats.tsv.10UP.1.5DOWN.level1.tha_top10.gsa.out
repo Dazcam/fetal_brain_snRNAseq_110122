@@ -1,0 +1,27 @@
+# TOTAL_GENES = 17665
+# TEST_DIRECTION = one-sided, positive (set), two-sided (covar)
+# CONDITIONED_INTERNAL = gene size, gene density, sample size, inverse mac, log(gene size), log(gene density), log(sample size), log(inverse mac)
+VARIABLE         TYPE  NGENES         BETA     BETA_STD           SE            P
+Thal.RG.6         SET    1024       -0.136    -0.031782     0.058963      0.98945
+Thal.InN.1        SET     925    -0.052923    -0.011789     0.060473      0.80925
+Thal.RG.1         SET    1043      0.07585     0.017879     0.055756     0.086862
+Thal.InN.2        SET     916  -0.00074582  -0.00016538      0.05982      0.50497
+Thal.InN.3        SET     934    -0.084613    -0.018935     0.059381       0.9229
+Thal.RG.2         SET    1072      0.12309     0.029388     0.056217     0.014289
+Thal.InN.5        SET     924    -0.099035     -0.02205     0.060564      0.94899
+Thal.InN.6        SET     995     -0.13303     -0.03067     0.057264      0.98991
+Thal.ExN.1        SET    1234    -0.083083    -0.021179     0.051809      0.94559
+Thal.CycPro       SET    1110     0.059732     0.014495     0.053319      0.13131
+Thal.RG.7         SET     986     0.087775     0.020151     0.056661     0.060687
+Thal.IP           SET     895    -0.023534   -0.0051614     0.061243      0.64961
+Thal.RG.3         SET    1061     0.013909    0.0033048     0.054349      0.39901
+Thal.InN.4        SET     828    -0.062399    -0.013189     0.062078      0.84258
+Thal.RG.4         SET    1105     0.092525     0.022406     0.055241     0.046985
+Thal.InN.7        SET    1053    -0.073791    -0.017471     0.055626      0.90766
+Thal.OPC          SET     964     0.059545     0.013525     0.058622      0.15489
+Thal.RG.5         SET     639     0.018542    0.0034623     0.068424       0.3932
+Thal.ExN.2        SET     734     -0.17816    -0.035555     0.064553      0.99711
+Thal.ExN.3        SET    1114      0.02347     0.005705     0.052596      0.32772
+Thal.InN.8        SET     759    -0.045404   -0.0092073     0.065068      0.75734
+Thal.MG           SET     911    -0.063478    -0.014039     0.058954      0.85919
+Thal.Endo         SET     989      0.23819     0.054761     0.058072   2.0615e-05

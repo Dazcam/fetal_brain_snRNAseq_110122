@@ -1,0 +1,25 @@
+# TOTAL_GENES = 17665
+# TEST_DIRECTION = one-sided, positive (set), two-sided (covar)
+# CONDITIONED_INTERNAL = gene size, gene density, sample size, inverse mac, log(gene size), log(gene density), log(sample size), log(inverse mac)
+VARIABLE        TYPE  NGENES         BETA     BETA_STD           SE            P
+Cer.InN.1        SET    1013    -0.039916   -0.0092809     0.058268      0.75334
+Cer.RG.1         SET    1088     0.028864    0.0069393     0.054807      0.29923
+Cer.RG.2         SET    1076      0.11489     0.027478     0.055692     0.019568
+Cer.ExN.1        SET     992     -0.19824     -0.04564     0.058486      0.99965
+Cer.InN.2        SET     902    -0.086363    -0.019011     0.060576      0.92301
+Cer.InN.3        SET     995     -0.11046    -0.025467     0.058736      0.96998
+Cer.InN.5        SET     868    -0.088345    -0.019097     0.061238      0.92543
+Cer.IP           SET     883     -0.15218    -0.033164     0.062115      0.99285
+Cer.ExN.2        SET     875    -0.025234   -0.0054754     0.061636      0.65888
+Cer.RG.3         SET    1064    -0.011417   -0.0027163     0.055038      0.58216
+Cer.ExN.3        SET     961     -0.10555    -0.023941     0.059976      0.96078
+Cer.ExN.4        SET     871     0.033586    0.0072719     0.061109       0.2913
+Cer.CycPro       SET    1149     0.080134     0.019762     0.052321     0.062823
+Cer.InN.6        SET     887     -0.17738    -0.038739     0.061271       0.9981
+Cer.InN.4        SET     965     -0.10149    -0.023065     0.058292      0.95916
+Cer.InN.7        SET    1002     -0.18069    -0.041797     0.057717      0.99913
+Cer.OPC          SET     853    -0.016514   -0.0035402     0.063144      0.60316
+Cer.ExN.5        SET     845     0.053033     0.011318     0.061235      0.19324
+Cer.InN.8        SET     765     -0.04458   -0.0090743     0.063253      0.75952
+Cer.Endo         SET     980      0.20537     0.047013     0.058095   0.00020441
+Cer.MG           SET     927     -0.07074    -0.015774     0.059286      0.88359
