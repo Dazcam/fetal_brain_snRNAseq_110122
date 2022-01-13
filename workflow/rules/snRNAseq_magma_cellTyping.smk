@@ -27,7 +27,7 @@ rule get_genes_in_MHC:
     input:  "../resources/R_objects/seurat.{REGION}.final.rds"
     output: "../resources/R_objects/{REGION}_MHC_overlapping_genes.rds"
     params: outdir = "../resources/R_objects/"
-    log:    "results/logs/magma/get_genes_in_MHC_{REGION}.log"
+    log:    "../results/logs/magma/get_genes_in_MHC_{REGION}.log"
     shell:
             """
 
@@ -42,7 +42,7 @@ rule create_ctd:
     input:  seurat_obj = "../resources/R_objects/seurat.{REGION}.final.rds",
             MHC_gene_list = "../resources/R_objects/{REGION}_MHC_overlapping_genes.rds"
     output: "../resources/ctd_objects/CellTypeData_{REGION}.rda"
-    log:    "results/logs/magma/create_ctd_{REGION}.log" 
+    log:    "../results/logs/magma/create_ctd_{REGION}.log" 
     shell: 
             """
             
@@ -57,7 +57,7 @@ rule map_genes_to_snps:
     # Requires net access to run
     input:  GWAS_DIR + "{GWAS}_hg19_magma_ready.sumstats.tsv"
     output: MAGMA_OUTDIR + "{GWAS}_hg19_magma_ready.sumstats.tsv.10UP.1.5DOWN/{GWAS}_hg19_magma_ready.sumstats.tsv.10UP.1.5DOWN.genes.raw"
-    log:   "results/logs/magma/map_snps2genes_hg19_{GWAS}.log"
+    log:   "../results/logs/magma/map_snps2genes_hg19_{GWAS}.log"
     shell:
             """
        
@@ -73,7 +73,7 @@ rule magma_analysis:
             gene_file = MAGMA_OUTDIR + "{GWAS}_hg19_magma_ready.sumstats.tsv.10UP.1.5DOWN/{GWAS}_hg19_magma_ready.sumstats.tsv.10UP.1.5DOWN.genes.raw", 
             gwas_file = GWAS_DIR + "{GWAS}_hg19_magma_ready.sumstats.tsv" 
     output: MAGMA_OUTDIR + "{GWAS}_hg19_magma_ready.sumstats.tsv.10UP.1.5DOWN/{GWAS}_hg19_magma_ready.sumstats.tsv.10UP.1.5DOWN.level2.{REGION}_top10.gsa.out"
-    log:    "results/logs/magma/magma_analysis_hg19_{REGION}_{GWAS}.log"
+    log:    "../results/logs/magma/magma_analysis_hg19_{REGION}_{GWAS}.log"
     shell:
             """
 
@@ -87,9 +87,9 @@ rule magma_analysis:
 rule cp_magma_results:
     # Need this as magma celltyping put the results in a wierd place
     input:  files = expand(MAGMA_OUTDIR + "{GWAS}_hg19_magma_ready.sumstats.tsv.10UP.1.5DOWN/{GWAS}_hg19_magma_ready.sumstats.tsv.10UP.1.5DOWN.level2.{REGION}_top10.gsa.out", REGION = config["RNA_REGIONS"], GWAS = config["SUMSTATS"])
-    output: directory("results/magma_celltyping/{GWAS}_hg19_magma_ready.sumstats.tsv.10UP.1.5DOWN/")
+    output: directory("../results/magma_celltyping/{GWAS}_hg19_magma_ready.sumstats.tsv.10UP.1.5DOWN/")
     params: dir = MAGMA_OUTDIR + "{GWAS}_hg19_magma_ready.sumstats.tsv.10UP.1.5DOWN/"
-    log:    "results/logs/magma/cp_magma_results_{GWAS}.log" 
+    log:    "../results/logs/magma/cp_magma_results_{GWAS}.log" 
     shell: 
             """
 
@@ -119,8 +119,8 @@ rule cp_magma_results:
 
 rule magma_create_LDSC_geneLists:
     input:  ctd_obj = "../resources/ctd_objects/CellTypeData_{REGION}.rda", 
-    output: "results/q10_gene_lists_for_LDSC/{REGION}_complete.file"
-    log:    "results/logs/magma/magma_ldsc_gene_lists_{REGION}.log"
+    output: "../results/q10_gene_lists_for_LDSC/{REGION}_complete.file"
+    log:    "../results/logs/magma/magma_ldsc_gene_lists_{REGION}.log"
     shell:
             """
 
