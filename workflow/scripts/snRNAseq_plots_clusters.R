@@ -17,15 +17,17 @@
 ##  Load Packages  --------------------------------------------------------------------
 library(cowplot)
 library(tidyverse)
+library(monocle3)
 library(Seurat)
 library(Matrix) # to load Polioudakis dataset
 library(clustifyr)
 
 
+
 ## Set variables  ---------------------------------------------------------------------
-DATA_DIR <- '~/Desktop/fetal_brain_snRNAseq_110122/resources/R_objects/' # May change this to github repo
-FIG_DIR <- '~/Desktop/fetal_brain_snRNAseq_110122/figures/'
-ALDINGER_DIR <- '~/Desktop/single_cell/public_datasets/aldinger2021_fetal_cer_prePreint/'
+DATA_DIR <- '~/Desktop/fetal_brain_snRNAseq_110122/resources/' # May change this to github repo
+FIG_DIR <- '~/Desktop/fetal_brain_snRNAseq_110122/results/figures/'
+ALDINGER_DIR <- paste0(DATA_DIR, 'public_datasets/aldinger2021_fetal_cer/')
 REGIONS <- c('cer', 'hip', 'pfc', 'tha', 'wge')
 PCA_UPPER_DIM <- 17
 
@@ -50,17 +52,17 @@ RG_red <- c('#FAA0A0', '#FF5959', '#F75151', '#EF0029', '#D2042D')
 cycPro_lavender <- c("#DCBEFF")
 endo_brown <- '#9A6324'
 ip_magenta <- "#D078FF"
-OPC_yelow <- '#FFDE725FF'
+OPC_yelow <- '#FDE725FF'
 MG_orange <- '#F58231'
 
 ## Load Data --------------------------------------------------------------------------
 # Seurat objects  ----
 for (REGION in REGIONS) { 
   
-  seurat.obj <- readRDS(paste0(DATA_DIR, 'seurat.', REGION, '.final.rds'))
+  seurat.obj <- readRDS(paste0(DATA_DIR, 'R_objects/seurat.', REGION, '.final.rds'))
   
   # Add plot IDs - remove region labels
-   seurat.obj$plotIDs <- gsub("^.*?-", "", seurat.obj$cellIDs)
+  # seurat.obj$plotIDs <- gsub("^.*?-", "", seurat.obj$cellIDs)
   
   assign(paste0('seurat.', REGION), seurat.obj, .GlobalEnv)
   
@@ -76,20 +78,14 @@ for (REGION in REGIONS) {
   
 }
 
-# Load monocle object
-monocle.obj <- readRDS(paste0(DATA_DIR, "pfc_monocle_MK167.rds"))
+# Load monocle object - 
+monocle.obj <- readRDS(paste0(DATA_DIR, "R_objects/pfc_monocle_MK167.rds"))
 
 ## Figure 1  --------------------------------------------------------------------------
 # GE
-
 ge_colours <- c('#006400', '#55C667FF',  '#00FF00A5', '#10A53DFF', '#95D840FF', 
                 '#FAA0A0', '#EF0029', "#DCBEFF", '#73D055FF', '#D2042D',
                 '#3CBB75FF')
-# cellID-list GE-InN-1 GE-InN-2 GE-InN-3 GE-InN-4 GE-InN-5 GE-RG-1 GE-RG-2 GE-CycPro GE-InN-6 GE-RG-3 GE-InN-7
-
-
-RG_red <- c('#FAA0A0', '#FF5959', '#F75151', '#EF0029', '#D2042D')
-
 
 ge_final_plot <- wge_plot +
   ggtitle('Ganglionic Eminence') +
@@ -113,6 +109,8 @@ cer_final_plot <- cer_plot +
   my_theme +
   scale_color_manual(values = cer_colours)
 
+
+
 # FC
 fc_colours <- c('#CEE5FD', '#76B5C5', '#ABDBE3', '#FF5959', '#76B5C5', 
                 '#95D840FF', '#55C667FF', '#1E81B0', "#DCBEFF", '#D078FF', 
@@ -128,9 +126,14 @@ fc_final_plot <- pfc_plot +
 
 # Hip
 hip_colours <- c("#DCBEFF", '#9A6324', '#76B5C5', "#00BDD2", '#CEE5FD',  
-                 "#00B6EB", '#ABDBE3','#1E81B0', '#779CBA', '#73D055FF', 
+                 "#00B6EB", '#ABDBE3', '#1E81B0', '#779CBA', '#73D055FF', 
                  '#00FF00A5', '#10A53DFF', '#95D840FF', '#CCCCCC', "#949494",   
                  '#FDE725FF', '#FAA0A0', '#EF0029', '#D2042D')
+
+hip_colours <- c('#76B5C5', '#B200ED', '#FAA0A0', '#EF0029', '#CEE5FD',  
+                 '#95D840FF', "#00BDD2", '#00FF00A5', "#DCBEFF", '#10A53DFF', 
+                 '#6F2DA8', '#ABDBE3', '#1E81B0', '#D2042D', '#006400',   
+                 '#FDE725FF', '#779CBA', '#F58231', '#9A6324')
 
 hip_final_plot <- hip_plot +
   ggtitle('Hippocampus') +
@@ -139,12 +142,16 @@ hip_final_plot <- hip_plot +
   my_theme +
   scale_color_manual(values = hip_colours)
 
+
+
 # Tha
-thalamus_colours <- c("#DCBEFF", '#9A6324', '#76B5C5', "#00BDD2", "#00B6EB", 
-                      '#CEE5FD', '#ABDBE3','#1E81B0', '#779CBA', '#B8D2EB', 
-                      '#CEE5FD', '#10A53DFF', '#00FF00A5', '#95D840FF', '#006400',
-                      "#D078FF", '#F58231', '#FDE725FF', '#FAA0A0',
-                      '#FF5959', '#F75151', '#EF0029', '#D2042D')
+thalamus_colours <- c("#FA8072", '#3CBB75FF', '#FAA0A0', '#00FF00A5', '#95D840FF', 
+                      '#FF5959', '#B7FFB7', '#708238', '#ABDBE3', "#DCBEFF", 
+                      "#D21F3C", "#D078FF", '#EF0029', '#006400', '#F75151',
+                      '#10A53DFF', '#FDE725FF', '#800000', "#00B6EB", '#779CBA',
+                      '#9DC183','#F58231', '#9A6324') 
+
+
 
 tha_final_plot <- tha_plot +
   ggtitle('Thalamus') +
@@ -164,7 +171,8 @@ fig1_plot <- plot_grid(fc_final_plot,
 
 ## Figure 1  --------------------------------------------------------------------------
 # Plot Monocle pseudotime figure
-Supp_Fig_4B <- plot_cells(monocle.obj, color_cells_by = "pseudotime", label_cell_groups = FALSE, label_leaves = FALSE, 
+Supp_Fig_4B <- plot_cells(monocle.obj, color_cells_by = "pseudotime", 
+                          label_cell_groups = FALSE, label_leaves = FALSE, 
                           label_branch_points = FALSE) +
   ggtitle('Pseudotime - MK167') +
   theme_bw() +
@@ -184,16 +192,16 @@ Supp_Fig_4B <- plot_cells(monocle.obj, color_cells_by = "pseudotime", label_cell
 #  Seurat - using Polioudakis reference dataset  - FC only  ---------------------------
 # I kept this code in here rather than running in a seprate script as I didn't want to 
 # alter the seurat objects
-load("~/Desktop/single_cell/public_datasets/sc_dev_cortex_geschwind/raw_counts_mat.rdata")
+load(paste0(DATA_DIR, "public_datasets/sc_dev_cortex_geschwind/raw_counts_mat.rdata"))
 gersch_matrix <-  as.matrix(raw_counts_mat)
-gersch_meta <-  as.data.frame(read_csv("Desktop/single_cell/public_datasets/sc_dev_cortex_geschwind/cell_metadata.csv")) 
+gersch_meta <-  as.data.frame(read_csv(paste0(DATA_DIR, "public_datasets/sc_dev_cortex_geschwind/cell_metadata.csv"))) 
 
 #gersch_meta$Cell <- paste0(gersch_meta$Cell, "-1")
 gersch_meta <- column_to_rownames(gersch_meta, var = "Cell")
 
 rna_gersch <- CreateSeuratObject(counts = gersch_matrix, meta.data = gersch_meta)
 
-# Prepare gersch data for label transfer
+# Prepare gersch data for label transfer - https://stackoverflow.com/questions/51295402
 rna_gersch <- NormalizeData(rna_gersch) %>%
   FindVariableFeatures(selection.method = "vst", nfeatures = 2000) %>%
   ScaleData()
@@ -208,7 +216,7 @@ seurat.pfc$prediction.match <- seurat.pfc$predicted.id == seurat.pfc$seurat_clus
 
 
 #  ClustifyR - using Nowakowski reference dataset - FC and GE  
-load(file = paste0("Desktop/single_cell/public_datasets/Nowakowski/Nowakowski2018_cortex_dev_clustifyR.rda"))
+load(file = paste0(DATA_DIR, "public_datasets/Nowakowski/Nowakowski2018_cortex_dev_clustifyR.rda"))
 
 # Run clustifyr  - Nowakowski - FC and GE 
 for (REGION in c("pfc", "wge")) {
@@ -356,7 +364,7 @@ fig_Supp_3B <- DimPlot(list_res, reduction = "umap", label = TRUE, label.size = 
 
 ## Save plots  ------------------------------------------------------------------------
 # Figure 1
-tiff(paste0(FIG_DIR, "Fig_1.tiff"), height = 30, width = 40, units='cm',
+tiff(paste0(FIG_DIR, "Fig_1.tiff"), height = 20, width = 40, units='cm',
      compression = "lzw", res = 300)
 fig1_plot
 dev.off()
@@ -380,12 +388,35 @@ tiff(paste0(FIG_DIR, "Sup_Data_Figure_3.tiff"), height = 15, width = 40, units='
 plot_grid(fig_Supp_3A, fig_Supp_3B, labels = 'AUTO', label_size = 16, align = c("hv"))
 dev.off()
 
+# Jpegs
 # Fig Supp Fig 4
-tiff(paste0(FIG_DIR, "Sup_Data_Figure_4.tiff"), height = 15, width = 40, units='cm', 
-     compression = "lzw", res = 300)
-plot_grid(fc_final_plot + NoLegend(), Supp_Fig_4B, labels = 'AUTO', label_size = 16, 
-          align = c("h"), axis = c("tb"), rel_widths = c(1, 1.1))
+jpeg(paste0(FIG_DIR, "Fig_1.jpeg"), height = 20, width = 40, units='cm',
+     res = 500)
+fig1_plot
 dev.off()
+
+# Fig Supp Fig 1 
+jpeg(paste0(FIG_DIR, "Sup_Data_Figure_1.jpeg"), height = 30, width = 40, units='cm', 
+     res = 500)
+plot_grid(fig_Supp_1A, fig_Supp_1B, fig_Supp_1C, labels = 'AUTO', 
+          label_size = 16, align = c("hv"))
+dev.off()
+
+# Fig Supp Fig 2 
+jpeg(paste0(FIG_DIR, "Sup_Data_Figure_2.jpeg"), height = 15, width = 40, units='cm', 
+     res = 500)
+plot_grid(fig_Supp_2A, fig_Supp_2B, labels = 'AUTO', label_size = 16, align = c("hv"))
+dev.off()
+
+# Fig Supp Fig 3
+jpeg(paste0(FIG_DIR, "Sup_Data_Figure_3.jpeg"), height = 15, width = 40, units='cm', 
+     res = 500)
+plot_grid(fig_Supp_3A, fig_Supp_3B, labels = 'AUTO', label_size = 16, align = c("hv"))
+dev.off()
+
+
 
 #--------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------
+
+
