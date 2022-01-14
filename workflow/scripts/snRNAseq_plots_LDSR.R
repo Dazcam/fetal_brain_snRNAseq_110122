@@ -6,7 +6,7 @@
 
 ## Info  ------------------------------------------------------------------------------
 
-#  Code for figures 3, S8, S10, S12 - laptop
+#  Code for figures 3, 5 
 
 ##  Load packages  --------------------------------------------------------------------
 cat('\nLoading packages ... \n\n')
@@ -23,9 +23,7 @@ FIG_DIR <- '~/Desktop/fetal_brain_snRNAseq_110122/results/figures/'
 for (DISORDER in GWAS) {
   
   for (REGION in REGIONS) {
-    
-    REGION = 'Cer'
-    
+
     # Load data
     all_top10_df <- read_tsv(paste0(DATA_DIR, 'snRNAseq_LDSC_', DISORDER, '_baseline.v1.2_top10pc.tsv'))
     subset_top10_df <- as.data.frame(filter(all_top10_df, grepl(REGION, Category)))
@@ -203,25 +201,13 @@ for (DISORDER in GWAS) {
 
 # Save plots
 # Fig 3 - SCZ
-tiff(paste0(PLOT_DIR, "Fig_3.tiff"), height = 30, width = 30, units='cm', 
+tiff(paste0(FIG_DIR, "Fig_3.tiff"), height = 30, width = 30, units='cm', 
      compression = "lzw", res = 300)
 all_regions_SCZ_ldsc_top10_plot
 dev.off()
 
-# Fig S8 - BPD
-tiff(paste0(PLOT_DIR, "Fig_S8.tiff"), height = 30, width = 30, units='cm', 
-     compression = "lzw", res = 300)
-all_regions_BPD_ldsc_top10_plot
-dev.off()
-
-# Fig S10 - MDD
-tiff(paste0(PLOT_DIR, "Fig_S10.tiff"), height = 30, width = 30, units='cm', 
-     compression = "lzw", res = 300)
-all_regions_MDD_ldsc_top10_plot
-dev.off()
-
 # Fig 5 - HEIGHT
-tiff(paste0(PLOT_DIR, "Fig_5.tiff"), height = 30, width = 30, units='cm', 
+tiff(paste0(FIG_DIR, "Fig_5.tiff"), height = 30, width = 30, units='cm', 
      compression = "lzw", res = 300)
 all_regions_HEIGHT_ldsc_top10_plot
 dev.off()
