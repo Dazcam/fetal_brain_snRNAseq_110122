@@ -125,11 +125,6 @@ fc_final_plot <- pfc_plot +
   scale_color_manual(values = fc_colours)
 
 # Hip
-hip_colours <- c("#DCBEFF", '#9A6324', '#76B5C5', "#00BDD2", '#CEE5FD',  
-                 "#00B6EB", '#ABDBE3', '#1E81B0', '#779CBA', '#73D055FF', 
-                 '#00FF00A5', '#10A53DFF', '#95D840FF', '#CCCCCC', "#949494",   
-                 '#FDE725FF', '#FAA0A0', '#EF0029', '#D2042D')
-
 hip_colours <- c('#76B5C5', '#B200ED', '#FAA0A0', '#EF0029', '#CEE5FD',  
                  '#95D840FF', "#00BDD2", '#00FF00A5', "#DCBEFF", '#10A53DFF', 
                  '#6F2DA8', '#ABDBE3', '#1E81B0', '#D2042D', '#006400',   
@@ -364,7 +359,7 @@ fig_Supp_3B <- DimPlot(list_res, reduction = "umap", label = TRUE, label.size = 
 
 ## Save plots  ------------------------------------------------------------------------
 # Figure 1
-tiff(paste0(FIG_DIR, "Fig_1.tiff"), height = 20, width = 40, units='cm',
+tiff(paste0(FIG_DIR, "Fig_1.tiff"), height = 30, width = 40, units='cm',
      compression = "lzw", res = 300)
 fig1_plot
 dev.off()
@@ -388,33 +383,46 @@ tiff(paste0(FIG_DIR, "Sup_Data_Figure_3.tiff"), height = 15, width = 40, units='
 plot_grid(fig_Supp_3A, fig_Supp_3B, labels = 'AUTO', label_size = 16, align = c("hv"))
 dev.off()
 
-# Jpegs
 # Fig Supp Fig 4
-jpeg(paste0(FIG_DIR, "Fig_1.jpeg"), height = 20, width = 40, units='cm',
-     res = 500)
+tiff(paste0(FIG_DIR, "Sup_Data_Figure_4.tiff"), height = 15, width = 40, units='cm', 
+     compression = "lzw", res = 300)
+plot_grid(fc_final_plot + NoLegend(), Supp_Fig_4B, labels = 'AUTO', label_size = 16, 
+          align = c("h"), axis = c("tb"), rel_widths = c(1, 1.1))
+dev.off()
+
+# Jpegs
+# Fig 1 - options(ggrepel.max.overlaps = Inf)
+options(ggrepel.max.overlaps = Inf)
+jpeg(paste0(FIG_DIR, "Fig_1.jpg"), width = 1440, height = 960, 
+     units = "px", pointsize = 12, quality = 150)
 fig1_plot
 dev.off()
 
 # Fig Supp Fig 1 
-jpeg(paste0(FIG_DIR, "Sup_Data_Figure_1.jpeg"), height = 30, width = 40, units='cm', 
-     res = 500)
+jpeg(paste0(FIG_DIR, "Sup_Data_Figure_1.jpg"), width = 960, height = 960, 
+     units = "px", pointsize = 12, quality = 150)
 plot_grid(fig_Supp_1A, fig_Supp_1B, fig_Supp_1C, labels = 'AUTO', 
           label_size = 16, align = c("hv"))
 dev.off()
 
 # Fig Supp Fig 2 
-jpeg(paste0(FIG_DIR, "Sup_Data_Figure_2.jpeg"), height = 15, width = 40, units='cm', 
-     res = 500)
+jpeg(paste0(FIG_DIR, "Sup_Data_Figure_2.jpg"), width = 960, height = 480, 
+     units = "px", pointsize = 12, quality = 150)
 plot_grid(fig_Supp_2A, fig_Supp_2B, labels = 'AUTO', label_size = 16, align = c("hv"))
 dev.off()
 
 # Fig Supp Fig 3
-jpeg(paste0(FIG_DIR, "Sup_Data_Figure_3.jpeg"), height = 15, width = 40, units='cm', 
-     res = 500)
+jpeg(paste0(FIG_DIR, "Sup_Data_Figure_3.jpg"), width = 960, height = 480, 
+     units = "px", pointsize = 12, quality = 150)
 plot_grid(fig_Supp_3A, fig_Supp_3B, labels = 'AUTO', label_size = 16, align = c("hv"))
 dev.off()
 
-
+# Fig Supp Fig 4
+jpeg(paste0(FIG_DIR, "Sup_Data_Figure_4.jpg"), width = 960, height = 480, 
+     units = "px", pointsize = 12, quality = 150)
+plot_grid(fc_final_plot + NoLegend(), Supp_Fig_4B, labels = 'AUTO', label_size = 16, 
+          align = c("h"), axis = c("tb"), rel_widths = c(1, 1.1))
+dev.off()
 
 #--------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------
