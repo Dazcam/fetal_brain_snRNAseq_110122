@@ -3,3 +3,7 @@ resources/seurat.pfc.final.rds
 resources/seurat.tha.final.rds
 resources/seurat.wge.final.rds
 resources/seurat.hip.final.rds
+results/q10_gene_lists_for_LDSC/all_quantiles/
+results/magma_celltyping/HEIGHT_hg19_magma_ready.sumstats.tsv.10UP.1.5DOWN/
+results/magma_celltyping/SCZ_hg19_magma_ready.sumstats.tsv.10UP.1.5DOWN/
+workflow/.snakemake/

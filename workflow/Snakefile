@@ -2,6 +2,7 @@
 
 include: "rules/snRNAseq_magma_cellTyping.smk"
 include: "rules/snRNAseq_LDSC.smk"
+include: "rules/snRNAseq_extract_final_results.smk"
 
 rule all:
     input:
@@ -10,5 +11,6 @@ rule all:
 #        expand(MAGMA_OUTDIR + "{GWAS}_hg19_magma_ready.sumstats.tsv.10UP.1.5DOWN/{GWAS}_hg19_magma_ready.sumstats.tsv.10UP.1.5DOWN.genes.raw", GWAS = config["SUMSTATS"]),
 #        expand(MAGMA_OUTDIR + "{GWAS}_hg19_magma_ready.sumstats.tsv.10UP.1.5DOWN/{GWAS}_hg19_magma_ready.sumstats.tsv.10UP.1.5DOWN.level2.{REGION}_top10.gsa.out", GWAS = config["SUMSTATS"], REGION = config["RNA_REGIONS"])
         expand("../results/magma_celltyping/{GWAS}_hg19_magma_ready.sumstats.tsv.10UP.1.5DOWN/", GWAS = config["SUMSTATS"]),
-        expand("../results/q10_gene_lists_for_LDSC/{REGION}_complete.file", REGION = config["RNA_REGIONS"]),
-        expand("../results/LDSR_part_herit/snRNAseq_LDSC_{GWAS}_baseline.v1.2_top10pc.tsv", GWAS = config["SUMSTATS"])
+        expand("../results/q10_gene_lists_for_LDSC/all_quantiles/{REGION}_complete.file", REGION = config["RNA_REGIONS"]),
+        expand("../results/LDSR_part_herit/snRNAseq_LDSC_{GWAS}_baseline.v1.2_top10pc.tsv", GWAS = config["SUMSTATS"]),
+        expand("../results/q10_gene_lists_for_LDSC/{SIG_CELL_TYPE}_Q10_genes.tsv", SIG_CELL_TYPE = config["SIG_CELL_TYPES"])

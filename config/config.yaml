@@ -119,3 +119,16 @@ RNA_CELL_TYPES:
     GE-RG-3:
     GE-InN-7:
 
+SIG_CELL_TYPES:
+    FC-ExN-2:
+    FC-ExN-3:
+    FC-ExN-4: 
+    FC-ExN-5: 
+    FC-InN-1: 
+    FC-InN-4:
+    GE-InN-1: 
+    GE-InN-2: 
+    Hipp-ExN-3: 
+    Hipp-ExN-5:
+    Thal-ExN-1:
+    Thal-ExN-3:
