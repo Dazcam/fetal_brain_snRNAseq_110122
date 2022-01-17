@@ -212,6 +212,17 @@ tiff(paste0(FIG_DIR, "Fig_5.tiff"), height = 30, width = 30, units='cm',
 all_regions_HEIGHT_ldsc_top10_plot
 dev.off()
 
+# Jpegs
+jpeg(paste0(FIG_DIR, "Fig_3.jpg"), width = 960, height = 960, 
+     units = "px", pointsize = 12, quality = 150)
+all_regions_SCZ_ldsc_top10_plot
+dev.off()
+
+jpeg(paste0(FIG_DIR, "Fig_5.jpg"), width = 960, height = 960, 
+     units = "px", pointsize = 12, quality = 150)
+all_regions_HEIGHT_ldsc_top10_plot
+dev.off()
+
 
 #--------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------

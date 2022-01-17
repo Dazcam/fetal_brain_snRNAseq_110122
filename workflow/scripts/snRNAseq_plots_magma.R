@@ -229,32 +229,25 @@ fetal_vs_adult_plot  <- ggplot(data = fetal_vs_adult, aes(x = -log10(as.numeric(
 
 # Save plots
 # Fig 2 - SCZ
-tiff(paste0(PLOT_DIR, "Fig_2.tiff"), height = 30, width = 30, units='cm', 
+tiff(paste0(FIG_DIR, "Fig_2.tiff"), height = 30, width = 30, units='cm', 
      compression = "lzw", res = 300)
 all_regions_SCZ_magma_top10_plot
 dev.off()
 
-# Fig 4 - fetal vs adult
-tiff(paste0(PLOT_DIR, "Fig_4B.tiff"), height = 30, width = 30, units='cm', 
+# Fig 4 - HEIGHT
+tiff(paste0(FIG_DIR, "Fig_4.tiff"), height = 30, width = 30, units='cm', 
      compression = "lzw", res = 300)
-fetal_vs_adult_plot
+all_regions_HEIGHT_magma_top10_plot
 dev.off()
 
-# Fig S7 - BPD
-tiff(paste0(PLOT_DIR, "Fig_S7.tiff"), height = 30, width = 30, units='cm', 
-     compression = "lzw", res = 300)
-all_regions_BPD_magma_top10_plot
+# Jpegs
+jpeg(paste0(FIG_DIR, "Fig_2.jpg"), width = 960, height = 960, 
+     units = "px", pointsize = 12, quality = 150)
+all_regions_SCZ_magma_top10_plot
 dev.off()
 
-# Fig S9 - MDD
-tiff(paste0(PLOT_DIR, "Fig_S9.tiff"), height = 30, width = 30, units='cm', 
-     compression = "lzw", res = 300)
-all_regions_MDD_magma_top10_plot
-dev.off()
-
-# Fig S11 - HEIGHT
-tiff(paste0(PLOT_DIR, "Fig_S11.tiff"), height = 30, width = 30, units='cm', 
-     compression = "lzw", res = 300)
+jpeg(paste0(FIG_DIR, "Fig_4.jpg"), width = 960, height = 960, 
+     units = "px", pointsize = 12, quality = 150)
 all_regions_HEIGHT_magma_top10_plot
 dev.off()
 
