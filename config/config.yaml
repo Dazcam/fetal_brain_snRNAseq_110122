@@ -132,3 +132,10 @@ SIG_CELL_TYPES:
     Hipp-ExN-5:
     Thal-ExN-1:
     Thal-ExN-3:
+
+MAGMA_CONDITIONS:
+    FC_ExN_2:    
+    skene_InN:
+    skene_MSN:
+    skene_CA1: 
+    skene_SS:

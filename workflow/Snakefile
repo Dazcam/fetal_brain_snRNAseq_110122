@@ -3,6 +3,7 @@
 include: "rules/snRNAseq_magma_cellTyping.smk"
 include: "rules/snRNAseq_LDSC.smk"
 include: "rules/snRNAseq_extract_final_results.smk"
+include: "rules/snRNAseq_magma_conditional.smk"
 
 rule all:
     input:
@@ -13,4 +14,5 @@ rule all:
         expand("../results/magma_celltyping/{GWAS}_hg19_magma_ready.sumstats.tsv.10UP.1.5DOWN/", GWAS = config["SUMSTATS"]),
         expand("../results/q10_gene_lists_for_LDSC/all_quantiles/{REGION}_complete.file", REGION = config["RNA_REGIONS"]),
         expand("../results/LDSR_part_herit/snRNAseq_LDSC_{GWAS}_baseline.v1.2_top10pc.tsv", GWAS = config["SUMSTATS"]),
-        expand("../results/q10_gene_lists_for_LDSC/{SIG_CELL_TYPE}_Q10_genes.tsv", SIG_CELL_TYPE = config["SIG_CELL_TYPES"])
+        expand("../results/q10_gene_lists_for_LDSC/{SIG_CELL_TYPE}_Q10_genes.tsv", SIG_CELL_TYPE = config["SIG_CELL_TYPES"]),
+        expand("../results/magma_conditional/magma_all_sig_and_skene_condition_{CONDITION}.gsa.out", CONDITION = config['MAGMA_CONDITIONS'])
