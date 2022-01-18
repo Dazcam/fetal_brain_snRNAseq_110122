@@ -28,8 +28,8 @@ OUT_DIR <- "~/Desktop/fetal_brain_snRNAseq_110122/results/gene_lists/Ave_express
 dir.create(OUT_DIR, recursive = TRUE)
 REGIONS <- c('cer', 'hip', 'pfc', 'tha', 'wge')
 CELL_TYPES <- c('FC_ExN_2', 'FC_ExN_3', 'FC_ExN_4', 'FC_ExN_5', 'FC_InN_1', 
-                'FC_InN-4', 'GE_InN_1', 'GE_InN_2', 'Hipp_ExN_4', 'Hipp_ExN_6', 
-                'Thal_ExN_5', 'Thal_ExN_9')
+                'FC_InN_4', 'GE_InN_1', 'GE_InN_2', 'Hipp_ExN_3', 'Hipp_ExN_5', 
+                'Thal_ExN_1', 'Thal_ExN_3')
 
 
 ## Load Data --------------------------------------------------------------------------
@@ -86,22 +86,22 @@ GE_InN_2_gene_list <- as.data.frame(wge_avExp$RNA) %>%
   filter(`GE-InN-2` > 0) %>%
   arrange(desc(`GE-InN-2`))
 
-Hipp_ExN_4_gene_list <- as.data.frame(hip_avExp$RNA) %>%
+Hipp_ExN_3_gene_list <- as.data.frame(hip_avExp$RNA) %>%
   dplyr::select(`Hipp-ExN-3`) %>%
   filter(`Hipp-ExN-3` > 0) %>%
   arrange(desc(`Hipp-ExN-3`))
 
-Hipp_ExN_6_gene_list <- as.data.frame(hip_avExp$RNA) %>%
+Hipp_ExN_5_gene_list <- as.data.frame(hip_avExp$RNA) %>%
   dplyr::select(`Hipp-ExN-5`) %>%
   filter(`Hipp-ExN-5` > 0) %>%
   arrange(desc(`Hipp-ExN-5`))
 
-Thal_ExN_5_gene_list <- as.data.frame(tha_avExp$RNA) %>%
+Thal_ExN_1_gene_list <- as.data.frame(tha_avExp$RNA) %>%
   dplyr::select(`Thal-ExN-1`) %>%
   filter(`Thal-ExN-1` > 0) %>%
   arrange(desc(`Thal-ExN-1`))
 
-Thal_ExN_9_gene_list <- as.data.frame(tha_avExp$RNA) %>%
+Thal_ExN_3_gene_list <- as.data.frame(tha_avExp$RNA) %>%
   dplyr::select(`Thal-ExN-3`) %>%
   filter(`Thal-ExN-3` > 0) %>%
   arrange(desc(`Thal-ExN-3`))
@@ -134,8 +134,8 @@ for (CELL_TYPE in CELL_TYPES) {
   
   assign(paste0(CELL_TYPE, '_entrezID'), ENTREZ_GENES_UNIQUE)
   
-  write.table(ENTREZ_GENES_UNIQUE, paste0(OUT_DIR, CELL_TYPE, '_all_genesExpresssed.tsv'),
-              quote = FALSE, row.names = FALSE,  sep = '\t')
+  write.table(ENTREZ_GENES_UNIQUE, paste0(OUT_DIR, CELL_TYPE, '_all_genes_expresssed.tsv'),
+              quote = FALSE, row.names = FALSE,  sep = '\t', col.names = FALSE)
   
 }
 
