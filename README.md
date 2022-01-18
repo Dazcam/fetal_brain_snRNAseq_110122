@@ -19,3 +19,5 @@ OUTPUT: results/magma_celltyping, results/figures/
 5. magma_generate_plots - creates plots for magma anlysis
 6: magma_create_LDSC_geneLists - extracts q10 gene lists from CTD object to run LDSC analysis
 7: Plotting  
+
+TEST
