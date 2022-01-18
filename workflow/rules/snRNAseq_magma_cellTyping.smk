@@ -117,9 +117,9 @@ rule cp_magma_results:
 
 #            """
 
-rule magma_create_LDSC_geneLists:
+rule magma_create_q10_geneLists:
     input:  ctd_obj = "../resources/ctd_objects/CellTypeData_{REGION}.rda", 
-    output: "../results/q10_gene_lists_for_LDSC/all_quantiles/{REGION}_complete.file"
+    output: "../results/gene_lists/q10_gene_lists/all_quantiles/{REGION}_complete.file"
     log:    "../results/logs/magma/magma_ldsc_gene_lists_{REGION}.log"
     shell:
             """
