@@ -6,13 +6,13 @@
 
 ## Info  ------------------------------------------------------------------------------
 
-#  Code for figures 1, S1-5 - laptop
+#  Code for figures 1, Supplemetry figure 6-9 - laptop
 
 #  Nowakowski and Polioudakis for FC 
 #  Nowakowski for GE
 #  Aldinger for Cer
 
-# Monocle - FC ExN MK167
+# Monocle - FC ExN MK167 - removed for now
 
 ##  Load Packages  --------------------------------------------------------------------
 library(cowplot)
@@ -79,7 +79,7 @@ for (REGION in REGIONS) {
 }
 
 # Load monocle object - 
-monocle.obj <- readRDS(paste0(DATA_DIR, "R_objects/pfc_monocle_MK167.rds"))
+# monocle.obj <- readRDS(paste0(DATA_DIR, "R_objects/pfc_monocle_MK167.rds"))
 
 ## Figure 1  --------------------------------------------------------------------------
 # GE
@@ -166,22 +166,22 @@ fig1_plot <- plot_grid(fc_final_plot,
 
 ## Figure 1  --------------------------------------------------------------------------
 # Plot Monocle pseudotime figure
-Supp_Fig_4B <- plot_cells(monocle.obj, color_cells_by = "pseudotime", 
-                          label_cell_groups = FALSE, label_leaves = FALSE, 
-                          label_branch_points = FALSE) +
-  ggtitle('Pseudotime - MK167') +
-  theme_bw() +
-  theme(legend.text = element_text(size = 12),
-        legend.title = element_blank(),
-        plot.margin = unit(c(0.5, 0.5, 0.5, 0.5), "cm"),
-        panel.grid.major = element_blank(), 
-        panel.grid.minor = element_blank(),
-        panel.border = element_rect(colour = "black", size = 1),
-        plot.title = element_text(hjust = 0.5),
-        axis.title.x = element_text(colour = "#000000", size = 14),
-        axis.title.y = element_text(colour = "#000000", size = 14),
-        axis.text.x  = element_text(colour = "#000000", size = 12, vjust = 0.5),
-        axis.text.y  = element_text(colour = "#000000", size = 12))
+# Supp_Fig_4B <- plot_cells(monocle.obj, color_cells_by = "pseudotime", 
+#                           label_cell_groups = FALSE, label_leaves = FALSE, 
+#                           label_branch_points = FALSE) +
+#   ggtitle('Pseudotime - MK167') +
+#   theme_bw() +
+#   theme(legend.text = element_text(size = 12),
+#         legend.title = element_blank(),
+#         plot.margin = unit(c(0.5, 0.5, 0.5, 0.5), "cm"),
+#         panel.grid.major = element_blank(), 
+#         panel.grid.minor = element_blank(),
+#         panel.border = element_rect(colour = "black", size = 1),
+#         plot.title = element_text(hjust = 0.5),
+#         axis.title.x = element_text(colour = "#000000", size = 14),
+#         axis.title.y = element_text(colour = "#000000", size = 14),
+#         axis.text.x  = element_text(colour = "#000000", size = 12, vjust = 0.5),
+#         axis.text.y  = element_text(colour = "#000000", size = 12))
 
 ##  Cluster assignment section  -------------------------------------------------------
 #  Seurat - using Polioudakis reference dataset  - FC only  ---------------------------
@@ -364,31 +364,31 @@ tiff(paste0(FIG_DIR, "Fig_1.tiff"), height = 30, width = 40, units='cm',
 fig1_plot
 dev.off()
 
-# Fig Supp Fig 1 
-tiff(paste0(FIG_DIR, "Sup_Data_Figure_1.tiff"), height = 30, width = 40, units='cm', 
+# Fig Supp Fig 6 
+tiff(paste0(FIG_DIR, "Supplementary_figure_6.tiff"), height = 30, width = 40, units='cm', 
      compression = "lzw", res = 300)
 plot_grid(fig_Supp_1A, fig_Supp_1B, fig_Supp_1C, labels = 'AUTO', 
           label_size = 16, align = c("hv"))
 dev.off()
 
-# Fig Supp Fig 2 
-tiff(paste0(FIG_DIR, "Sup_Data_Figure_2.tiff"), height = 15, width = 40, units='cm', 
+# Fig Supp Fig 7 
+tiff(paste0(FIG_DIR, "Supplementary_figure_7.tiff"), height = 15, width = 40, units='cm', 
      compression = "lzw", res = 300)
 plot_grid(fig_Supp_2A, fig_Supp_2B, labels = 'AUTO', label_size = 16, align = c("hv"))
 dev.off()
 
-# Fig Supp Fig 3
-tiff(paste0(FIG_DIR, "Sup_Data_Figure_3.tiff"), height = 15, width = 40, units='cm', 
+# Fig Supp Fig 8
+tiff(paste0(FIG_DIR, "Supplementary_figure_8.tiff"), height = 15, width = 40, units='cm', 
      compression = "lzw", res = 300)
 plot_grid(fig_Supp_3A, fig_Supp_3B, labels = 'AUTO', label_size = 16, align = c("hv"))
 dev.off()
 
-# Fig Supp Fig 4
-tiff(paste0(FIG_DIR, "Sup_Data_Figure_4.tiff"), height = 15, width = 40, units='cm', 
-     compression = "lzw", res = 300)
-plot_grid(fc_final_plot + NoLegend(), Supp_Fig_4B, labels = 'AUTO', label_size = 16, 
-          align = c("h"), axis = c("tb"), rel_widths = c(1, 1.1))
-dev.off()
+# # Fig Supp Fig 4
+# tiff(paste0(FIG_DIR, "Sup_Data_Figure_4.tiff"), height = 15, width = 40, units='cm', 
+#      compression = "lzw", res = 300)
+# plot_grid(fc_final_plot + NoLegend(), Supp_Fig_4B, labels = 'AUTO', label_size = 16, 
+#           align = c("h"), axis = c("tb"), rel_widths = c(1, 1.1))
+# dev.off()
 
 # Jpegs
 # Fig 1 - options(ggrepel.max.overlaps = Inf)
@@ -398,31 +398,31 @@ jpeg(paste0(FIG_DIR, "Fig_1.jpg"), width = 1440, height = 960,
 fig1_plot
 dev.off()
 
-# Fig Supp Fig 1 
-jpeg(paste0(FIG_DIR, "Sup_Data_Figure_1.jpg"), width = 960, height = 960, 
+# Fig Supp Fig 6 
+jpeg(paste0(FIG_DIR, "Supplementary_figure_6.jpg"), width = 960, height = 960, 
      units = "px", pointsize = 12, quality = 150)
 plot_grid(fig_Supp_1A, fig_Supp_1B, fig_Supp_1C, labels = 'AUTO', 
           label_size = 16, align = c("hv"))
 dev.off()
 
-# Fig Supp Fig 2 
-jpeg(paste0(FIG_DIR, "Sup_Data_Figure_2.jpg"), width = 960, height = 480, 
+# Fig Supp Fig 7 
+jpeg(paste0(FIG_DIR, "Supplementary_figure_7.jpg"), width = 960, height = 480, 
      units = "px", pointsize = 12, quality = 150)
 plot_grid(fig_Supp_2A, fig_Supp_2B, labels = 'AUTO', label_size = 16, align = c("hv"))
 dev.off()
 
-# Fig Supp Fig 3
-jpeg(paste0(FIG_DIR, "Sup_Data_Figure_3.jpg"), width = 960, height = 480, 
+# Fig Supp Fig 8
+jpeg(paste0(FIG_DIR, "Supplementary_figure_8.jpg"), width = 960, height = 480, 
      units = "px", pointsize = 12, quality = 150)
 plot_grid(fig_Supp_3A, fig_Supp_3B, labels = 'AUTO', label_size = 16, align = c("hv"))
 dev.off()
 
-# Fig Supp Fig 4
-jpeg(paste0(FIG_DIR, "Sup_Data_Figure_4.jpg"), width = 960, height = 480, 
-     units = "px", pointsize = 12, quality = 150)
-plot_grid(fc_final_plot + NoLegend(), Supp_Fig_4B, labels = 'AUTO', label_size = 16, 
-          align = c("h"), axis = c("tb"), rel_widths = c(1, 1.1))
-dev.off()
+# # Fig Supp Fig 4
+# jpeg(paste0(FIG_DIR, "Sup_Data_Figure_4.jpg"), width = 960, height = 480, 
+#      units = "px", pointsize = 12, quality = 150)
+# plot_grid(fc_final_plot + NoLegend(), Supp_Fig_4B, labels = 'AUTO', label_size = 16, 
+#           align = c("h"), axis = c("tb"), rel_widths = c(1, 1.1))
+# dev.off()
 
 #--------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------
