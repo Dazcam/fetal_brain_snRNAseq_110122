@@ -26,6 +26,11 @@ fetal_matrix <- readRDS(paste0(DATA_DIR, 'fetal_overlap_SCZ_magma_P_0.05_matrix.
 skene_matrix <- readRDS(paste0(DATA_DIR, 'skene_overlap_SCZ_magma_P_0.05_matrix.rds'))
 magma_matrix <- read_table(paste0(DATA_DIR, 'magma_fetal.vs.adult_summary.tsv'))
 
+colnames(skene_matrix) <- c("FC_ExN_2 (538)", "FC_ExN_3 (476)", "FC_ExN_4 (480)", "FC_ExN_5 (467)", "FC_InN_1 (310)", 
+                            "GE_InN_1 (441)", "GE_InN_2 (439)", "Hipp_ExN_3 (432)", "Hipp_ExN_5 (398)", "Thal_ExN_1 (479)", 
+                            "Thal_ExN_3 (387)")
+rownames(skene_matrix) <- c("skene_SS (519)", "skene_InN (561)", "skene_MSN (543)", "skene_CA1 (547)")
+
 ##  Plot ------------------------------------------------------------------------------
 # Figure 6A - Fetal cell type gene overlap plot
 fig_6A_data <- reshape2::melt(fetal_matrix) %>%
@@ -81,7 +86,7 @@ fig_7A <- fig_7A_data %>%
 
 # Conditional analysis bar chart conditioning fetal cell types on FC-ExN-2
 FC_ExN_2 <- read.table(paste0(MAGMA_DIR, 'magma_all_sig_and_skene_condition_FC_ExN_2.gsa.out'), header = FALSE) %>%
-  row_to_names(row_number = 1) %>% 
+  janitor::row_to_names(row_number = 1) %>% 
   filter(!str_detect(VARIABLE, "FC_ExN_2|skene")) %>%
   mutate(VARIABLE = R.utils::capitalize(VARIABLE)) %>%
   mutate(VARIABLE = gsub("_", "-", VARIABLE))

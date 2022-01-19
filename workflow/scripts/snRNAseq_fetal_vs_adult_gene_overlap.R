@@ -22,7 +22,7 @@ library(biomaRt)
 ## Set variables  ---------------------------------------------------------------------
 DATA_DIR <- '~/Desktop/fetal_brain_snRNAseq_110122/resources/R_objects/'
 MAGMA_DIR <- '~/Desktop/fetal_brain_snRNAseq_110122/results/magma_celltyping/'
-ENTREZ_DIR <- '~/Desktop/fetal_brain_snRNAseq_110122/results/q10_gene_lists_for_LDSC/ENTREZ/'
+ENTREZ_DIR <- '~/Desktop/fetal_brain_snRNAseq_110122/results/gene_lists/q10_gene_lists/ENTREZ/'
 CELL_TYPES <- c('FC_ExN_2', 'FC_ExN_3', 'FC_ExN_4', 'FC_ExN_5', 'FC_InN_1', 
                 'GE_InN_1', 'GE_InN_2', 'Hipp_ExN_3', 'Hipp_ExN_5', 'Thal_ExN_1', 
                 'Thal_ExN_3', 'skene_InN', 'skene_MSN', 'skene_CA1', 'skene_SS')
@@ -58,7 +58,7 @@ for (CELL_TYPE in CELL_TYPES) {
 }
 
 # Calculate overlaps
-## Create overlap grids for comaprisons across all cell-types  ------------------------
+## Create overlap grids for comparisons across all cell-types  ------------------------
 # Create overlap grids
 cat('\nCreating overlap grids for comparisons across all cell-types  ... \n')
 fetal_overlap_list <- list(FC_ExN_2_overlaps, FC_ExN_3_overlaps, FC_ExN_4_overlaps, 
