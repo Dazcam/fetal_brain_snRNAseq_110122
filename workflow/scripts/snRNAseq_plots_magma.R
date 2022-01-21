@@ -6,7 +6,7 @@
 
 ## Info  ------------------------------------------------------------------------------
 
-#  Code for figures 2, 4B, S7, S9, S11 - laptop
+#  Code for figures 2, 4, S7, S9, S11 - laptop
 
 ##  Load packages  --------------------------------------------------------------------
 cat('\nLoading packages ... \n\n')
@@ -35,7 +35,7 @@ for (REGION in REGIONS) {
     top10Data <- top10Data[-1, ]
     
     # Remove regional info from cell types on y axis
-    top10Data$VARIABLE <- gsub("^.*?\\.", "", top10Data$VARIABLE)
+    # top10Data$VARIABLE <- gsub("^.*?\\.", "", top10Data$VARIABLE)
     
     ##  Plot  ---------------------------------------------------------------------------
     # Update region names in plot titles to new ones for FC and GE

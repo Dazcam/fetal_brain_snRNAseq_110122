@@ -40,7 +40,7 @@ for (REGION in c('cer', 'hip', 'pfc', 'tha', 'wge')) {
   
 }
 
-# Save tables - extract only genes with BF corrected p_val < 0.05
+# Save tables - extract only genes with BF corrected
 for (INDEX in 1:length(REGIONS)) {
   
   INDEX_2 <- INDEX + 1
@@ -49,7 +49,7 @@ for (INDEX in 1:length(REGIONS)) {
     relocate(cluster, gene) %>%
     filter(p_val_adj < 0.05)
   print(head(OBJ))
-  write.table(OBJ, paste0(FIG_DIR, "Supplementary_table_", INDEX_2, ".txt"), , sep = '\t', 
+  write.table(OBJ, paste0(FIG_DIR, "Supplementary_table_", INDEX_2, ".txt"), sep = '\t', 
               row.names = FALSE, quote = FALSE, col.names = TRUE)
   
 }
