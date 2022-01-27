@@ -32,13 +32,14 @@ REGIONS <- c('cer', 'hip', 'pfc', 'tha', 'wge')
 PCA_UPPER_DIM <- 17
 
 ## Set default ggplot theme
-my_theme <-   theme(legend.text=element_text(size = 12),
+options(ggrepel.max.overlaps = Inf)
+my_theme <-   theme(legend.text=element_text(size = 16),
                     legend.title = element_blank(),
                     plot.margin = unit(c(0.5, 0.5, 0.5, 0.5), "cm"),
                     panel.grid.major = element_blank(), 
                     panel.grid.minor = element_blank(),
                     panel.border = element_rect(colour = "black", size = 1),
-                    plot.title = element_text(hjust = 0.5),
+                    plot.title = element_text(hjust = 0.5, size = 16, face = 'bold'),
                     axis.title.x = element_text(colour = "#000000", size = 14),
                     axis.title.y = element_text(colour = "#000000", size = 14),
                     axis.text.x  = element_text(colour = "#000000", size = 12, vjust = 0.5),
@@ -67,7 +68,7 @@ for (REGION in REGIONS) {
   assign(paste0('seurat.', REGION), seurat.obj, .GlobalEnv)
   
   cluster_plot <- DimPlot(seurat.obj, reduction = "umap", group.by = 'cellIDs',
-                          label = TRUE, label.size = 4,
+                          label = TRUE, label.size = 5,
                           pt.size = 0.1, repel = TRUE) + ggtitle(NULL) 
   
   cluster_plot_noLabel <- DimPlot(seurat.obj, reduction = "umap", group.by = 'cellIDs',
@@ -230,8 +231,9 @@ for (REGION in c("pfc", "wge")) {
   )
   
   # Plots
-  clustifyR_plot <- DimPlot(res, reduction = "umap", label = TRUE, repel = TRUE,
+  clustifyR_plot <- DimPlot(res, reduction = "umap", label = TRUE, repel = TRUE, label.size = 5,
                             pt.size = 0.1, group.by = 'type') + ggtitle(NULL)
+  
   
   
   # Assign plots
@@ -304,7 +306,7 @@ poulioudakis_colours <- c('#9A6324', '#779CBA', '#1E81B0', '#ABDBE3', '#76B5C5',
                           '#FDE725FF', '#FF5959',  '#9A7B47',  '#6300A7FF',  '#8707A6FF', 
                           '#EF0029')
 
-fig_Supp_1C <- DimPlot(seurat.pfc, pt.size = 0.1, reduction = "umap",
+fig_Supp_1C <- DimPlot(seurat.pfc, pt.size = 0.1, reduction = "umap", label.size = 5,
                    label = TRUE, group.by = "predicted.id") +
   ggtitle('Poulioudakis') +
   theme_bw() +
@@ -338,17 +340,17 @@ fig_Supp_3A <- cer_plot +
   my_theme +
   scale_color_manual(values = cer_colours)
 
-cer_colours <- c('#DCBEFF', '#9A6324', '#76B5C5', '#CEE5FD', '#00BDD2',  
-                 '#00B6EB', '#ABDBE3', '#1E81B0', '#3CBB75FF', '#00FF00A5', 
-                 '#006400', '#95D840FF', '#B7FFB7', '#10A53DFF', '#F58231', 
-                 '#949494', '#CCCCCC', '#FDE725FF', '#FAA0A0','#EF0029', 
-                 '#D2042D')
+# cer_colours <- c('#DCBEFF', '#9A6324', '#76B5C5', '#CEE5FD', '#00BDD2',  
+#                  '#00B6EB', '#ABDBE3', '#1E81B0', '#3CBB75FF', '#00FF00A5', 
+#                  '#006400', '#95D840FF', '#B7FFB7', '#10A53DFF', '#F58231', 
+#                  '#949494', '#CCCCCC', '#FDE725FF', '#FAA0A0','#EF0029', 
+#                  '#D2042D')
 
 aldinger_colours <- c('#FAA0A0', '#CCCCCC', '#9A6324', '#76B5C5', '#D2042D', 
                       '#CEE5FD', '#F58231', '#B7FFB7', '#FDE725FF', '#10A53DFF', 
                       '#95D840FF')
 
-fig_Supp_3B <- DimPlot(list_res, reduction = "umap", label = TRUE, label.size = 4,
+fig_Supp_3B <- DimPlot(list_res, reduction = "umap", label = TRUE, label.size = 5,
                    pt.size = 0.1, group.by = "type.clustify",
                    repel = TRUE) + ggtitle(NULL) +
   ggtitle('Aldinger') +
@@ -392,7 +394,6 @@ dev.off()
 
 # Jpegs
 # Fig 1 - options(ggrepel.max.overlaps = Inf)
-options(ggrepel.max.overlaps = Inf)
 jpeg(paste0(FIG_DIR, "Fig_1.jpg"), width = 1440, height = 960, 
      units = "px", pointsize = 12, quality = 150)
 fig1_plot

@@ -6,7 +6,7 @@
 
 ## Info  ------------------------------------------------------------------------------
 
-#  Code for figures 8 
+#  Code for figure 6
 
 ##  Load packages  --------------------------------------------------------------------
 cat('\nLoading packages ... \n\n')
@@ -26,21 +26,19 @@ library(readxl)
 ##  Initialise variables  -------------------------------------------------------------
 DATA_DIR <- "~/Desktop/fetal_brain_snRNAseq_110122/resources/sheets/"
 FIG_DIR <- "~/Desktop/fetal_brain_snRNAseq_110122/results/figures/"
-CELL_TYPES <- c("FC_ExN_2", "FC_ExN_3", "FC_ExN_4", "FC_ExN_5", "FC_InN_1", 
-                "GE_InN_1", "GE_InN_2", "Hipp_ExN_4", "Hipp_ExN_6", "Thal_ExN_5", 
-                "Thal_ExN_9")
+CELL_TYPES <- c("FC_ExN_2", "FC_ExN_3", "FC_ExN_4", 
+                "GE_InN_2", "Hipp_ExN_4", "Hipp_ExN_6")
 
 
 ##  Load data  ------------------------------------------------------------------------
-GO_DATA <- read_excel(paste0(DATA_DIR, "FinalGOterms_to_plot_for_figure8.xlsx"), skip = 2, col_names = F) %>%  
+GO_DATA <- read_excel(paste0(DATA_DIR, "FinalGOterms_to_plot_for_figure6.xlsx"), skip = 2, col_names = F) %>%  
   mutate(across(everything(), ~replace_na(.x, 0))) # Get rid of NAs
 
 colnames(GO_DATA) <- c("Term", "FC_ExN_2-FE", "FC_ExN_2-FDR", "FC_ExN_3-FE", "FC_ExN_3-FDR", 
-                       "FC_ExN_4-FE", "FC_ExN_4-FDR", "FC_ExN_5-FE", "FC_ExN_5-FDR", "FC_InN_1-FE", 
-                       "FC_InN_1-FDR", "FC_InN_4-FE", "FC_InN_4-FDR","GE_InN_1-FE", "GE_InN_1-FDR", 
-                       "GE_InN_2-FE", "GE_InN_2-FDR", "Hipp_ExN_3-FE", "Hipp_ExN_3-FDR", "Hipp_ExN_5-FE", 
-                       "Hipp_ExN_5-FDR", "Thal_ExN_1-FE", "Thal_ExN_1-FDR", "Thal_ExN_3-FE", "Thal_ExN_3-FDR")
+                       "FC_ExN_4-FE", "FC_ExN_4-FDR", "GE_InN_2-FE", "GE_InN_2-FDR", "Hipp_ExN_3-FE", 
+                       "Hipp_ExN_3-FDR", "Hipp_ExN_5-FE", "Hipp_ExN_5-FDR")
 
+# Need to add abbr. for long terms
 GO_DATA$Term <- c("GO:0007399~nervous system development", "GO:0048666~neuron development", 
                   "GO:0022008~neurogenesis", "GO:0021872~forebrain generation of neurons", 
                   "GO:0030182~neuron differentiation", "GO:0001764~neuron migration", 
@@ -50,13 +48,10 @@ GO_DATA$Term <- c("GO:0007399~nervous system development", "GO:0048666~neuron de
                   "GO:0030516~regulation of axon extension", "GO:0050803~regulation of synapse structure or activity", 
                   "GO:0050808~synapse organization", "GO:0007416~synapse assembly", 
                   "GO:0099536~synaptic signaling", "GO:0050804~modulation of synaptic transmission", 
-                  "GO:1903530~regulation of secretion by cell", "GO:0050433~regulation of catecholamine secretion", 
                   "GO:0007186~G-protein coupled receptor signaling pathway", "GO:0042391~regulation of membrane potential", 
-                  "GO:0043269~regulation of ion transport", "GO:0015837~amine transport", 
-                  "GO:0006836~neurotransmitter transport", "GO:0034762~regulation of transmembrane transport", 
-                  "GO:0007610~behavior", "GO:0007613~memory", "GO:1903506~regulation of nucleic acid-templated transcription", 
-                  "GO:1901028~regulation of mitochondrial outer membrane permeabilization ASP"
-)
+                  "GO:0043269~regulation of ion transport", "GO:0006836~neurotransmitter transport", 
+                  "GO:0034762~regulation of transmembrane transport", "GO:0007610~behavior", 
+                  "GO:0007613~memory")
 
 
 # Create factor for y-axis order
@@ -72,10 +67,11 @@ GO_DATA <- GO_DATA %>%
   pivot_longer(-Term) %>% 
   separate(name, into = c("cell_type", "Score"), '-') %>% 
   pivot_wider(names_from = Score, values_from = value) %>%
-  mutate_at('cell_type', str_replace_all, "_", "-") %>%
+  mutate_at('cell_type', str_replace_all, "_", "-") 
   # mutate(bio_term = gsub(".*~", "", Term)) %>%
   # mutate(bio_term = R.utils::capitalize(bio_term)) %>%
-  rename(`Fold Enrichment` = FE) 
+
+colnames(GO_DATA) <- c("Term", "cell_type", "Fold Enrichment", "FDR")
 
 # Plot
 GO_plot <- ggplot(data = GO_DATA, aes(y = factor(Term, level = rev(ORDERED_LIST)), x = cell_type, 
@@ -93,19 +89,21 @@ GO_plot <- ggplot(data = GO_DATA, aes(y = factor(Term, level = rev(ORDERED_LIST)
         axis.text.y  = element_text(colour = "#000000", size = 12),
         legend.text=element_text(size = 10)) +
   scale_color_gradient(low = "blue", high = "red") +
-  theme(axis.text.x = element_text(colour = "#000000", angle = 45, vjust = 1, hjust = 1)) +
+  theme(axis.text.x = element_text(colour = "#000000")) +
   ylab("") + 
   xlab("") +
-  scale_radius(limits = c(1, 6), range = c(1,8))
+  scale_radius(limits = c(1, 6), range = c(1,10))
+
+# Add to axis x if needed: , angle = 45, vjust = 1, hjust = 1
 
 # Save plot
-tiff(paste0(FIG_DIR, "Fig_8.tiff"), height = 30, width = 40, units='cm', 
+tiff(paste0(FIG_DIR, "Fig_6.tiff"), height = 30, width = 40, units='cm', 
      compression = "lzw", res = 300)
 print(GO_plot)
 dev.off()
 
 # jpeg
-jpeg(paste0(FIG_DIR, "Fig_8.jpg"), width = 1200, height = 720, 
+jpeg(paste0(FIG_DIR, "Fig_6.jpg"), width = 1200, height = 720, 
      units = "px", pointsize = 12, quality = 150)
 print(GO_plot)
 dev.off()

@@ -20,51 +20,53 @@ DATA_DIR <- "~/Desktop/fetal_brain_snRNAseq_110122/resources/R_objects/"
 MAGMA_DIR <- "~/Desktop/fetal_brain_snRNAseq_110122/results/magma_conditional/"
 FIG_DIR <- "~/Desktop/fetal_brain_snRNAseq_110122/results/figures/"
 SKENE_CELL_TYPES <- c("skene_CA1", "skene_InN", "skene_MSN", "skene_SS")
+SIG_CELLS <- c('FC_ExN_2', 'FC_ExN_3', 'FC_ExN_4', 'GE_InN_2', 'Hipp_ExN_3', 'Hipp_ExN_5')
+SIG_CELLS_EDIT <- c('FC-ExN-2', 'FC-ExN-3', 'FC-ExN-4', 'GE-InN-2', 'Hipp-ExN-3', 'Hipp-ExN-5')
 
 ##  Load data -------------------------------------------------------------------------
-fetal_matrix <- readRDS(paste0(DATA_DIR, 'fetal_overlap_SCZ_magma_P_0.05_matrix.rds'))
+fetal_matrix <- readRDS(paste0(DATA_DIR, 'fetal_overlap_SCZ_magma_P_0.05_matrix.rds')) 
 skene_matrix <- readRDS(paste0(DATA_DIR, 'skene_overlap_SCZ_magma_P_0.05_matrix.rds'))
-magma_matrix <- read_table(paste0(DATA_DIR, 'magma_fetal.vs.adult_summary.tsv'))
 
-colnames(skene_matrix) <- c("FC_ExN_2 (538)", "FC_ExN_3 (476)", "FC_ExN_4 (480)", "FC_ExN_5 (467)", "FC_InN_1 (310)", 
-                            "GE_InN_1 (441)", "GE_InN_2 (439)", "Hipp_ExN_3 (432)", "Hipp_ExN_5 (398)", "Thal_ExN_1 (479)", 
-                            "Thal_ExN_3 (387)")
+colnames(skene_matrix) <- c("FC_ExN_2 (538)", "FC_ExN_3 (476)", "FC_ExN_4 (480)", 
+                            "GE_InN_2 (439)", "Hipp_ExN_3 (432)", "Hipp_ExN_5 (398)")
 rownames(skene_matrix) <- c("skene_SS (519)", "skene_InN (561)", "skene_MSN (543)", "skene_CA1 (547)")
 
 ##  Plot ------------------------------------------------------------------------------
-# Figure 6A - Fetal cell type gene overlap plot
-fig_6A_data <- reshape2::melt(fetal_matrix) %>%
+# Figure 4A - Fetal cell type gene overlap plot
+fig_4A_data <- reshape2::melt(fetal_matrix) %>%
   arrange(Var1) %>%
   group_by(Var1) %>%
   filter(row_number() >= which(Var1 == Var2)) %>%
   mutate(bold = case_when(Var1 == Var2 ~ TRUE,                  # Lines to omit
                           Var1 != Var2 ~ FALSE))                # if bold boxes
-frames = fig_6A_data[fig_6A_data$bold, c("Var1", "Var2")]       # not
+frames = fig_4A_data[fig_4A_data$bold, c("Var1", "Var2")]       # not
 frames$Var1 = as.integer(frames$Var1)                           # required
 frames$Var2 = rev(as.integer(frames$Var2))                      # and geom_rect
 
-fig_6A <- fig_6A_data %>%  ggplot(aes(x = Var1, y = Var2, fill = 'white')) + 
+fig_4A <- fig_4A_data %>%  ggplot(aes(x = Var1, y = Var2, fill = 'white')) + 
   geom_tile(color = "black", size = 0.5, fill = '#DBF3FA') +
   geom_rect(data = frames, size = 1, fill = NA, colour = "black",
             aes(xmin = Var1 - 0.5, xmax = Var1 + 0.5, ymin = Var2 - 0.5, ymax = Var2 + 0.5)) +
   geom_text(aes(label = value, size = 12)) +
   theme_minimal() +
-  theme(axis.text.x = element_text(colour = "#000000", size = 12, angle = 45, vjust = 1, hjust = 1),
+  theme(axis.text.x = element_text(colour = "#000000"),
         axis.text.y  = element_text(colour = "#000000", size = 12),
         legend.position = "none",
         panel.grid = element_blank()) +
-  scale_y_discrete(limits = rev(levels(fig_6A_data$Var2))) +
+  scale_y_discrete(limits = rev(levels(fig_4A_data$Var2))) +
   xlab("") + 
   ylab("") +
   coord_fixed() 
 
-# Figure 7A - Adult vs. fetal gene overlap grid
-fig_7A_data <- reshape2::melt(skene_matrix) %>%
+# , size = 12, angle = 45, vjust = 1, hjust = 1
+
+# Figure 5A - Adult vs. fetal gene overlap grid
+fig_5A_data <- reshape2::melt(skene_matrix) %>%
   arrange(Var1) %>%
   group_by(Var1) %>%
   mutate(Var1 = R.utils::capitalize(Var1))
 
-fig_7A <- fig_7A_data %>%  
+fig_5A <- fig_5A_data %>%  
   ggplot(aes(x=Var1, y=Var2, fill = 'white')) + 
   geom_tile(color = "black", size = 0.5, fill = '#DBF3FA') +
   geom_text(aes(label = value, size = 12)) +
@@ -76,24 +78,22 @@ fig_7A <- fig_7A_data %>%
         panel.grid = element_blank()) +
   theme(legend.position = "none") +
   theme(panel.grid = element_blank()) +
-  scale_x_discrete(labels = as.factor(gsub("_", "-", as.vector(unique(fig_7A_data$Var1))))) +
-  scale_y_discrete(limits = rev(levels(fig_7A_data$Var2)), labels = rev(gsub("_", "-", as.vector(unique(fig_7A_data$Var2))))) +
+  scale_x_discrete(labels = as.factor(gsub("_", "-", as.vector(unique(fig_5A_data$Var1))))) +
+  scale_y_discrete(limits = rev(levels(fig_5A_data$Var2)), labels = rev(gsub("_", "-", as.vector(unique(fig_5A_data$Var2))))) +
   xlab("") + 
   ylab("") +
   coord_equal(ratio = 1) 
 
 
-
 # Conditional analysis bar chart conditioning fetal cell types on FC-ExN-2
 FC_ExN_2 <- read.table(paste0(MAGMA_DIR, 'magma_all_sig_and_skene_condition_FC_ExN_2.gsa.out'), header = FALSE) %>%
   janitor::row_to_names(row_number = 1) %>% 
-  filter(!str_detect(VARIABLE, "FC_ExN_2|skene")) %>%
+  filter(!str_detect(VARIABLE, "FC_ExN_2|FC_ExN_5|skene|FC_InN_1|GE_InN_1|Thal")) %>%
   mutate(VARIABLE = R.utils::capitalize(VARIABLE)) %>%
   mutate(VARIABLE = gsub("_", "-", VARIABLE))
 
 FC_ExN_2_plot <- ggplot(data = FC_ExN_2, aes(x = -log10(as.numeric(P)), y = factor(VARIABLE, rev(levels(factor(VARIABLE)))))) +
-  geom_bar(stat = "identity", fill = c('#CEE5FD', '#CEE5FD', '#CEE5FD', '#3CBB75FF', '#3CBB75FF', 
-                                       '#3CBB75FF', '#CEE5FD', '#CEE5FD', '#CEE5FD', '#CEE5FD'), 
+  geom_bar(stat = "identity", fill = c('#CEE5FD', '#CEE5FD', '#3CBB75FF', '#CEE5FD', '#CEE5FD'), 
            color = 'black') +
   #  geom_vline(xintercept=-log10(0.05/14), linetype = "dashed", color = "black") +
   geom_vline(xintercept=-log10(0.05), linetype = "dotted", color = "black") +
@@ -111,12 +111,13 @@ FC_ExN_2_plot <- ggplot(data = FC_ExN_2, aes(x = -log10(as.numeric(P)), y = fact
   ylab('Cell type') +
   xlim(0, 11.5)
 
+
 for (CELL_TYPE in SKENE_CELL_TYPES) {
   
   ##  Load Data  ----------------------------------------------------------------------
   SKENE_DATA <- read.table(paste0(MAGMA_DIR, 'magma_all_sig_and_skene_condition_', CELL_TYPE, '.gsa.out'), header = FALSE) %>%
     row_to_names(row_number = 1) %>% 
-    filter(!str_detect(VARIABLE, 'skene')) %>%
+    filter(!str_detect(VARIABLE, 'FC_ExN_5|skene|FC_InN_1|GE_InN_1|Thal')) %>%
     mutate(VARIABLE = paste0(VARIABLE, " no ", CELL_TYPE)) %>%
     mutate(VARIABLE = gsub("_", "-", VARIABLE))
   
@@ -127,17 +128,13 @@ for (CELL_TYPE in SKENE_CELL_TYPES) {
 fetal_vs_adult <- rbind(skene_CA1, skene_InN, skene_MSN, skene_SS) 
 fetal_vs_adult$VARIABLE <- as.factor(fetal_vs_adult$VARIABLE)
 
-fig_7B <- fetal_vs_adult %>%
+fig_5B <- fetal_vs_adult %>%
   ggplot(aes(x = -log10(as.numeric(P)), y = factor(VARIABLE, rev(levels(factor(VARIABLE)))))) +
-  geom_bar(stat = "identity", fill = c('#CEE5FD', '#CEE5FD', '#CEE5FD', '#CEE5FD', '#3CBB75FF',
-                                       '#3CBB75FF', '#3CBB75FF', '#CEE5FD', '#CEE5FD', '#CEE5FD',
+  geom_bar(stat = "identity", fill = c('#CEE5FD', '#CEE5FD', '#CEE5FD', '#3CBB75FF', '#CEE5FD',
+                                       '#CEE5FD', '#CEE5FD', '#CEE5FD', '#CEE5FD', '#3CBB75FF',
                                        '#CEE5FD', '#CEE5FD', '#CEE5FD', '#CEE5FD', '#CEE5FD', 
-                                       '#3CBB75FF', '#3CBB75FF', '#3CBB75FF', '#CEE5FD', '#CEE5FD',
-                                       '#CEE5FD', '#CEE5FD', '#CEE5FD', '#CEE5FD', '#CEE5FD',
-                                       '#CEE5FD', '#3CBB75FF', '#3CBB75FF', '#3CBB75FF', '#CEE5FD',
-                                       '#CEE5FD', '#CEE5FD', '#CEE5FD', '#CEE5FD', '#CEE5FD',
-                                       '#CEE5FD', '#CEE5FD', '#3CBB75FF', '#3CBB75FF', '#3CBB75FF',
-                                       '#CEE5FD', '#CEE5FD', '#CEE5FD', '#CEE5FD'), color = 'black') +
+                                       '#3CBB75FF', '#CEE5FD', '#CEE5FD', '#CEE5FD', '#CEE5FD',
+                                       '#CEE5FD', '#3CBB75FF', '#CEE5FD', '#CEE5FD'), color = 'black') +
   geom_vline(xintercept=-log10(0.05), linetype = "dotted", color = "black") +
   theme_bw() +
   #  ggtitle(toupper(TITLE)) +
@@ -154,30 +151,30 @@ fig_7B <- fetal_vs_adult %>%
   ylab('Cell type')
 
 # Save plots
-# Fig 6 - SCZ
-tiff(paste0(FIG_DIR, "Figure_6.tiff"), height = 20, width = 40, units='cm', 
+# Fig 4 
+tiff(paste0(FIG_DIR, "Figure_4.tiff"), height = 20, width = 40, units='cm', 
      compression = "lzw", res = 300)
-plot_grid(fig_6A, FC_ExN_2_plot, align = 'h', labels = 'AUTO', label_size = 16, rel_heights = c(1, 0.1), axis = 'tb')
+plot_grid(fig_4A, FC_ExN_2_plot, align = 'h', labels = 'AUTO', label_size = 16, axis = 'tb')
 dev.off()
 
-# Fig 7 - SCZ
-tiff(paste0(FIG_DIR, "Figure_7.tiff"), height = 20, width = 40, units='cm', 
+# Fig 5 
+tiff(paste0(FIG_DIR, "Figure_5.tiff"), height = 20, width = 40, units='cm', 
      compression = "lzw", res = 300)
-plot_grid(fig_7A, fig_7B, align = 'h', labels = 'AUTO', label_size = 16, rel_heights = c(1, 0.1), axis = 'tb')
+plot_grid(fig_5A, fig_5B, align = 'h', labels = 'AUTO', label_size = 16, axis = 'tb')
 dev.off()
 
 
 # Jpegs
-# Fig 6 - options(ggrepel.max.overlaps = Inf)
-jpeg(paste0(FIG_DIR, "Fig_6.jpg"), width = 1440, height = 960, 
+# Fig 4 
+jpeg(paste0(FIG_DIR, "Fig_4.jpg"), width = 1440, height = 960, 
      units = "px", pointsize = 12, quality = 150)
-plot_grid(fig_6A, FC_ExN_2_plot, align = 'h', labels = 'AUTO', label_size = 16, rel_heights = c(1, 0.1), axis = 'tb')
+plot_grid(fig_4A, FC_ExN_2_plot, align = 'h', labels = 'AUTO', label_size = 16, rel_heights = c(1, 0.1), axis = 'tb')
 dev.off()
 
-# Fig 7 
-jpeg(paste0(FIG_DIR, "Fig_7.jpg"), width = 1440, height = 960, 
+# Fig 5
+jpeg(paste0(FIG_DIR, "Fig_5.jpg"), width = 1440, height = 960, 
      units = "px", pointsize = 12, quality = 150)
-plot_grid(fig_7A, fig_7B, align = 'h', labels = 'AUTO', label_size = 16, rel_heights = c(1, 0.1), axis = 'tb')
+plot_grid(fig_5A, fig_5B, align = 'h', labels = 'AUTO', label_size = 16, rel_heights = c(1, 0.1), axis = 'tb')
 dev.off()
 
 # -------------------------------------------------------------------------------------

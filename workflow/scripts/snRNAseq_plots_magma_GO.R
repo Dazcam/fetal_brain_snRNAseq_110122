@@ -7,7 +7,6 @@
 ## Info  ------------------------------------------------------------------------------
 
 #  Code for figure 7
-#  Issues: Region IDs encoded differently in MAGMA and LSDR analysis
 
 ##  Load packages  --------------------------------------------------------------------
 cat('\nLoading packages ... \n\n')
@@ -24,43 +23,71 @@ GO_DF <- read.table(paste0(DATA_DIR, 'magma_GO.gsa.out'), header = FALSE) %>%
   janitor::row_to_names(row_number = 1)
 
 
+# Need to recode GO Terms as Magma truncated them - https://stackoverflow.com/questions/65178820
+COMPLETE_TERMS <- c("GO:0007399~nervous" = "GO:0007399~nervous system development", 
+                    "GO:0048666~neuron" = "GO:0048666~neuron development", 
+                    "GO:0022008~neurogenesis" = "GO:0022008~neurogenesis",
+                    "GO:0021872~forebrain" = "GO:0021872~forebrain generation of neurons", 
+                    "GO:0030182~neuron" = "GO:0030182~neuron differentiation", 
+                    "GO:0001764~neuron" = "GO:0001764~neuron migration", 
+                    "GO:0048667~cell" = "GO:0048667~cell morphogenesis involved in neuron differentiation", 
+                    "GO:0007156~homophilic" = "GO:0007156~homophilic cell adhesion via PAM", 
+                    "GO:0031175~neuron" = "GO:0031175~neuron projection development", 
+                    "GO:0061564~axon" = "GO:0061564~axon development", 
+                    "GO:0030516~regulation" = "GO:0030516~regulation of axon extension", 
+                    "GO:0050803~regulation" = "GO:0050803~regulation of synapse structure or activity", 
+                    "GO:0050808~synapse" = "GO:0050808~synapse organization", 
+                    "GO:0007416~synapse" = "GO:0007416~synapse assembly", 
+                    "GO:0099536~synaptic" = "GO:0099536~synaptic signaling", 
+                    "GO:0050804~modulation" = "GO:0050804~modulation of synaptic transmission", 
+                    "GO:0007186~G-protein" = "GO:0007186~G-protein coupled receptor signaling pathway", 
+                    "GO:0042391~regulation" = "GO:0042391~regulation of membrane potential", 
+                    "GO:0043269~regulation" = "GO:0043269~regulation of ion transport", 
+                    "GO:0006836~neurotransmitter" = "GO:0006836~neurotransmitter transport", 
+                    "GO:0034762~regulation" = "GO:0034762~regulation of transmembrane transport", 
+                    "GO:0007610~behavior" = "GO:0007610~behavior", 
+                    "GO:0007613~memory" = "GO:0007613~memory")
+
+
 for (CELL_TYPE in SIG_CELLS) {
   
   if (CELL_TYPE == "GE_InN_2") {
   
-  GO_DF_FILT <- filter(GO_DF, grepl(CELL_TYPE, VARIABLE)) %>%
-    mutate(Term = gsub(paste0("^[^", CELL_TYPE, "_]*", CELL_TYPE,"_"), "", VARIABLE)) %>%
-    select(Term, P)
+    GO_DF_FILT <- filter(GO_DF, grepl(CELL_TYPE, FULL_NAME)) %>%
+      mutate(Term = gsub(paste0("^[^", CELL_TYPE, "_]*", CELL_TYPE,"_"), "", FULL_NAME)) %>%
+      select(Term, P) %>%
+      mutate(Full_Term = COMPLETE_TERMS[as.character(Term)])
 
-  PLOT <- ggplot(data = GO_DF_FILT, aes(x = -log10(as.numeric(P)), y = Term)) +
-    geom_bar(stat = "identity", color = 'black', fill = '#3CBB75FF') +
-    geom_vline(xintercept=-log10(0.05/121), linetype = "dashed", color = "black") +
-  #  geom_vline(xintercept=-log10(0.05), linetype = "dotted", color = "black") +
-    theme_bw() +
-    ggtitle(CELL_TYPE) +
-    theme(plot.margin = unit(c(0.5, 0.5, 0.5, 0.5), "cm"),
-          panel.grid.major = element_blank(), 
-          panel.grid.minor = element_blank(),
-          panel.border = element_rect(colour = "black", size = 1),
-          plot.title = element_text(hjust = 0.5),
-          axis.title.x = element_text(colour = "#000000", size = 14),
-          axis.title.y = element_text(colour = "#000000", size = 14),
-          axis.text.x  = element_text(colour = "#000000", size = 12, vjust = 0.5),
-          axis.text.y  = element_text(colour = "#000000", size = 12),
-          legend.position = "none") +
-    xlab(expression(-log[10](P))) +
-    ylab('Term') +
-    xlim(0, 11.5) 
-  
-  assign(paste0(CELL_TYPE, '_go_plot'), PLOT)
+    PLOT <- ggplot(data = GO_DF_FILT, aes(x = -log10(as.numeric(P)), y = Full_Term)) +
+      geom_bar(stat = "identity", color = 'black', fill = '#3CBB75FF') +
+      geom_vline(xintercept=-log10(0.05/121), linetype = "dashed", color = "black") +
+    #  geom_vline(xintercept=-log10(0.05), linetype = "dotted", color = "black") +
+      theme_bw() +
+      ggtitle(CELL_TYPE) +
+      theme(plot.margin = unit(c(0.5, 0.5, 0.5, 0.5), "cm"),
+            panel.grid.major = element_blank(), 
+            panel.grid.minor = element_blank(),
+            panel.border = element_rect(colour = "black", size = 1),
+            plot.title = element_text(hjust = 0.5),
+            axis.title.x = element_text(colour = "#000000", size = 14),
+            axis.title.y = element_text(colour = "#000000", size = 14),
+            axis.text.x  = element_text(colour = "#000000", size = 12, vjust = 0.5),
+            axis.text.y  = element_text(colour = "#000000", size = 12),
+            legend.position = "none") +
+      xlab(expression(-log[10](P))) +
+      ylab('Term') +
+      xlim(0, 11.5) 
+    
+    assign(paste0(CELL_TYPE, '_go_plot'), PLOT)
   
   } else {
     
-    GO_DF_FILT <- filter(GO_DF, grepl(CELL_TYPE, VARIABLE)) %>%
-      mutate(Term = gsub(paste0("^[^", CELL_TYPE, "_]*", CELL_TYPE,"_"), "", VARIABLE)) %>%
-      select(Term, P)
+    GO_DF_FILT <- filter(GO_DF, grepl(CELL_TYPE, FULL_NAME)) %>%
+      mutate(Term = gsub(paste0("^[^", CELL_TYPE, "_]*", CELL_TYPE,"_"), "", FULL_NAME)) %>%
+      select(Term, P) %>%
+      mutate(Full_Term = COMPLETE_TERMS[as.character(Term)])
     
-    PLOT <- ggplot(data = GO_DF_FILT, aes(x = -log10(as.numeric(P)), y = Term)) +
+    PLOT <- ggplot(data = GO_DF_FILT, aes(x = -log10(as.numeric(P)), y = Full_Term)) +
       geom_bar(stat = "identity", color = 'black', fill = '#CEE5FD') +
       geom_vline(xintercept=-log10(0.05/121), linetype = "dashed", color = "black") +
       #  geom_vline(xintercept=-log10(0.05), linetype = "dotted", color = "black") +
@@ -93,14 +120,14 @@ group_plot <- plot_grid(FC_ExN_2_go_plot, FC_ExN_3_go_plot,
                         ncol = 2, labels = 'AUTO')
 
 
-# Save
+# Tiff
 tiff(paste0(FIG_DIR, "Fig_7.tiff"), height = 30, width = 40, units='cm', 
      compression = "lzw", res = 300)
 group_plot
 dev.off()
 
 
-# Jpegs
+# Jpeg
 jpeg(paste0(FIG_DIR, "Fig_7.jpg"), width = 1440, height = 960, 
      units = "px", pointsize = 12, quality = 150)
 group_plot
