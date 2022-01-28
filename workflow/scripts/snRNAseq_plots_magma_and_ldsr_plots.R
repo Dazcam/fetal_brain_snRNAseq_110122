@@ -6,7 +6,7 @@
 
 ## Info  ------------------------------------------------------------------------------
 
-#  Code for figure 2
+#  Code for figures 2 and 3
 #  Issues: Region IDs encoded differently in MAGMA and LSDR analysis
 
 ##  Load packages  --------------------------------------------------------------------
@@ -92,7 +92,7 @@ for (LDSR_REGION in LDSR_REGIONS) {
     if (LDSR_REGION == 'FC') {
       REGION = 'Frontal Cortex'
     } else if (LDSR_REGION == 'GE') {
-      REGION = 'Gangliolnic Eminence'
+      REGION = 'Ganglionic Eminence'
     } else if (LDSR_REGION == 'Hipp') {
       REGION = 'Hippocampus'
     } else if (LDSR_REGION == 'Cer') {
@@ -121,8 +121,8 @@ for (LDSR_REGION in LDSR_REGIONS) {
             plot.title = element_text(hjust = 0.5, face = 'bold'),
             axis.title.x = element_text(colour = "#000000", size = 14),
             axis.title.y = element_text(colour = "#000000", size = 14),
-            axis.text.x  = element_text(colour = "#000000", size = 12, vjust = 0.5),
-            axis.text.y  = element_text(colour = "#000000", size = 12),
+            axis.text.x  = element_text(colour = "#000000", size = 13, vjust = 0.5),
+            axis.text.y  = element_text(colour = "#000000", size = 13),
             legend.position = "none") +
       xlab(expression(-log[10](P))) +
       ylab('Cell type') +
@@ -151,7 +151,7 @@ for (DISORDER in GWAS) {
                                get(paste0('Hipp_', DISORDER, '_magma_ldsr_plot')), 
                                get(paste0('Cer_', DISORDER, '_magma_ldsr_plot')),
                                get(paste0('Thal_', DISORDER, '_magma_ldsr_plot')),
-                               legend)
+                               legend, labels = c('A', 'B', 'C', 'D', 'E', ''), label_size = 16)
   
   assign(paste0('all_regions_', DISORDER, '_magma_ldsr_plot'), magma_ldsr_plot, envir = .GlobalEnv)
   

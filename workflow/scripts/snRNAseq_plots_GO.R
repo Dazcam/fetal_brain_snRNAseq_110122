@@ -83,15 +83,16 @@ GO_plot <- ggplot(data = GO_DATA, aes(y = factor(Term, level = rev(ORDERED_LIST)
         #    panel.grid.minor = element_blank(),
         panel.border = element_rect(colour = "black", size = 1),
         plot.title = element_text(hjust = 0.5),
-        axis.title.x = element_text(colour = "#000000", size = 14),
-        axis.title.y = element_text(colour = "#000000", size = 14),
-        axis.text.x  = element_text(colour = "#000000", size = 12, vjust = 0.5),
-        axis.text.y  = element_text(colour = "#000000", size = 12),
-        legend.text=element_text(size = 10)) +
+        axis.title.x = element_text(colour = "#000000", size = 17, vjust = -0.5),
+        axis.title.y = element_text(colour = "#000000", size = 17),
+        axis.text.x  = element_text(colour = "#000000", size = 15, vjust = 0.5),
+        axis.text.y  = element_text(colour = "#000000", size = 15),
+        legend.text = element_text(size = 14),
+        legend.title = element_text(size = 15)) +
   scale_color_gradient(low = "blue", high = "red") +
   theme(axis.text.x = element_text(colour = "#000000")) +
-  ylab("") + 
-  xlab("") +
+  ylab("Term") + 
+  xlab("Cell type") +
   scale_radius(limits = c(1, 6), range = c(1,10))
 
 # Add to axis x if needed: , angle = 45, vjust = 1, hjust = 1

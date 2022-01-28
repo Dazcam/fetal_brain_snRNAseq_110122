@@ -22,7 +22,6 @@ SIG_CELLS <- c('FC_ExN_2', 'FC_ExN_3', 'FC_ExN_4', 'GE_InN_2', 'Hipp_ExN_3', 'Hi
 GO_DF <- read.table(paste0(DATA_DIR, 'magma_GO.gsa.out'), header = FALSE) %>%
   janitor::row_to_names(row_number = 1)
 
-
 # Need to recode GO Terms as Magma truncated them - https://stackoverflow.com/questions/65178820
 COMPLETE_TERMS <- c("GO:0007399~nervous" = "GO:0007399~nervous system development", 
                     "GO:0048666~neuron" = "GO:0048666~neuron development", 
@@ -48,122 +47,59 @@ COMPLETE_TERMS <- c("GO:0007399~nervous" = "GO:0007399~nervous system developmen
                     "GO:0007610~behavior" = "GO:0007610~behavior", 
                     "GO:0007613~memory" = "GO:0007613~memory")
 
-
 for (CELL_TYPE in SIG_CELLS) {
-  
-  if (CELL_TYPE == "GE_InN_2") {
-  
-    GO_DF_FILT <- filter(GO_DF, grepl(CELL_TYPE, FULL_NAME)) %>%
-      mutate(Term = gsub(paste0("^[^", CELL_TYPE, "_]*", CELL_TYPE,"_"), "", FULL_NAME)) %>%
-      select(Term, P) %>%
-      mutate(Full_Term = COMPLETE_TERMS[as.character(Term)])
 
-    PLOT <- ggplot(data = GO_DF_FILT, aes(x = -log10(as.numeric(P)), y = Full_Term)) +
-      geom_bar(stat = "identity", color = 'black', fill = '#3CBB75FF') +
-      geom_vline(xintercept=-log10(0.05/121), linetype = "dashed", color = "black") +
-    #  geom_vline(xintercept=-log10(0.05), linetype = "dotted", color = "black") +
-      theme_bw() +
-      ggtitle(CELL_TYPE) +
-      theme(plot.margin = unit(c(0.5, 0.5, 0.5, 0.5), "cm"),
-            panel.grid.major = element_blank(), 
-            panel.grid.minor = element_blank(),
-            panel.border = element_rect(colour = "black", size = 1),
-            plot.title = element_text(hjust = 0.5),
-            axis.title.x = element_text(colour = "#000000", size = 14),
-            axis.title.y = element_text(colour = "#000000", size = 14),
-            axis.text.x  = element_text(colour = "#000000", size = 12, vjust = 0.5),
-            axis.text.y  = element_text(colour = "#000000", size = 12),
-            legend.position = "none") +
-      xlab(expression(-log[10](P))) +
-      ylab('Term') +
-      xlim(0, 11.5) 
-    
-    assign(paste0(CELL_TYPE, '_go_plot'), PLOT)
-  
-  } else {
-    
-    GO_DF_FILT <- filter(GO_DF, grepl(CELL_TYPE, FULL_NAME)) %>%
-      mutate(Term = gsub(paste0("^[^", CELL_TYPE, "_]*", CELL_TYPE,"_"), "", FULL_NAME)) %>%
-      select(Term, P) %>%
-      mutate(Full_Term = COMPLETE_TERMS[as.character(Term)])
-    
-    PLOT <- ggplot(data = GO_DF_FILT, aes(x = -log10(as.numeric(P)), y = Full_Term)) +
-      geom_bar(stat = "identity", color = 'black', fill = '#CEE5FD') +
-      geom_vline(xintercept=-log10(0.05/121), linetype = "dashed", color = "black") +
-      #  geom_vline(xintercept=-log10(0.05), linetype = "dotted", color = "black") +
-      theme_bw() +
-      ggtitle(CELL_TYPE) +
-      theme(plot.margin = unit(c(0.5, 0.5, 0.5, 0.5), "cm"),
-            panel.grid.major = element_blank(), 
-            panel.grid.minor = element_blank(),
-            panel.border = element_rect(colour = "black", size = 1),
-            plot.title = element_text(hjust = 0.5),
-            axis.title.x = element_text(colour = "#000000", size = 14),
-            axis.title.y = element_text(colour = "#000000", size = 14),
-            axis.text.x  = element_text(colour = "#000000", size = 12, vjust = 0.5),
-            axis.text.y  = element_text(colour = "#000000", size = 12),
-            legend.position = "none") +
-      xlab(expression(-log[10](P))) +
-      ylab('Term') +
-      xlim(0, 11.5) 
-    
-    assign(paste0(CELL_TYPE, '_go_plot'), PLOT)
-    
-  }
-  
-  
+GO_DF_FILT <- filter(GO_DF, grepl(CELL_TYPE, FULL_NAME)) %>%
+  mutate(Term = gsub(paste0("^[^", CELL_TYPE, "_]*", CELL_TYPE,"_"), "", FULL_NAME)) %>%
+  select(Term, P) %>%
+  mutate(Full_Term = COMPLETE_TERMS[as.character(Term)]) %>%
+  mutate(cell_type = rep(CELL_TYPE, length(Full_Term)))
+
+assign(paste0(CELL_TYPE, '_df'), GO_DF_FILT)
+
 }
 
-group_plot <- plot_grid(FC_ExN_2_go_plot, FC_ExN_3_go_plot, 
-                        FC_ExN_4_go_plot, GE_InN_2_go_plot, 
-                        Hipp_ExN_3_go_plot, Hipp_ExN_5_go_plot, 
-                        ncol = 2, labels = 'AUTO')
 
+GO_DF_GROUP <- rbind(FC_ExN_2_df, FC_ExN_3_df, FC_ExN_4_df, 
+      GE_InN_2_df, Hipp_ExN_3_df, Hipp_ExN_5_df) 
+
+GO_PLOT <- ggplot(GO_DF_GROUP, aes(x = -log10(as.numeric(P)), y = Full_Term)) +
+  geom_bar(stat = "identity", color = 'black', fill = '#F8766D') +
+  facet_grid(~cell_type) +
+  geom_vline(xintercept=-log10(0.05/121), linetype = "dashed", color = "black") +
+  #  geom_vline(xintercept=-log10(0.05), linetype = "dotted", color = "black") +
+  theme_bw() +
+  theme(plot.margin = unit(c(0.5, 0.5, 0.5, 0.5), "cm"),
+        panel.grid.major = element_blank(), 
+        panel.grid.minor = element_blank(),
+        panel.border = element_rect(colour = "black", size = 1),
+        plot.title = element_text(hjust = 0.5, size = 16, face = 'bold'),
+        axis.title.x = element_text(colour = "#000000", size = 16),
+        axis.title.y = element_text(colour = "#000000", size = 16),
+        axis.text.x  = element_text(colour = "#000000", size = 13, vjust = 0.5),
+        axis.text.y  = element_text(colour = "#000000", size = 13),
+        legend.position = "none",
+        strip.background = element_blank(),
+        strip.text.x = element_text(size = 14, colour = "black")) +
+  xlab(expression(-log[10](P))) +
+  ylab('Term') +
+  xlim(0, 10.5) +
+  scale_x_continuous(breaks= pretty_breaks())
+  
 
 # Tiff
-tiff(paste0(FIG_DIR, "Fig_7.tiff"), height = 30, width = 40, units='cm', 
+tiff(paste0(FIG_DIR, "Fig_7.tiff"), height = 20, width = 40, units='cm', 
      compression = "lzw", res = 300)
-group_plot
+GO_PLOT
 dev.off()
-
 
 # Jpeg
 jpeg(paste0(FIG_DIR, "Fig_7.jpg"), width = 1440, height = 960, 
      units = "px", pointsize = 12, quality = 150)
-group_plot
+GO_PLOT
 dev.off()
 
 
-# All cell types in same plot draft
-
-# group_plot <- plot_grid(FC_ExN_2_go_plot, FC_ExN_3_go_plot, FC_ExN_4_go_plot,
-#                         GE_InN_2_go_plot, Hipp_ExN_3_go_plot, Hipp_ExN_5_go_plot)
-# 
-# 
-# PLOT_DF <- GO_DF %>%
-#   separate(VARIABLE, c("Cell_type", "Term"), sep = "_GO") %>%
-#   mutate(Term = paste0('GO', Term)) %>%
-#   select(Term, Cell_type, P)
-  
-
-# ggplot(data = PLOT_DF, aes(x = -log10(as.numeric(P)), y = Term, fill = Cell_type)) +
-#   geom_bar(stat = "identity", color = 'black', position = "dodge") +
-#   geom_vline(xintercept=-log10(0.05/121), linetype = "dashed", color = "black") +
-#   #  geom_vline(xintercept=-log10(0.05), linetype = "dotted", color = "black") +
-#   theme_bw() +
-# #  ggtitle(CELL_TYPE) +
-#   theme(plot.margin = unit(c(0.5, 0.5, 0.5, 0.5), "cm"),
-#         panel.grid.major = element_blank(), 
-#         panel.grid.minor = element_blank(),
-#         panel.border = element_rect(colour = "black", size = 1),
-#         plot.title = element_text(hjust = 0.5),
-#         axis.title.x = element_text(colour = "#000000", size = 14),
-#         axis.title.y = element_text(colour = "#000000", size = 14),
-#         axis.text.x  = element_text(colour = "#000000", size = 12, vjust = 0.5),
-#         axis.text.y  = element_text(colour = "#000000", size = 12)) +
-#   xlab(expression(-log[10](P))) +
-#   ylab('Term') +
-#   xlim(0, 11.5) 
 
 # -------------------------------------------------------------------------------------
 # -------------------------------------------------------------------------------------

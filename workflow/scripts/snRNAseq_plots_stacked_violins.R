@@ -81,19 +81,68 @@ Idents(seurat.hip) <- factor(x = Idents(seurat.hip), levels = sort(levels(seurat
 # Plot
 FC_plot <- VlnPlot(seurat.pfc, fc_features, stack = TRUE, flip = TRUE, 
                    cols = fc_colours, same.y.lims = TRUE, fill.by = 'ident') +
-  theme(legend.position = "none") + ggtitle("Frontal Cortex")
+  theme(legend.position = "none",
+        plot.margin = unit(c(0.5, 0.5, 0.5, 0.5), "cm"),
+        panel.grid.major = element_blank(), 
+        panel.grid.minor = element_blank(),
+        plot.title = element_text(hjust = 0.5),
+        text = element_text(size = 18),
+        axis.text.x  = element_text(colour = "#000000", size = 16),
+        axis.text.y  = element_text(colour = "#000000", size = 16)) +
+  xlab('Cell type') +
+  ggtitle("Frontal Cortex")
+
 GE_plot <- VlnPlot(seurat.wge, ge_features, stack = TRUE, flip = TRUE, 
                    cols = ge_colours, same.y.lims = TRUE, fill.by = 'ident') +
-  theme(legend.position = "none") + ggtitle("Ganglionic Eminence")
+  theme(legend.position = "none",
+        plot.margin = unit(c(0.5, 0.5, 0.5, 0.5), "cm"),
+        panel.grid.major = element_blank(), 
+        panel.grid.minor = element_blank(),
+        plot.title = element_text(hjust = 0.5),
+        text = element_text(size = 18),
+        axis.text.x  = element_text(colour = "#000000", size = 16),
+        axis.text.y  = element_text(colour = "#000000", size = 16)) +
+  xlab('Cell type') +
+  ggtitle("Ganglionic Eminence")
+
 Hip_plot <- VlnPlot(seurat.hip, hip_features, stack = TRUE, flip = TRUE, 
-                    cols = hip_colours, same.y.lims = TRUE, fill.by = 'ident') +
-  theme(legend.position = "none") + ggtitle("Hippocampus")
+                    cols = hip_colours, same.y.lims = TRUE, fill.by = 'ident')  +
+  theme(legend.position = "none",
+        plot.margin = unit(c(0.5, 0.5, 0.5, 0.5), "cm"),
+        panel.grid.major = element_blank(), 
+        panel.grid.minor = element_blank(),
+        plot.title = element_text(hjust = 0.5),
+        text = element_text(size = 18),
+        axis.text.x  = element_text(colour = "#000000", size = 16),
+        axis.text.y  = element_text(colour = "#000000", size = 16)) +
+  xlab('Cell type') +
+  ggtitle("Hippocampus")
+
 Tha_plot <- VlnPlot(seurat.tha, tha_features, stack = TRUE, flip = TRUE, 
                     cols = tha_colours, same.y.lims = TRUE, fill.by = 'ident') +
-  theme(legend.position = "none") + ggtitle("Thalamus")
+  theme(legend.position = "none",
+        plot.margin = unit(c(0.5, 0.5, 0.5, 0.5), "cm"),
+        panel.grid.major = element_blank(), 
+        panel.grid.minor = element_blank(),
+        plot.title = element_text(hjust = 0.5),
+        text = element_text(size = 18),
+        axis.text.x  = element_text(colour = "#000000", size = 16),
+        axis.text.y  = element_text(colour = "#000000", size = 16)) +
+  xlab('Cell type') +
+  ggtitle("Thalamus")
+
 Cer_plot <- VlnPlot(seurat.cer, cer_features, stack = TRUE, flip = TRUE, 
                     cols = cer_colours, same.y.lims = TRUE, fill.by = 'ident') +
-  theme(legend.position = "none") + ggtitle("Cerebellum")
+  theme(legend.position = "none",
+        plot.margin = unit(c(0.5, 0.5, 0.5, 0.5), "cm"),
+        panel.grid.major = element_blank(), 
+        panel.grid.minor = element_blank(),
+        plot.title = element_text(hjust = 0.5),
+        text = element_text(size = 18),
+        axis.text.x  = element_text(colour = "#000000", size = 16),
+        axis.text.y  = element_text(colour = "#000000", size = 16)) +
+  xlab('Cell type') +
+  ggtitle("Cerebellum")
 
 
 # Save
