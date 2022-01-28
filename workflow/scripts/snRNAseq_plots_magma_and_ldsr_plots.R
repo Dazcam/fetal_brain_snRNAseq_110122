@@ -149,9 +149,9 @@ for (DISORDER in GWAS) {
   magma_ldsr_plot <- plot_grid(get(paste0('FC_', DISORDER, '_magma_ldsr_plot')),
                                get(paste0('GE_', DISORDER, '_magma_ldsr_plot')),
                                get(paste0('Hipp_', DISORDER, '_magma_ldsr_plot')), 
-                               get(paste0('Cer_', DISORDER, '_magma_ldsr_plot')),
                                get(paste0('Thal_', DISORDER, '_magma_ldsr_plot')),
-                               legend, labels = c('A', 'B', 'C', 'D', 'E', ''), label_size = 16)
+                               get(paste0('Cer_', DISORDER, '_magma_ldsr_plot')),
+                               legend, label_size = 16)
   
   assign(paste0('all_regions_', DISORDER, '_magma_ldsr_plot'), magma_ldsr_plot, envir = .GlobalEnv)
   

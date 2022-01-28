@@ -59,9 +59,33 @@ assign(paste0(CELL_TYPE, '_df'), GO_DF_FILT)
 
 }
 
-
+# Combine filtered dfs
 GO_DF_GROUP <- rbind(FC_ExN_2_df, FC_ExN_3_df, FC_ExN_4_df, 
       GE_InN_2_df, Hipp_ExN_3_df, Hipp_ExN_5_df) 
+
+
+# Create factor for y-axis order
+ORDERED_LIST <- GO_DF_GROUP %>% select(Full_Term) %>%  
+  #  mutate(Term = gsub(".*~", "", Term)) %>%  # Remove GO numbers
+  #  mutate(Term = R.utils::capitalize(Term)) %>%
+  pull() %>% 
+  unname() %>%
+  as_factor()
+
+levels(ORDERED_LIST) <- c("GO:0007399~nervous system development", "GO:0048666~neuron development", 
+                          "GO:0022008~neurogenesis", "GO:0021872~forebrain generation of neurons", 
+                          "GO:0030182~neuron differentiation", "GO:0001764~neuron migration", 
+                          "GO:0048667~cell morphogenesis involved in neuron differentiation", 
+                          "GO:0007156~homophilic cell adhesion via PAM", 
+                          "GO:0031175~neuron projection development", "GO:0061564~axon development", 
+                          "GO:0030516~regulation of axon extension", "GO:0050803~regulation of synapse structure or activity", 
+                          "GO:0050808~synapse organization", "GO:0007416~synapse assembly", 
+                          "GO:0099536~synaptic signaling", "GO:0050804~modulation of synaptic transmission", 
+                          "GO:0007186~G-protein coupled receptor signaling pathway", "GO:0042391~regulation of membrane potential", 
+                          "GO:0043269~regulation of ion transport", "GO:0006836~neurotransmitter transport", 
+                          "GO:0034762~regulation of transmembrane transport", "GO:0007610~behavior", 
+                          "GO:0007613~memory")
+
 
 GO_PLOT <- ggplot(GO_DF_GROUP, aes(x = -log10(as.numeric(P)), y = Full_Term)) +
   geom_bar(stat = "identity", color = 'black', fill = '#F8766D') +
@@ -84,7 +108,8 @@ GO_PLOT <- ggplot(GO_DF_GROUP, aes(x = -log10(as.numeric(P)), y = Full_Term)) +
   xlab(expression(-log[10](P))) +
   ylab('Term') +
   xlim(0, 10.5) +
-  scale_x_continuous(breaks= pretty_breaks())
+  scale_x_continuous(breaks= pretty_breaks()) +
+  scale_y_discrete(limits = rev(levels(ORDERED_LIST)))
   
 
 # Tiff

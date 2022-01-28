@@ -162,8 +162,7 @@ fig1_plot <- plot_grid(fc_final_plot,
                        ge_final_plot,
                        hip_final_plot,
                        tha_final_plot,
-                       cer_final_plot, 
-                       labels = 'AUTO', label_size = 16)
+                       cer_final_plot)
 
 ## Figure 1  --------------------------------------------------------------------------
 # Plot Monocle pseudotime figure
@@ -295,7 +294,7 @@ nowakowski_fc_colours <- c('#1E81B0', '#76B5C5', '#779CBA',  '#CEE5FD',  '#ABDBE
                            '#FDE725FF', '#FF5959')
 
 fig_Supp_1B <- fig_Supp_1B + 
-  ggtitle('Nowakowski') +
+  ggtitle('Nowakowski et al. predictions') +
   theme_bw() +
   NoLegend() +
   my_theme +
@@ -308,7 +307,7 @@ poulioudakis_colours <- c('#9A6324', '#779CBA', '#1E81B0', '#ABDBE3', '#76B5C5',
 
 fig_Supp_1C <- DimPlot(seurat.pfc, pt.size = 0.1, reduction = "umap", label.size = 5,
                    label = TRUE, group.by = "predicted.id") +
-  ggtitle('Poulioudakis') +
+  ggtitle('Polioudakis et al. predictions') +
   theme_bw() +
   NoLegend() +
   my_theme +
@@ -326,7 +325,7 @@ nowakowski_ge_colours <- c('#FFD8B1', '#95D840FF','#55C667FF', '#00FF00A5', '#10
                            '#DCBEFF', '#FAA0A0',  '#3CBB75FF', '#FF5959')
 
 fig_Supp_2B <- fig_Supp_2B + 
-  ggtitle('Nowakowski') +
+  ggtitle('Nowakowski et al. predictions') +
   theme_bw() +
   NoLegend() +
   my_theme +
@@ -353,7 +352,7 @@ aldinger_colours <- c('#FAA0A0', '#CCCCCC', '#9A6324', '#76B5C5', '#D2042D',
 fig_Supp_3B <- DimPlot(list_res, reduction = "umap", label = TRUE, label.size = 5,
                    pt.size = 0.1, group.by = "type.clustify",
                    repel = TRUE) + ggtitle(NULL) +
-  ggtitle('Aldinger') +
+  ggtitle('Aldinger et al. predictions') +
   theme_bw() +
   NoLegend() +
   my_theme +
@@ -369,20 +368,22 @@ dev.off()
 # Fig Supp Fig 6 
 tiff(paste0(FIG_DIR, "Supplementary_figure_6.tiff"), height = 30, width = 40, units='cm', 
      compression = "lzw", res = 300)
-plot_grid(fig_Supp_1A, fig_Supp_1B, fig_Supp_1C, labels = 'AUTO', 
-          label_size = 16, align = c("hv"))
+plot_grid(fig_Supp_1A, fig_Supp_1B, fig_Supp_1C, align = c("hv"), 
+          labels = 'AUTO', label_size = 16)
 dev.off()
 
 # Fig Supp Fig 7 
 tiff(paste0(FIG_DIR, "Supplementary_figure_7.tiff"), height = 15, width = 40, units='cm', 
      compression = "lzw", res = 300)
-plot_grid(fig_Supp_2A, fig_Supp_2B, labels = 'AUTO', label_size = 16, align = c("hv"))
+plot_grid(fig_Supp_2A, fig_Supp_2B, align = c("hv"), 
+          labels = 'AUTO', label_size = 16)
 dev.off()
 
 # Fig Supp Fig 8
 tiff(paste0(FIG_DIR, "Supplementary_figure_8.tiff"), height = 15, width = 40, units='cm', 
      compression = "lzw", res = 300)
-plot_grid(fig_Supp_3A, fig_Supp_3B, labels = 'AUTO', label_size = 16, align = c("hv"))
+plot_grid(fig_Supp_3A, fig_Supp_3B, align = c("hv"), 
+          labels = 'AUTO', label_size = 16)
 dev.off()
 
 # # Fig Supp Fig 4
@@ -402,20 +403,22 @@ dev.off()
 # Fig Supp Fig 6 
 jpeg(paste0(FIG_DIR, "Supplementary_figure_6.jpg"), width = 960, height = 960, 
      units = "px", pointsize = 12, quality = 150)
-plot_grid(fig_Supp_1A, fig_Supp_1B, fig_Supp_1C, labels = 'AUTO', 
-          label_size = 16, align = c("hv"))
+plot_grid(fig_Supp_1A, fig_Supp_1B, fig_Supp_1C, align = c("hv"), 
+          labels = 'AUTO', label_size = 16)
 dev.off()
 
 # Fig Supp Fig 7 
 jpeg(paste0(FIG_DIR, "Supplementary_figure_7.jpg"), width = 960, height = 480, 
      units = "px", pointsize = 12, quality = 150)
-plot_grid(fig_Supp_2A, fig_Supp_2B, labels = 'AUTO', label_size = 16, align = c("hv"))
+plot_grid(fig_Supp_2A, fig_Supp_2B, align = c("hv"), 
+          labels = 'AUTO', label_size = 16)
 dev.off()
 
 # Fig Supp Fig 8
 jpeg(paste0(FIG_DIR, "Supplementary_figure_8.jpg"), width = 960, height = 480, 
      units = "px", pointsize = 12, quality = 150)
-plot_grid(fig_Supp_3A, fig_Supp_3B, labels = 'AUTO', label_size = 16, align = c("hv"))
+plot_grid(fig_Supp_3A, fig_Supp_3B, align = c("hv"), 
+          labels = 'AUTO', label_size = 16)
 dev.off()
 
 # # Fig Supp Fig 4
