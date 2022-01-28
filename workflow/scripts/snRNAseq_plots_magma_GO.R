@@ -53,7 +53,8 @@ GO_DF_FILT <- filter(GO_DF, grepl(CELL_TYPE, FULL_NAME)) %>%
   mutate(Term = gsub(paste0("^[^", CELL_TYPE, "_]*", CELL_TYPE,"_"), "", FULL_NAME)) %>%
   select(Term, P) %>%
   mutate(Full_Term = COMPLETE_TERMS[as.character(Term)]) %>%
-  mutate(cell_type = rep(CELL_TYPE, length(Full_Term)))
+  mutate(cell_type = rep(CELL_TYPE, length(Full_Term))) %>%
+  mutate_at('cell_type', str_replace_all, "_", "-") 
 
 assign(paste0(CELL_TYPE, '_df'), GO_DF_FILT)
 
