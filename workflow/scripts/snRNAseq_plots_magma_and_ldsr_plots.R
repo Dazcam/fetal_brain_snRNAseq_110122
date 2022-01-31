@@ -107,7 +107,7 @@ for (LDSR_REGION in LDSR_REGIONS) {
                         by = 'Category') %>% melt()
       
         
-    MAGMA_LDSR_PLOT <- ggplot(data = PLOT_DF, aes(x = value, y = Category, 
+    MAGMA_LDSR_PLOT <- ggplot(data = PLOT_DF, aes(x = value, y = factor(Category, rev(levels(factor(Category)))), 
                                                   fill = variable, group = rev(variable))) +
     geom_bar(stat = "identity", color = 'black', position = "dodge") +
       geom_vline(xintercept=-log10(0.00054), linetype = "dashed", color = "black") +
