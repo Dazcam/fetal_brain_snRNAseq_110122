@@ -1,23 +1,30 @@
-Repo for single nuceli fetal brain study using cell label version 110121
+# Bray Lab - snRNAseq in developing fetal brain study 2022
 
-***
+A snakemake pipeline to process snRNAseq data. Utilising the following packages:
 
-## Downstream analyses
++ CellRanger v5.0
++ Seurat v.
++ Magma Celltyping
++ LD Score Regression
++ etc.
 
-### MAGMA process - Note this was run using Magma Celltyping (MCT) package as we initally ran analysis using 
-the linear regression model described in Skene et al. 2019. We changed this subsequently to top 10% (which is an option in MCT) but decided 
-to stick with using MCT for this part of the process rather than running magma manually.
+This project was carried out in the Division of Psychological Medicine and Clinical Neurosciences (DPMCN). The workflow follows the the snakemake [distribution and reproducibility](https://snakemake.readthedocs.io/en/stable/snakefiles/deployment.html) recomendations.
 
-SCRIPT: snRNAseq_magma_cellTyping.smk
-INPUT:  R_objects/seurat.cer.final.rds
-OUTPUT: results/magma_celltyping, results/figures/
+## Installation and usage
+Clone this project, or copy the files into an existing project and edit as needed. This includes:
 
-1: get_genes_in_MHC - Identify genes in each seurat object that overlap MHC region
-2: create_ctd - create ctd object (using magma celltyping package) splits seurat GeX counts into quantiles
-3: map_SNPs_to_genes - (using magma cell typing which uses magma) to map SNPS to genes for magma analysis
-4: magma_analysis - runs the magma analysis on the cell types of each region 
-5. magma_generate_plots - creates plots for magma anlysis
-6: magma_create_LDSC_geneLists - extracts q10 gene lists from CTD object to run LDSC analysis
-7: Plotting  
+* LICENSE
+* CONTRIBUTING.md
+* CODE_OF_CONDUCT.md
+* and this README.md
 
-TEST
+## Contributing
+Contributing issues, feature proposals or code is actively welcomed - please see the [CONTRIBUTING.md](CONTRIBUTING.md) file for more details.
+
+## Code of Conduct
+We want to create a welcoming environment for everyone who is interested in contributing. Please see the [Contributor Covenant Code of Conduct](CODE_OF_CONDUCT.md) file to learn more about our commitment to an open and welcoming environment.
+
+## Copyright and Licence Information
+
+See the [LICENSE file](LICENSE.md).
+
