@@ -24,3 +24,5 @@ magma_all_sig_and_skene_condition_skene_SS.gsa.sets.genes.out
 magma_all_sig_and_skene_condition_skene_SS.log
 results/magma_conditional/magma_all_sig_and_skene_condition_FC_ExN_2.gsa.sets.genes.out
 results/magma_conditional/magma_all_sig_and_skene_condition_FC_ExN_2.log
+results/snRNAseq_CR5_190121/
+results/logs

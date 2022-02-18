@@ -1,3 +1,4 @@
+include: "rules/snRNAseq_cellRanger.smk"
 include: "rules/snRNAseq_magma_cellTyping.smk"
 include: "rules/snRNAseq_LDSC.smk"
 include: "rules/snRNAseq_extract_final_results.smk"
@@ -7,6 +8,7 @@ include: "rules/snRNAseq_magma_GO.smk"
 
 rule all:
     input:
+        expand("../results/snRNAseq_CR5_190121/{SAMPLE}.stamp", SAMPLE=config["SAMPLES_RNA"]),
         expand("../results/magma_celltyping/{GWAS}_hg19_magma_ready.sumstats.tsv.10UP.1.5DOWN/", GWAS = config["SUMSTATS"]),
         expand("../results/gene_lists/q10_gene_lists/all_quantiles/{REGION}_complete.file", REGION = config["RNA_REGIONS"]),
         expand("../results/LDSR_part_herit/snRNAseq_LDSC_{GWAS}_baseline.v1.2_top10pc.tsv", GWAS = config["SUMSTATS"]),
