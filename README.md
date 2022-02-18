@@ -58,5 +58,5 @@ We want to create a welcoming environment for everyone who is interested in cont
 
 ## Copyright and Licence Information
 
-See the [LICENSE file](LICENSE.md).
+See the [LICENCE file](LICENCE.md).
 
