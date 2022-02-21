@@ -8,18 +8,29 @@ This project was carried out in the Division of Psychological Medicine and Clini
 
 A snakemake pipeline to process snRNAseq data. Utilising the following packages:
 
-+ [Snakemake v6.6.1](https://snakemake.readthedocs.io/en/stable/)
-+ [CellRanger v5.0.1](https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/5.0/what-is-cell-ranger)
-+ [Seurat v.4.0.3](https://satijalab.org/seurat/articles/get_started.html) - Ran interactively on laptop still to add code for this
-+ [DropletUtils](https://bioconductor.org/packages/release/bioc/html/DropletUtils.html)
-+ [scDblFinder](https://bioconductor.org/packages/release/bioc/html/scDblFinder.html)
-+ [Scater](https://bioconductor.org/packages/release/bioc/html/scater.html)
-+ [MAGMA Celltyping](https://github.com/neurogenomics/MAGMA_Celltyping)
-+ [MAGMA](https://ctg.cncr.nl/software/magma)
-+ [LD Score Regression](https://github.com/bulik/ldsc)
-+ [clustifyr](https://bioconductor.org/packages/release/bioc/html/clustifyr.html)
++ [Snakemake 6.6.1](https://snakemake.readthedocs.io/en/stable/)
++ [CellRanger 5.0.1](https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/5.0/what-is-cell-ranger)
++ [Seurat 4.0.3](https://satijalab.org/seurat/articles/get_started.html) - Ran interactively on laptop still to add code for this
++ [DropletUtils 1.10.3](https://bioconductor.org/packages/release/bioc/html/DropletUtils.html)
++ [scDblFinder 1.4.0](https://bioconductor.org/packages/release/bioc/html/scDblFinder.html)
++ [Scater 1.18.5](https://bioconductor.org/packages/release/bioc/html/scater.html)
++ [MAGMA Celltyping 1.0.0](https://github.com/neurogenomics/MAGMA_Celltyping)
++ [MAGMA 1.08](https://ctg.cncr.nl/software/magma)
++ [LD Score Regression 1.0.1](https://github.com/bulik/ldsc)
++ [clustifyr 1.2.0](https://bioconductor.org/packages/release/bioc/html/clustifyr.html)
 + [scRNAseq_Benchmark](https://github.com/tabdelaal/scRNAseq_Benchmark)
 + etc.
+
+CellRanger 5.0.1(https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/5.0/what-is-cell-ranger)
+Seurat 4.0.3 (https://satijalab.org/seurat/articles/get_started.html) - Ran interactively on laptop still to add code for this
+DropletUtils 1.10.3 (https://bioconductor.org/packages/release/bioc/html/DropletUtils.html)
+scDblFinder 1.4.0 (https://bioconductor.org/packages/release/bioc/html/scDblFinder.html)
+Scater 1.18.5 (https://bioconductor.org/packages/release/bioc/html/scater.html)
+MAGMA Celltyping 1.0.0 (https://github.com/neurogenomics/MAGMA_Celltyping)
+MAGMA 1.08 (https://ctg.cncr.nl/software/magma)
+LD Score Regression 1.0.1 (https://github.com/bulik/ldsc)
+clustifyr 1.2.0 (https://bioconductor.org/packages/release/bioc/html/clustifyr.html)
+scRNAseq_Benchmark (https://github.com/tabdelaal/scRNAseq_Benchmark)
 
 ***
 
