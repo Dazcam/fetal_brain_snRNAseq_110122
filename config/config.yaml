@@ -45,7 +45,7 @@ RNA_REGIONS:
 
 SUMSTATS:
 #    ADHD: GWAS_sumstats/GWAS_sumstats_RAW/demontis-walters-martin-2017-eur-adhd-summaryqc.tsv
-#    ASD: GWAS_sumstats/GWAS_sumstats_RAW/grove-ripke-als-2017-eur-asd-summaryqc.tsv
+    ASD: GWAS_sumstats/GWAS_sumstats_RAW/grove-ripke-als-2017-eur-asd-summaryqc.tsv
 #    BPD: GWAS_sumstats/GWAS_sumstats_RAW/daner_bip_pgc3_nm.tsv
 #    MDD: GWAS_sumstats/GWAS_sumstats_RAW/wray-ripke-mattheisen-2017-mdd-23me-summaryqc.tsv
     SCZ: GWAS_sumstats/GWAS_sumstats_RAW/PGC3_SCZ_wave3_public.v2.tsv

@@ -65,7 +65,7 @@ rule partitioned_heritability_baseline_v12:
 
 rule create_partHerit_summary:
     # This is still optimised for multiple quantiles so creating > 100 single line files
-    input:   expand("../results/LDSR_part_herit/snRNAseq_LDSC_{CELL_TYPE}_Q{QUANTILE}_{GWAS}_baseline.v1.2.results", CELL_TYPE = config["RNA_CELL_TYPES"], QUANTILE = '10', GWAS = config["SUMSTATS"])
+    input:   expand("../results/LDSR_part_herit/baseline_v1.2/snRNAseq_LDSC_{CELL_TYPE}_Q{QUANTILE}_{GWAS}_baseline.v1.2.results", CELL_TYPE = config["RNA_CELL_TYPES"], QUANTILE = '10', GWAS = config["SUMSTATS"])
     output:  "../results/LDSR_part_herit/baseline_v1.2/snRNAseq_LDSC_{CELL_TYPE}_{GWAS}_baseline.v1.2_summary.tsv"
     message: "Creating summary file for {wildcards.CELL_TYPE} and {wildcards.GWAS} GWAS"
     params:  dir = "../results/LDSR_part_herit/baseline_v1.2/"
@@ -80,7 +80,7 @@ rule create_partHerit_summary:
 
 rule create_top_decile_tables:
     input:   expand("../results/LDSR_part_herit/baseline_v1.2/snRNAseq_LDSC_{CELL_TYPE}_{GWAS}_baseline.v1.2_summary.tsv", CELL_TYPE = config["RNA_CELL_TYPES"], GWAS = config["SUMSTATS"])
-    output:  "../results/LDSR_part_herit/snRNAseq_LDSC_{GWAS}_baseline.v1.2_top10pc.tsv"
+    output:  "../results/LDSR_part_herit/baseline_v1.2/snRNAseq_LDSC_{GWAS}_baseline.v1.2_top10pc.tsv"
     message: "Creating LDSC top decile tables for {wildcards.GWAS} GWAS"
     params:  dir = "../results/LDSR_part_herit/baseline_v1.2/"
     log:     "../results/logs/LDSR/snRNAseq.{GWAS}_partHerit_baseline.v1.2_top10pc_summary.log"

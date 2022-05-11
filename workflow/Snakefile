@@ -1,19 +1,19 @@
-include: "rules/snRNAseq_cellRanger.smk"
+#include: "rules/snRNAseq_cellRanger.smk"
 include: "rules/snRNAseq_magma_cellTyping.smk"
 include: "rules/snRNAseq_LDSC.smk"
-include: "rules/snRNAseq_extract_final_results.smk"
-include: "rules/snRNAseq_magma_conditional.smk"
-include: "rules/snRNAseq_SVM_analysis.smk"
-include: "rules/snRNAseq_magma_GO.smk"
+#include: "rules/snRNAseq_extract_final_results.smk"
+#include: "rules/snRNAseq_magma_conditional.smk"
+#include: "rules/snRNAseq_SVM_analysis.smk"
+#include: "rules/snRNAseq_magma_GO.smk"
 
 rule all:
     input:
-        expand("../results/snRNAseq_CR5_190121/{SAMPLE}.stamp", SAMPLE=config["SAMPLES_RNA"]),
+#        expand("../results/snRNAseq_CR5_190121/{SAMPLE}.stamp", SAMPLE=config["SAMPLES_RNA"]),
         expand("../results/magma_celltyping/{GWAS}_hg19_magma_ready.sumstats.tsv.10UP.1.5DOWN/", GWAS = config["SUMSTATS"]),
         expand("../results/gene_lists/q10_gene_lists/all_quantiles/{REGION}_complete.file", REGION = config["RNA_REGIONS"]),
-        expand("../results/LDSR_part_herit/snRNAseq_LDSC_{GWAS}_baseline.v1.2_top10pc.tsv", GWAS = config["SUMSTATS"]),
+        expand("../results/LDSR_part_herit/baseline_v1.2/snRNAseq_LDSC_{GWAS}_baseline.v1.2_top10pc.tsv", GWAS = config["SUMSTATS"]),
         expand("../results/gene_lists/q10_gene_lists/{SIG_CELL_TYPE}_Q10_genes.tsv", SIG_CELL_TYPE = config["SIG_CELL_TYPES"]),        
-        expand("../results/magma_conditional/magma_all_sig_and_skene_condition_{CONDITION}.gsa.out", CONDITION = config['MAGMA_CONDITIONS']),
-        "../resources/sheets/snRNAseq_cluster_labels_rand_wge_for_SVM.csv",
-        "../results/magma_GO/magma_GO.gsa.out"
+#        expand("../results/magma_conditional/magma_all_sig_and_skene_condition_{CONDITION}.gsa.out", CONDITION = config['MAGMA_CONDITIONS']),
+#        "../resources/sheets/snRNAseq_cluster_labels_rand_wge_for_SVM.csv",
+#        "../results/magma_GO/magma_GO.gsa.out"
 
