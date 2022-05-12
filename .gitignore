@@ -84,7 +84,6 @@ results/snRNAseq_CR5_190121/
 results/logs
 .snakemake/
 resources/R_objects/
-resources/ctd_objects/
 resources/ldsc/
 resources/magma_celltyping/
 resources/refdata-gex-GRCh38-2020-A/

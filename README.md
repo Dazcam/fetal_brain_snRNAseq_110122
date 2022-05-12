@@ -41,6 +41,9 @@ GWAS:
 + [SCZ - PGC3](https://doi.org/10.6084/m9.figshare.14672178)
 + [Height](https://portals.broadinstitute.org/collaboration/giant/index.php/GIANT_consortium_data_files)
 
+SCHEMA:
+
++ [SCHEMA](https://schema.broadinstitute.org/results)
 
 ## Installation and usage
 Clone this project, or copy the files into an existing project and edit as needed. This includes:
