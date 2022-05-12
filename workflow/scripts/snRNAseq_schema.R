@@ -7,9 +7,9 @@
 ## Info  ------------------------------------------------------------------------------
 
 #  1. Extract the cell specificity scores for all cell types from ctd objects  
-#  2. Take top 32 schema genes and Q values (i.e those FDR < 0.05)
-#  3. Run a wilcoxon test on specificity scores of each of 91 cell types against Qvalues  
-#     of schema genes
+#  2. Take top 32 schema genes (i.e those FDR < 0.05)
+#  3. Run a wilcoxon test on specificity scores of schema genes in each of 91 cell types 
+#     against the specificty scores for the rest of the genes in each cell type
 
 # Note: H1-4 in schema data is encoded HIST1H1E in our data
 
