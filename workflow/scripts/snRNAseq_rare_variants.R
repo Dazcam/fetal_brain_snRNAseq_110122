@@ -15,11 +15,14 @@
 
 ##  Load Packages  --------------------------------------------------------------------
 library(tidyverse)
+library(ggplot2)
+library(cowplot)
 
 ## Set variables  ---------------------------------------------------------------------
 DATA_DIR <- '~/Desktop/fetal_brain_snRNAseq_110122/resources/'
 FIG_DIR <- '~/Desktop/fetal_brain_snRNAseq_110122/results/figures/'
 REGIONS <- c('cer', 'hip', 'pfc', 'tha', 'wge')
+options(scipen=999) # remove scientific notation messess with ordering of tables
 
 ## Load Data --------------------------------------------------------------------------
 # Load fetal specificty scores for all 91 cell types 
@@ -51,6 +54,7 @@ for (STUDY in c('schema_genes', 'asd_genes')) {
   cat('\n\nRunning wilcoxon test for:', STUDY)
   STUDY_DF <- get(STUDY)
   STUDY_GENES <- STUDY_DF$gene
+  i <- 1
   
   # Run Wilcoxon tests on all 91 cell types
   for (REGION in REGIONS) {
@@ -94,6 +98,34 @@ for (STUDY in c('schema_genes', 'asd_genes')) {
         
       }
       
+      # Create box plot list to check distribution of significant 
+      if (wilcox_result$p.value < 0.05) {
+        
+        if (exists('wilcoxon_boxplot_list')) {
+          
+          i <- i + 1
+          
+          wilcoxon_boxplot_list[[i]] <- ggplot(specificity_cell, aes(x = study_status, y = cell_scores)) + 
+            geom_boxplot() + labs(title = CELL_TYPE) + theme_bw()
+  
+          
+        } else {
+          
+          wilcoxon_boxplot_list <- list()
+          wilcoxon_boxplot_list[[i]] <- ggplot(specificity_cell, aes(x = study_status, y = cell_scores)) + 
+            geom_boxplot() + labs(title = CELL_TYPE) + theme_bw()
+          
+        }
+        
+      }
+      
+      # Maybe better option for quick check
+      wilcoxon_boxlot <- ggplot(specificity_cell, aes(x = study_status, y = cell_scores)) + 
+        geom_boxplot() + labs(title = CELL_TYPE) + theme_bw()
+      jpeg(paste0(FIG_DIR, 'boxplots_temp/', STUDY, '_', CELL_TYPE, '_boxplot.jpg'), width = 960, height = 960, 
+           units = "px", pointsize = 12, quality = 150)
+      print(wilcoxon_boxlot)
+      dev.off()
       cat(paste0('\nNumber of ', STUDY, ' in sample:'), sum(specificity_cell$study_status == 'in_study'))
       
     }
@@ -107,8 +139,12 @@ for (STUDY in c('schema_genes', 'asd_genes')) {
     mutate(FDR = p.adjust(P, 'BH', length(P)))
   
   assign(paste0(STUDY, '_wilcoxon_df'), wilcoxon_df)
+  assign(paste0(STUDY, '_wilcoxon_boxplots'), wilcoxon_boxplot_list)
+  
   write_tsv(wilcoxon_df, paste0(FIG_DIR, STUDY, '_wilcoxon.txt'))
+  
   rm(wilcoxon_df)
+  rm(wilcoxon_boxplot_list)
   
 }
 
@@ -123,3 +159,14 @@ asd_genes_wilcoxon_df %>%
   arrange(P) %>%
   mutate(BF = p.adjust(P, 'bonferroni', length(P))) %>%
   mutate(FDR = p.adjust(P, 'BH', length(P)))
+
+
+specificity_DF <- get(paste0('pfc', '_specificity')) %>%
+  rownames_to_column(var = 'gene')
+
+
+  specificity_cell <- data.frame(gene = specificity_DF$gene,
+                                 cell_scores = specificity_DF[['FC-OPC']]) %>%
+    mutate(study_status = ifelse(gene %in% schema_genes$gene, 'in_study', 'not_in_study'))
+  
+boxplot(cell_scores ~ study_status, data = specificity_cell)
