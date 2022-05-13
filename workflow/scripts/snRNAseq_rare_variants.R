@@ -77,7 +77,8 @@ for (STUDY in c('schema_genes', 'asd_genes')) {
         filter(grepl('^not_in_study', study_status)) %>%
         pull(cell_scores)
       
-      wilcox_result <- wilcox.test(in_study_scores, not_in_study_scores, paired = FALSE, data = specificity_cell)
+      wilcox_result <- wilcox.test(in_study_scores, not_in_study_scores, alternative = 'greater', 
+                                   paired = FALSE, data = specificity_cell)
       
       if (exists('wilcoxon_df')) {
         
