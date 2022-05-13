@@ -22,10 +22,12 @@ library(org.Hs.eg.db)
 # 7. These gene lists were then used for magma conditional analysis
 #    See: snRNAseq_magma_conditional.smk
 
+# TODO Added Bryois cell types manually need to add them bioinformatically!!!!
+
 ##  Set variables  --------------------------------------------------------------------
 cat('\nDefining variables for section 1 ... \n')
-DATA_DIR <- '~/Desktop/fetal_brain_snRNAseq_110122/results/q10_gene_lists_for_LDSC/'
-ENTREZ_DIR <- '~/Desktop/fetal_brain_snRNAseq_110122/results/q10_gene_lists_for_LDSC/ENTREZ/'
+DATA_DIR <- '~/Desktop/fetal_brain_snRNAseq_110122/results/gene_lists/q10_gene_lists/'
+ENTREZ_DIR <- '~/Desktop/fetal_brain_snRNAseq_110122/results/gene_lists/ENTREZ/'
 dir.create(ENTREZ_DIR)
 SKENE_DIR <- '~/Desktop/fetal_brain_snRNAseq_110122/resources/public_datasets/skene/'
 CELL_TYPES <- c('FC-ExN-2', 'FC-ExN-3', 'FC-ExN-4', 'FC-ExN-5', 'FC-InN-1', 
@@ -191,10 +193,13 @@ for (CELL_TYPE in ALL_CELL_TYPES) {
     
   }
   
-  
-}
+  # Append Bryois adult human cell types to gene list
+  cat(readLines(paste0(SKENE_DIR, 'bryois_human_adult_top10pc_space_delim.txt')), '\n', 
+      file = paste0(DATA_DIR, 'ALL_SIG_AND_SKENE_entrez_gene_list.tsv'), 
+      append = TRUE)
  
-
+   
+}
 
  
 #--------------------------------------------------------------------------------------
