@@ -6,12 +6,14 @@
 
 ## Info  ------------------------------------------------------------------------------
 
-#  Code for figures 2 and 3
+#  Code for figures 2, 3, 4
 #  Issues: Region IDs encoded differently in MAGMA and LSDR analysis
+#          Much tweaking needed between ggplot and cowplot for FDR < 5% line
 
 ##  Load packages  --------------------------------------------------------------------
 cat('\nLoading packages ... \n\n')
 library(tidyverse)
+library(ggsignif)
 library(cowplot)
 library(reshape2) # For melt
 
@@ -35,8 +37,8 @@ for (MAGMA_REGION in MAGMA_REGIONS) {
                                    '.level1.', MAGMA_REGION, SUFFIX_TOP10), header = FALSE) %>%
       janitor::row_to_names(row_number = 1) %>% 
       mutate(VARIABLE = gsub('\\.', '-', VARIABLE)) %>%
-      mutate(Magma = -log10(as.numeric(P))) %>%
-      select(VARIABLE, Magma) %>%
+      mutate(MAGMA = -log10(as.numeric(P))) %>%
+      select(VARIABLE, MAGMA) %>%
       dplyr::rename(Category = VARIABLE) # Match LDSRs cell-type column
     
     if (MAGMA_REGION == 'cer') {
@@ -143,6 +145,44 @@ legend <- get_legend(
           legend.title = element_blank()) 
 )
 
+
+## Add FDR significance lines
+FC_SCZ_magma_ldsr_plot <- FC_SCZ_magma_ldsr_plot +
+  geom_segment(aes(x = 11, y = 13.6, xend = 11, yend = 14.4)) + # FC-ExN-2
+  annotate("text", x = 11.5, y = 13.85, label = "*", size = 5) +
+  geom_segment(aes(x = 11, y = 12.6, xend = 11, yend = 13.4)) + # FC-ExN-3
+  annotate("text", x = 11.5, y = 12.85, label = "*", size = 5) +
+  geom_segment(aes(x = 11, y = 11.6, xend = 11, yend = 12.4)) + # FC-ExN-4
+  annotate("text", x = 11.5, y = 11.85, label = "*", size = 5) +
+  geom_segment(aes(x = 11, y = 10.6, xend = 11, yend = 11.4)) + # FC-ExN-5
+  annotate("text", x = 11.5, y = 10.85, label = "*", size = 5)  
+  
+GE_SCZ_magma_ldsr_plot <- GE_SCZ_magma_ldsr_plot +
+  geom_segment(aes(x = 11, y = 9.6, xend = 11, yend = 10.4)) + # GE-InN-1
+  annotate("text", x = 11.5, y = 9.9, label = "*", size = 5) +
+  geom_segment(aes(x = 11, y = 8.6, xend = 11, yend = 9.4)) + # GE-InN-2
+  annotate("text", x = 11.5, y = 8.9, label = "*", size = 5) +
+  geom_segment(aes(x = 11, y = 6.6, xend = 11, yend = 7.4)) + # GE-InN-4
+  annotate("text", x = 11.5, y = 6.9, label = "*", size = 5) +
+  geom_segment(aes(x = 11, y = 5.6, xend = 11, yend = 6.4)) + # GE-InN-5
+  annotate("text", x = 11.5, y = 5.9, label = "*", size = 5) +
+  geom_segment(aes(x = 11, y = 3.6, xend = 11, yend = 4.4)) + # GE-InN-7
+  annotate("text", x = 11.5, y = 3.9, label = "*", size = 5) 
+
+Hipp_SCZ_magma_ldsr_plot <- Hipp_SCZ_magma_ldsr_plot +
+  geom_segment(aes(x = 11, y = 12.6, xend = 11, yend = 13.4)) + # Hipp-InN-3
+  annotate("text", x = 11.5, y = 12.85, label = "*", size = 5) +
+  geom_segment(aes(x = 11, y = 10.6, xend = 11, yend = 11.4)) + # GE-InN-5
+  annotate("text", x = 11.5, y = 10.85, label = "*", size = 5)
+
+Thal_SCZ_magma_ldsr_plot <- Thal_SCZ_magma_ldsr_plot +
+  geom_segment(aes(x = 11, y = 20.6, xend = 11, yend = 21.4)) + # Thal-InN-1
+  annotate("text", x = 11.5, y = 20.8, label = "*", size = 5) +
+  geom_segment(aes(x = 11, y = 18.6, xend = 11, yend = 19.4)) + # Thal-InN-3
+  annotate("text", x = 11.5, y = 18.8, label = "*", size = 5) +
+  geom_segment(aes(x = 11, y = 11.6, xend = 11, yend = 12.4)) + # Thal-InN-7
+  annotate("text", x = 11.5, y = 11.8, label = "*", size = 5)
+
 cat('\nCreating group plots ... \n')
 for (DISORDER in GWAS) {
   
@@ -164,17 +204,19 @@ tiff(paste0(FIG_DIR, "Fig_2.tiff"), height = 30, width = 30, units='cm',
 all_regions_SCZ_magma_ldsr_plot
 dev.off()
 
-# Fig 3 - HEIGHT
+# Fig 3 - ASD
 tiff(paste0(FIG_DIR, "Fig_3.tiff"), height = 30, width = 30, units='cm', 
+     compression = "lzw", res = 300)
+all_regions_ASD_magma_ldsr_plot
+dev.off()
+
+# Fig 4 - HEIGHT
+tiff(paste0(FIG_DIR, "Fig_4.tiff"), height = 30, width = 30, units='cm', 
      compression = "lzw", res = 300)
 all_regions_HEIGHT_magma_ldsr_plot
 dev.off()
 
-# Fig X - ASD
-tiff(paste0(FIG_DIR, "Fig_X.tiff"), height = 30, width = 30, units='cm', 
-     compression = "lzw", res = 300)
-all_regions_ASD_magma_ldsr_plot
-dev.off()
+
 
 # Jpegs
 jpeg(paste0(FIG_DIR, "Fig_2.jpg"), width = 960, height = 960, 
@@ -184,13 +226,15 @@ dev.off()
 
 jpeg(paste0(FIG_DIR, "Fig_3.jpg"), width = 960, height = 960, 
      units = "px", pointsize = 12, quality = 150)
+all_regions_ASD_magma_ldsr_plot
+dev.off()
+
+jpeg(paste0(FIG_DIR, "Fig_4.jpg"), width = 960, height = 960, 
+     units = "px", pointsize = 12, quality = 150)
 all_regions_HEIGHT_magma_ldsr_plot
 dev.off()
 
-jpeg(paste0(FIG_DIR, "Fig_X.jpg"), width = 960, height = 960, 
-     units = "px", pointsize = 12, quality = 150)
-all_regions_ASD_magma_ldsr_plot
-dev.off()
+
 
 #--------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------
