@@ -11,7 +11,7 @@
 #  3. Get no. of gene overlaps between all fetal and adult cell types (using gene lists created at stage 1)
 #  4. Save lists of q10 / SCZ MAGMA < 0.05 genes for each cell type to run GO analysis
 
-# Note: gene lists were created in snRNAseq_magma_conditonal_analysis_file_prep.R
+# Note: gene lists were created in snRNAseq_magma_conditional_file_prep.R
 # intersect matrix code from: snRNAseq_fetal_vs_adult_create_overlap_gene_lists.R
 
 ##  Load Packages  --------------------------------------------------------------------
@@ -24,7 +24,8 @@ DATA_DIR <- '~/Desktop/fetal_brain_snRNAseq_110122/resources/R_objects/'
 MAGMA_DIR <- '~/Desktop/fetal_brain_snRNAseq_110122/results/magma_celltyping/'
 ENTREZ_DIR <- '~/Desktop/fetal_brain_snRNAseq_110122/results/gene_lists/q10_gene_lists/ENTREZ/'
 CELL_TYPES <- c('FC_ExN_2', 'FC_ExN_3', 'FC_ExN_4', 'GE_InN_2', 'Hipp_ExN_3',
-                'Hipp_ExN_5', 'skene_InN', 'skene_MSN', 'skene_CA1', 'skene_SS')
+                'Hipp_ExN_5', 'skene_InN', 'skene_MSN', 'skene_CA1', 'skene_SS',
+                'bryois_exCA1', 'bryois_exCA3', 'bryois_exDG', 'bryois_exPFC1')
 FETAL_CELL_TYPES <- c('FC_ExN_2', 'FC_ExN_3', 'FC_ExN_4', 'GE_InN_2', 'Hipp_ExN_3', 
                       'Hipp_ExN_5')
 
@@ -37,7 +38,7 @@ magma_df <- read_table(paste0(MAGMA_DIR, "SCZ_hg19_magma_ready.sumstats.tsv.10UP
 cat('\nTotal genes in SCZ MAGMA: 18904')
 cat('\nTotal genes in SCZ MAGMA P < 0.05: ', nrow(magma_df), '\n')
 
-# Fetal and skene q10 cell type genes that overlap SCZ MAGMA P < 0.05 genes
+# Fetal, skene and bryois q10 cell type genes that overlap SCZ MAGMA P < 0.05 genes
 for (CELL_TYPE in CELL_TYPES) {
   
   GENE_LIST <- read_tsv(paste0(ENTREZ_DIR, CELL_TYPE, '_entrez_gene_list.tsv'), show_col_types = FALSE) %>%
@@ -62,6 +63,7 @@ cat('\nCreating overlap grids for comparisons across all cell-types  ... \n')
 fetal_overlap_list <- list(FC_ExN_2_overlaps, FC_ExN_3_overlaps, FC_ExN_4_overlaps,    
                            GE_InN_2_overlaps, Hipp_ExN_3_overlaps, Hipp_ExN_5_overlaps)
 skene_overlap_list <- list(skene_SS_overlaps, skene_InN_overlaps, skene_MSN_overlaps, skene_CA1_overlaps)
+bryois_overlap_list <- list(bryois_exCA1_overlaps, bryois_exCA3_overlaps, bryois_exDG_overlaps, bryois_exPFC1_overlaps)
 
 ## Intra-dataset comparisons - all fetal cells  ---------------------------------------
 cat('Intra-dataset comparisons - all fetal cells  ... \n')
@@ -111,9 +113,37 @@ colnames(skene_matrix) <- c('FC_ExN_2', 'FC_ExN_3', 'FC_ExN_4',
                             'GE-InN-2', 'Hipp_ExN_3', 'Hipp_ExN_5')
 rownames(skene_matrix) <- c('skene_SS', 'skene_InN', 'skene_MSN', 'skene_CA1')
 
+## Inter-dataset comparisons - 4 Bryois vs. all fetal cells  ---------------------------
+cat('\nInter-dataset comparisons - 4 Bryois vs. all fetal cells  ... \n')
+# Get intersections all skene cell types in all fetal cell types
+
+cat('Creating pairwise intersections  ... \n')
+x <- 0
+for (i in bryois_overlap_list) {
+  
+  x <- x + 1   
+  vect_bryois <- vector()
+  
+  for (j in fetal_overlap_list) {
+    vect_bryois <- c(vect_bryois, length(intersect(i,j)))
+  }
+  
+  assign(paste0('vect_bryois', x), vect_bryois)
+  
+}
+
+# Create DF of overlap counts
+bryois_matrix <- rbind(vect_bryois1, vect_bryois2, vect_bryois3, vect_bryois4)
+
+# Assign columns and rows names
+colnames(bryois_matrix) <- c('FC_ExN_2', 'FC_ExN_3', 'FC_ExN_4', 
+                            'GE-InN-2', 'Hipp_ExN_3', 'Hipp_ExN_5')
+rownames(bryois_matrix) <- c('bryois_exCA1', 'bryois_exCA3', 'bryois_exDG', 'bryois_exPFC1')
+
 ##  Save files  -----------------------------------------------------------------------
 saveRDS(fetal_matrix, paste0(DATA_DIR, 'fetal_overlap_SCZ_magma_P_0.05_matrix.rds'))
 saveRDS(skene_matrix, paste0(DATA_DIR, 'skene_overlap_SCZ_magma_P_0.05_matrix.rds'))
+saveRDS(bryois_matrix, paste0(DATA_DIR, 'bryois_overlap_SCZ_magma_P_0.05_matrix.rds'))
 
 for (CELL_TYPE in FETAL_CELL_TYPES) {
   

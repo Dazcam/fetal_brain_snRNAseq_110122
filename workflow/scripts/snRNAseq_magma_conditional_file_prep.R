@@ -13,27 +13,28 @@ library(cowplot)
 library(org.Hs.eg.db)
 
 ##  Info  -----------------------------------------------------------------------------
-# 1. Convert fetal top decile genes (from q10_gene_lists_for_LDSC) from HGNC IDs to entrez IDs 
+# 1. Convert fetal top decile genes (from q10_gene_lists_for_LDSC) from HGNC IDs to Entrez IDs 
 # 2. Obtain top decile genes for Skene cell types
 # 3. Convert Skene top decile genes from MGI IDs to HGNC IDs 
-# 4. Convert Skene top decile genes from HGNC IDs to entrez IDs 
+# 4. Convert Skene top decile genes from HGNC IDs to Entrez IDs 
 # 5. These were then transposed to get a list of genes in a single line per cell type
 # 6. These were then bound by row in bash (using >>) for input to MAGMA
 # 7. These gene lists were then used for magma conditional analysis
 #    See: snRNAseq_magma_conditional.smk
+# 8. Convert Bryois top decile genes into single file per cell type 
 
-# TODO Added Bryois cell types manually need to add them bioinformatically!!!!
+# TODO Added Bryois cell types manually need to add them bio-informatically!!!!
 
 ##  Set variables  --------------------------------------------------------------------
 cat('\nDefining variables for section 1 ... \n')
 DATA_DIR <- '~/Desktop/fetal_brain_snRNAseq_110122/results/gene_lists/q10_gene_lists/'
-ENTREZ_DIR <- '~/Desktop/fetal_brain_snRNAseq_110122/results/gene_lists/ENTREZ/'
+ENTREZ_DIR <- '~/Desktop/fetal_brain_snRNAseq_110122/results/gene_lists/q10_gene_lists/ENTREZ/'
 dir.create(ENTREZ_DIR)
 SKENE_DIR <- '~/Desktop/fetal_brain_snRNAseq_110122/resources/public_datasets/skene/'
 CELL_TYPES <- c('FC-ExN-2', 'FC-ExN-3', 'FC-ExN-4', 'FC-ExN-5', 'FC-InN-1', 
                 'GE-InN-1', 'GE-InN-2', 'Hipp-ExN-3', 'Hipp-ExN-5', 'Thal-ExN-1',
                 'Thal-ExN-3')
-ALL_CELL_TYPES <- c('FC-ExN-2', 'FC-ExN-3', 'FC-ExN-4', 'FC-ExN-5', 'FC-InN-1', 
+ALL_SIG_CELL_TYPES <- c('FC-ExN-2', 'FC-ExN-3', 'FC-ExN-4', 'FC-ExN-5', 'FC-InN-1', 
                     'GE-InN-1', 'GE-InN-2', 'Hipp-ExN-3', 'Hipp-ExN-5', 'Thal-ExN-1',
                     'Thal-ExN-3', 'skene_InN', 'skene_MSN', 'skene_CA1', 'skene_SS')
 
@@ -48,7 +49,7 @@ for (CELL_TYPE in CELL_TYPES) {
   
 }
 
-# Convert HGNC IDs to entrez IDS
+# Convert HGNC IDs to Entrez IDS
 for (CELL_TYPE in CELL_TYPES) {
   
   CELL_TYPE_EDIT <- gsub("-", "_", CELL_TYPE)
@@ -173,7 +174,7 @@ for (CELL_TYPE in c('skene_InN', 'skene_MSN', 'skene_CA1', 'skene_SS')) {
 }
 
 # Cat single line gene lists to one file for conditional analysis
-for (CELL_TYPE in ALL_CELL_TYPES) {
+for (CELL_TYPE in ALL_SIG_CELL_TYPES) {
   
   if (CELL_TYPE == 'FC-ExN-2') {
     
@@ -193,12 +194,76 @@ for (CELL_TYPE in ALL_CELL_TYPES) {
     
   }
   
-  # Append Bryois adult human cell types to gene list
-  cat(readLines(paste0(SKENE_DIR, 'bryois_human_adult_top10pc_space_delim.txt')), '\n', 
-      file = paste0(DATA_DIR, 'ALL_SIG_AND_SKENE_entrez_gene_list.tsv'), 
-      append = TRUE)
+   # Append Bryois adult human cell types to gene list - TODO
+  # cat(readLines(paste0(SKENE_DIR, 'bryois_human_adult_top10pc_space_delim.txt')), '\n', 
+  #     file = paste0(DATA_DIR, 'ALL_SIG_AND_SKENE_entrez_gene_list.tsv'), 
+  #     append = TRUE)
  
    
+}
+
+# Bryois 
+
+
+bryois_raw <- readLines(paste0(SKENE_DIR, 'bryois_human_adult_top10pc_space_delim.txt'))
+
+for (i in seq(4, 7, 1)) {
+  
+  GENE_LIST <- base::as.data.frame(unlist(str_split(bryois_raw[i], " "))) %>%
+    janitor::row_to_names(row_number = 1)
+  cat('\n', 'Bryois', colnames(GENE_LIST), 'loaded. Rows:', nrow(GENE_LIST))
+  
+  CELL_TYPE_EDIT <- paste0('bryois_', colnames(GENE_LIST))
+  colnames(GENE_LIST) <- CELL_TYPE_EDIT
+  
+  write_tsv(GENE_LIST, paste0(ENTREZ_DIR, CELL_TYPE_EDIT, '_entrez_gene_list.tsv'), col_names = TRUE)
+    
+  
+  # assign(paste0(CELL_TYPE_EDIT, '_raw_entrez'), GENE_LIST)
+  # 
+  # cat(paste0('\n\nRunning conversion for: ', CELL_TYPE_EDIT, '\n'))
+  # cat(paste0('Total genes before converting IDs: ', nrow(GENE_LIST), '\n'))
+  # 
+  # # Convert gene IDs 
+  # cat('Converting human gene IDs using BiomaRt ... \n')
+  # mart = useMart("ensembl", dataset = "hsapiens_gene_ensembl")
+  # ENTREZ_GENES = getBM(attributes = c("hgnc_symbol", "entrezgene_id", "ensembl_gene_id"), 
+  #                      filters = "entrezgene_id", 
+  #                      values = GENE_LIST, 
+  #                      bmHeader = T, 
+  #                      mart = mart)
+  # ENTREZ_GENES_noNA <- ENTREZ_GENES %>% na_if("") %>% drop_na()
+  # ENTREZ_GENES_UNIQUE <- as.data.frame(unique(ENTREZ_GENES_noNA[, 2]))
+  # HGNC_GENES_UNIQUE <- as.data.frame(unique(ENTREZ_GENES_noNA[, 1]))
+  # 
+  # colnames(ENTREZ_GENES_UNIQUE) <- CELL_TYPE_EDIT
+  # colnames(HGNC_GENES_UNIQUE) <- CELL_TYPE_EDIT
+  # 
+  # cat(paste0('Total genes after converting IDs: ', nrow(ENTREZ_GENES), '\n'))
+  # cat(paste0('Total genes after removing NAs: ', nrow(ENTREZ_GENES_noNA), '\n'))
+  # cat(paste0('Total genes after checking uniqueness (so final count): ', nrow(HGNC_GENES_UNIQUE), '\n'))
+  # 
+  # # Add annotation to gene list
+  # ENTREZ_GENES_ANNOT <- ENTREZ_GENES_UNIQUE
+  # ENTREZ_GENES_ANNOT$gene_list <- rep(paste0(CELL_TYPE_EDIT), nrow(ENTREZ_GENES_ANNOT))
+  # 
+  # # Create transposed df
+  # ENTREZ_GENES_TRANS <- as.data.frame(t(ENTREZ_GENES_UNIQUE))
+  # 
+  # assign(paste0(CELL_TYPE_EDIT, '_entrezID'), ENTREZ_GENES_UNIQUE)
+  # assign(paste0(CELL_TYPE_EDIT, '_entrezID_annot'), ENTREZ_GENES_ANNOT)
+  # assign(paste0(CELL_TYPE_EDIT, '_entrezID_trans'), ENTREZ_GENES_TRANS)
+  # assign(CELL_TYPE_EDIT, HGNC_GENES_UNIQUE)
+  # 
+  # # write_tsv(ENTREZ_GENES_UNIQUE, paste0(ENTREZ_DIR, CELL_TYPE_EDIT, '_entrez_gene_list.tsv'))
+  # # write_tsv(ENTREZ_GENES_ANNOT, paste0(ENTREZ_DIR, CELL_TYPE_EDIT, '_entrez_gene_list_annot.tsv'), col_names = FALSE)
+  # # write.table(ENTREZ_GENES_TRANS, paste0(ENTREZ_DIR, CELL_TYPE_EDIT, '_entrez_gene_list_trans.tsv'), col.names = FALSE, 
+  # #             quote = FALSE, sep = '\t', row.names = TRUE)
+  # 
+  #write_tsv(HGNC_GENES_UNIQUE, paste0(ENTREZ_DIR, CELL_TYPE_EDIT, '_entrez_gene_list.tsv'))
+ 
+    
+  
 }
 
  
