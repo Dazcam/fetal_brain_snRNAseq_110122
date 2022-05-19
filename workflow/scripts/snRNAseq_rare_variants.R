@@ -11,7 +11,7 @@
 #  3. Run a wilcoxon test on specificity scores of schema genes in each of 91 cell types 
 #     against the specificty scores for the rest of the genes in each cell type
 
-# Note: H1-4 in schema data is encoded HIST1H1E in our data
+#  Note: H1-4 in schema data is encoded HIST1H1E in our data
 
 ##  Load Packages  --------------------------------------------------------------------
 library(tidyverse)
@@ -21,8 +21,12 @@ library(cowplot)
 ## Set variables  ---------------------------------------------------------------------
 DATA_DIR <- '~/Desktop/fetal_brain_snRNAseq_110122/resources/'
 FIG_DIR <- '~/Desktop/fetal_brain_snRNAseq_110122/results/figures/'
+RESULTS_DIR <- '~/Desktop/fetal_brain_snRNAseq_110122/results/rare_variants/'
+dir.create(RESULTS_DIR)
 REGIONS <- c('cer', 'hip', 'pfc', 'tha', 'wge')
+REGIONS_NEW <- c('Cer', 'FC', 'GE', 'Hipp', 'Thal')
 options(scipen=999) # remove scientific notation messess with ordering of tables
+
 
 ## Load Data --------------------------------------------------------------------------
 # Load fetal specificty scores for all 91 cell types 
@@ -141,7 +145,17 @@ for (STUDY in c('schema_genes', 'asd_genes')) {
   assign(paste0(STUDY, '_wilcoxon_df'), wilcoxon_df)
   assign(paste0(STUDY, '_wilcoxon_boxplots'), wilcoxon_boxplot_list)
   
-  write_tsv(wilcoxon_df, paste0(FIG_DIR, STUDY, '_wilcoxon.txt'))
+  write_tsv(wilcoxon_df, paste0(RESULTS_DIR, STUDY, 'all_wilcoxon.txt'))
+  
+  for (REGION in REGIONS_NEW) {
+    
+    wilcoxon_regional_df <- wilcoxon_df %>%
+      filter(grepl(REGION, cell_type))
+    write_tsv(wilcoxon_regional_df, paste0(RESULTS_DIR, STUDY, '_', REGION,'_wilcoxon.txt'))
+    
+    
+  }
+  
   
   rm(wilcoxon_df)
   rm(wilcoxon_boxplot_list)
@@ -154,19 +168,3 @@ for (STUDY in c('schema_genes', 'asd_genes')) {
 
 #--------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------
-
-asd_genes_wilcoxon_df %>% 
-  arrange(P) %>%
-  mutate(BF = p.adjust(P, 'bonferroni', length(P))) %>%
-  mutate(FDR = p.adjust(P, 'BH', length(P)))
-
-
-specificity_DF <- get(paste0('pfc', '_specificity')) %>%
-  rownames_to_column(var = 'gene')
-
-
-  specificity_cell <- data.frame(gene = specificity_DF$gene,
-                                 cell_scores = specificity_DF[['FC-OPC']]) %>%
-    mutate(study_status = ifelse(gene %in% schema_genes$gene, 'in_study', 'not_in_study'))
-  
-boxplot(cell_scores ~ study_status, data = specificity_cell)
