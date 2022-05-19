@@ -13,7 +13,7 @@ configfile: "../config/config.yaml"
 
 rule make_annot:
     input:   gene_set = "../results/q10_gene_lists_for_LDSC/{CELL_TYPE}_Q{QUANTILE}_genes.tsv",
-             gene_coord = "../resources/sheets/snRNAseq_LDSC_gene_coords.tsv",
+             gene_coord = "../resources/snRNAseq_LDSC_gene_coords.tsv",
              bim_file = "../resources/ldsc/reference_files/1000G_EUR_Phase3_plink/1000G.EUR.QC.{CHR}.bim" 
     output:  "../results/LDSR_annotation_files/snRNAseq.{CELL_TYPE}.Q{QUANTILE}.{CHR}.annot.gz"
     conda:   "../envs/ldsc.yml"    

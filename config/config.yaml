@@ -173,3 +173,7 @@ MAGMA_CONDITIONS:
     bryois_exCA3:
     bryois_exDG:
     bryois_exPFC1: 
+
+MAGMA_EXT_UP: 100
+MAGMA_EXT_DOWN: 100
+    

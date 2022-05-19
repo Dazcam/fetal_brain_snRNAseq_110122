@@ -1,0 +1,21 @@
+# TOTAL_GENES = 18183
+# TEST_DIRECTION = one-sided, positive (set), two-sided (covar)
+# CONDITIONED_INTERNAL = gene size, gene density, inverse mac, log(gene size), log(gene density), log(inverse mac)
+VARIABLE        TYPE  NGENES         BETA     BETA_STD           SE            P
+FC.ExN.1         SET     918     0.047156     0.010325     0.040645      0.12299
+FC.ExN.2         SET    1213      0.24035     0.059973     0.036124   1.4845e-11
+FC.ExN.3         SET    1100      0.18427     0.043932     0.037876   5.7796e-07
+FC.RG.1          SET    1123     -0.10488    -0.025248     0.036805      0.99781
+FC.ExN.4         SET    1184      0.15564     0.038402     0.036165   8.4589e-06
+FC.InN.1         SET     807      0.18321     0.037731     0.043273   1.1565e-05
+FC.InN.2         SET     844      0.10261     0.021588     0.042865    0.0083443
+FC.ExN.5         SET    1180      0.15834     0.039007     0.036424   6.9453e-06
+FC.CycPro        SET    1183    -0.014595   -0.0035996     0.035922      0.65773
+FC.IP            SET     798     0.057229     0.011723     0.043158     0.092423
+FC.InN.3         SET     763    0.0082234    0.0016489     0.044014       0.4259
+FC.N.undef       SET     945     0.078431      0.01741     0.040166     0.025439
+FC.RG.2          SET     885    -0.076662    -0.016497     0.040635      0.97038
+FC.InN.4         SET     749      0.15546     0.030896     0.045127   0.00028637
+FC.Endo          SET    1039     -0.14617    -0.033928     0.038146      0.99994
+FC.OPC           SET     651     0.017916    0.0033288     0.048167      0.35497
+FC.MG            SET     842    -0.087928    -0.018478     0.041686      0.98253

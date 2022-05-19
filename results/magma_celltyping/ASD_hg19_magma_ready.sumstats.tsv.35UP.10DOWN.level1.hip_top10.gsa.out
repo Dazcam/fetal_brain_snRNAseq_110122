@@ -1,0 +1,24 @@
+# MEAN_SAMPLE_SIZE = 46350
+# TOTAL_GENES = 18047
+# TEST_DIRECTION = one-sided, positive (set), two-sided (covar)
+# CONDITIONED_INTERNAL = gene size, gene density, inverse mac, log(gene size), log(gene density), log(inverse mac)
+VARIABLE         TYPE  NGENES         BETA     BETA_STD           SE            P
+Hipp.ExN.1        SET    1032     0.018964    0.0044034     0.030481      0.26692
+Hipp.CR.1         SET    1074    -0.010875   -0.0025729      0.03021      0.64056
+Hipp.RG.1         SET    1081     -0.03506   -0.0083201     0.029524      0.88248
+Hipp.RG.2         SET    1098     0.021257    0.0050814     0.028926      0.23121
+Hipp.ExN.2        SET     997    -0.004517    -0.001032     0.030593      0.55869
+Hipp.InN.1        SET     949     0.044458    0.0099234     0.031046     0.076086
+Hipp.ExN.3        SET    1121     0.010869    0.0026234     0.029126      0.35452
+Hipp.InN.2        SET    1011     0.031401    0.0072211     0.029729      0.14544
+Hipp.CycPro       SET    1082   -0.0060889   -0.0014456     0.028663      0.58411
+Hipp.InN.3        SET     924   -0.0094235    -0.002077     0.031799      0.61651
+Hipp.CR.2         SET     889    -0.018345   -0.0039702     0.032076      0.71631
+Hipp.ExN.4        SET     924     0.027588    0.0060808      0.03121      0.18836
+Hipp.ExN.5        SET    1023     0.076279     0.017639     0.030503     0.006203
+Hipp.RG.3         SET     994    -0.048098    -0.010973     0.030332      0.94358
+Hipp.InN.4        SET     765    -0.043976   -0.0088604     0.034098      0.90141
+Hipp.OPC          SET     838     0.047663      0.01003     0.032821     0.073232
+Hipp.ExN.6        SET     908     0.036777    0.0080394      0.03188      0.12433
+Hipp.MG           SET     811     -0.05433    -0.011256     0.032773      0.95131
+Hipp.Endo         SET     816      0.02441     0.005072     0.033719      0.23456
