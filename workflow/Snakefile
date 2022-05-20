@@ -7,7 +7,11 @@
 #include: "rules/snRNAseq_magma_conditional.smk"
 #include: "rules/snRNAseq_SVM_analysis.smk"
 #include: "rules/snRNAseq_magma_GO.smk"
-include: "rules/snRNAseq_magma_cellTyping_change_extension.smk"
+#include: "rules/snRNAseq_magma_cellTyping_change_extension.smk"
+include: "rules/snRNAseq_LDSC_change_extension.smk"
+
+import pandas as pd
+import numpy as np
 
 rule all:
     input:
@@ -19,4 +23,12 @@ rule all:
 #        expand("../results/magma_conditional/magma_all_sig_and_skene_condition_{CONDITION}.gsa.out", CONDITION = config['MAGMA_CONDITIONS']),
 #        "../resources/sheets/snRNAseq_cluster_labels_rand_wge_for_SVM.csv",
 #        "../results/magma_GO/magma_GO.gsa.out"
-         expand("../results/magma_celltyping/{GWAS}_hg19_magma_ready.sumstats.tsv.{MAGMA_EXT_UP}UP.{MAGMA_EXT_DOWN}DOWN/", GWAS = config["SUMSTATS"], MAGMA_EXT_UP = config["MAGMA_EXT_UP"], MAGMA_EXT_DOWN = config["MAGMA_EXT_DOWN"])        
+#         expand("../results/magma_celltyping/{GWAS}_hg19_magma_ready.sumstats.tsv.{EXT_UP}UP.{EXT_DOWN}DOWN/", GWAS = config["SUMSTATS"], EXT_UP = config["EXT_UP"], EXT_DOWN = config["EXT_DOWN"])        
+#         expand("../results/gene_lists/gene_coords/snRNAseq_LDSC_gene_coords_UP{EXT_UP}_DOWN{EXT_DOWN}.tsv", EXT_UP = config["EXT_UP"], EXT_DOWN = config["EXT_DOWN"])           
+         expand("../results/LDSR_part_herit/baseline_v1.2/snRNAseq_LDSC_UP{EXT_UP}_DOWN{EXT_DOWN}_{GWAS}_baseline.v1.2_top10pc.tsv", EXT_UP = config["EXT_UP"], EXT_DOWN = config["EXT_DOWN"], GWAS = config["SUMSTATS"])
+
+
+
+
+
+                
