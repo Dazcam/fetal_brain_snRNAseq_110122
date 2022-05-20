@@ -23,29 +23,53 @@ GO_DF <- read.table(paste0(DATA_DIR, 'magma_GO.gsa.out'), header = FALSE) %>%
   janitor::row_to_names(row_number = 1)
 
 # Need to recode GO Terms as Magma truncated them - https://stackoverflow.com/questions/65178820
-COMPLETE_TERMS <- c("GO:0007399~nervous" = "GO:0007399~nervous system development", 
-                    "GO:0048666~neuron" = "GO:0048666~neuron development", 
-                    "GO:0022008~neurogenesis" = "GO:0022008~neurogenesis",
-                    "GO:0021872~forebrain" = "GO:0021872~forebrain generation of neurons", 
-                    "GO:0030182~neuron" = "GO:0030182~neuron differentiation", 
-                    "GO:0001764~neuron" = "GO:0001764~neuron migration", 
-                    "GO:0048667~cell" = "GO:0048667~cell morphogenesis involved in neuron differentiation", 
-                    "GO:0007156~homophilic" = "GO:0007156~homophilic cell adhesion via PAM", 
-                    "GO:0031175~neuron" = "GO:0031175~neuron projection development", 
-                    "GO:0061564~axon" = "GO:0061564~axon development", 
-                    "GO:0030516~regulation" = "GO:0030516~regulation of axon extension", 
-                    "GO:0050803~regulation" = "GO:0050803~regulation of synapse structure or activity", 
-                    "GO:0050808~synapse" = "GO:0050808~synapse organization", 
-                    "GO:0007416~synapse" = "GO:0007416~synapse assembly", 
-                    "GO:0099536~synaptic" = "GO:0099536~synaptic signaling", 
-                    "GO:0050804~modulation" = "GO:0050804~modulation of synaptic transmission", 
-                    "GO:0007186~G-protein" = "GO:0007186~G-protein coupled receptor signaling pathway", 
-                    "GO:0042391~regulation" = "GO:0042391~regulation of membrane potential", 
-                    "GO:0043269~regulation" = "GO:0043269~regulation of ion transport", 
-                    "GO:0006836~neurotransmitter" = "GO:0006836~neurotransmitter transport", 
-                    "GO:0034762~regulation" = "GO:0034762~regulation of transmembrane transport", 
-                    "GO:0007610~behavior" = "GO:0007610~behavior", 
-                    "GO:0007613~memory" = "GO:0007613~memory")
+# COMPLETE_TERMS <- c("GO:0007399~nervous" = "GO:0007399~nervous system development", 
+#                     "GO:0048666~neuron" = "GO:0048666~neuron development", 
+#                     "GO:0022008~neurogenesis" = "GO:0022008~neurogenesis",
+#                     "GO:0021872~forebrain" = "GO:0021872~forebrain generation of neurons", 
+#                     "GO:0030182~neuron" = "GO:0030182~neuron differentiation", 
+#                     "GO:0001764~neuron" = "GO:0001764~neuron migration", 
+#                     "GO:0048667~cell" = "GO:0048667~cell morphogenesis involved in neuron differentiation", 
+#                     "GO:0007156~homophilic" = "GO:0007156~homophilic cell adhesion via PAM", 
+#                     "GO:0031175~neuron" = "GO:0031175~neuron projection development", 
+#                     "GO:0061564~axon" = "GO:0061564~axon development", 
+#                     "GO:0030516~regulation" = "GO:0030516~regulation of axon extension", 
+#                     "GO:0050803~regulation" = "GO:0050803~regulation of synapse structure or activity", 
+#                     "GO:0050808~synapse" = "GO:0050808~synapse organization", 
+#                     "GO:0007416~synapse" = "GO:0007416~synapse assembly", 
+#                     "GO:0099536~synaptic" = "GO:0099536~synaptic signaling", 
+#                     "GO:0050804~modulation" = "GO:0050804~modulation of synaptic transmission", 
+#                     "GO:0007186~G-protein" = "GO:0007186~G-protein coupled receptor signaling pathway", 
+#                     "GO:0042391~regulation" = "GO:0042391~regulation of membrane potential", 
+#                     "GO:0043269~regulation" = "GO:0043269~regulation of ion transport", 
+#                     "GO:0006836~neurotransmitter" = "GO:0006836~neurotransmitter transport", 
+#                     "GO:0034762~regulation" = "GO:0034762~regulation of transmembrane transport", 
+#                     "GO:0007610~behavior" = "GO:0007610~behavior", 
+#                     "GO:0007613~memory" = "GO:0007613~memory")
+
+COMPLETE_TERMS <- c("GO:0007399~nervous" = "Nervous system development", 
+                    "GO:0048666~neuron" = "Neuron development", 
+                    "GO:0022008~neurogenesis" = "Neurogenesis",
+                    "GO:0021872~forebrain" = "Forebrain generation of neurons", 
+                    "GO:0030182~neuron" = "Neuron differentiation", 
+                    "GO:0001764~neuron" = "Neuron migration", 
+                    "GO:0048667~cell" = "Cell morphogenesis involved in neuron differentiation", 
+                    "GO:0007156~homophilic" = "Homophilic cell adhesion via PAM", 
+                    "GO:0031175~neuron" = "Neuron projection development", 
+                    "GO:0061564~axon" = "Axon development", 
+                    "GO:0030516~regulation" = "Regulation of axon extension", 
+                    "GO:0050803~regulation" = "Regulation of synapse structure or activity", 
+                    "GO:0050808~synapse" = "Synapse organization", 
+                    "GO:0007416~synapse" = "Synapse assembly", 
+                    "GO:0099536~synaptic" = "Synaptic signaling", 
+                    "GO:0050804~modulation" = "Modulation of synaptic transmission", 
+                    "GO:0007186~G-protein" = "G-protein coupled receptor signaling pathway", 
+                    "GO:0042391~regulation" = "Regulation of membrane potential", 
+                    "GO:0043269~regulation" = "Regulation of ion transport", 
+                    "GO:0006836~neurotransmitter" = "Neurotransmitter transport", 
+                    "GO:0034762~regulation" = "Regulation of transmembrane transport", 
+                    "GO:0007610~behavior" = "Behavior", 
+                    "GO:0007613~memory" = "Memory")
 
 for (CELL_TYPE in SIG_CELLS) {
 
@@ -73,19 +97,33 @@ ORDERED_LIST <- GO_DF_GROUP %>% select(Full_Term) %>%
   unname() %>%
   as_factor()
 
-levels(ORDERED_LIST) <- c("GO:0007399~nervous system development", "GO:0048666~neuron development", 
-                          "GO:0022008~neurogenesis", "GO:0021872~forebrain generation of neurons", 
-                          "GO:0030182~neuron differentiation", "GO:0001764~neuron migration", 
-                          "GO:0048667~cell morphogenesis involved in neuron differentiation", 
-                          "GO:0007156~homophilic cell adhesion via PAM", 
-                          "GO:0031175~neuron projection development", "GO:0061564~axon development", 
-                          "GO:0030516~regulation of axon extension", "GO:0050803~regulation of synapse structure or activity", 
-                          "GO:0050808~synapse organization", "GO:0007416~synapse assembly", 
-                          "GO:0099536~synaptic signaling", "GO:0050804~modulation of synaptic transmission", 
-                          "GO:0007186~G-protein coupled receptor signaling pathway", "GO:0042391~regulation of membrane potential", 
-                          "GO:0043269~regulation of ion transport", "GO:0006836~neurotransmitter transport", 
-                          "GO:0034762~regulation of transmembrane transport", "GO:0007610~behavior", 
-                          "GO:0007613~memory")
+# levels(ORDERED_LIST) <- c("GO:0007399~nervous system development", "GO:0048666~neuron development", 
+#                           "GO:0022008~neurogenesis", "GO:0021872~forebrain generation of neurons", 
+#                           "GO:0030182~neuron differentiation", "GO:0001764~neuron migration", 
+#                           "GO:0048667~cell morphogenesis involved in neuron differentiation", 
+#                           "GO:0007156~homophilic cell adhesion via PAM", 
+#                           "GO:0031175~neuron projection development", "GO:0061564~axon development", 
+#                           "GO:0030516~regulation of axon extension", "GO:0050803~regulation of synapse structure or activity", 
+#                           "GO:0050808~synapse organization", "GO:0007416~synapse assembly", 
+#                           "GO:0099536~synaptic signaling", "GO:0050804~modulation of synaptic transmission", 
+#                           "GO:0007186~G-protein coupled receptor signaling pathway", "GO:0042391~regulation of membrane potential", 
+#                           "GO:0043269~regulation of ion transport", "GO:0006836~neurotransmitter transport", 
+#                           "GO:0034762~regulation of transmembrane transport", "GO:0007610~behavior", 
+#                           "GO:0007613~memory")
+
+levels(ORDERED_LIST) <- c("Nervous system development", "Neuron development", 
+                          "Neurogenesis", "Forebrain generation of neurons", 
+                          "Neuron differentiation", "Neuron migration", 
+                          "Cell morphogenesis involved in neuron differentiation", 
+                          "Homophilic cell adhesion via PAM", 
+                          "Neuron projection development", "Axon development", 
+                          "Regulation of axon extension", "Regulation of synapse structure or activity", 
+                          "Synapse organization", "Synapse assembly", 
+                          "Synaptic signaling", "Modulation of synaptic transmission", 
+                          "G-protein coupled receptor signaling pathway", "Regulation of membrane potential", 
+                          "Regulation of ion transport", "Neurotransmitter transport", 
+                          "Regulation of transmembrane transport", "Behavior", 
+                          "Memory")
 
 
 GO_PLOT <- ggplot(GO_DF_GROUP, aes(x = -log10(as.numeric(P)), y = Full_Term)) +
@@ -109,7 +147,7 @@ GO_PLOT <- ggplot(GO_DF_GROUP, aes(x = -log10(as.numeric(P)), y = Full_Term)) +
   xlab(expression(-log[10](P))) +
   ylab('Term') +
   xlim(0, 10.5) +
-  scale_x_continuous(breaks= pretty_breaks()) +
+  scale_x_continuous(breaks= scales::pretty_breaks()) +
   scale_y_discrete(limits = rev(levels(ORDERED_LIST)))
   
 
