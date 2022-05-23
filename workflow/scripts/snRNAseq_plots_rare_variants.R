@@ -88,11 +88,11 @@ for (REGION in REGIONS) {
 #  Schema
 FC_schema_genes_wilcoxon_plot <- FC_schema_genes_wilcoxon_plot +
   geom_segment(aes(x = 11, y = 13.6, xend = 11, yend = 14.4)) + # FC-ExN-2
-  annotate("text", x = 11.5, y = 13.75, label = "*", size = 7) +
+  annotate("text", x = 11.5, y = 13.77, label = "*", size = 7) +
   geom_segment(aes(x = 11, y = 8.6, xend = 11, yend = 9.4)) + # FC-InN-2
-  annotate("text", x = 11.5, y = 8.75, label = "*", size = 7) +
+  annotate("text", x = 11.5, y = 8.77, label = "*", size = 7) +
   geom_segment(aes(x = 11, y = 2.6, xend = 11, yend = 3.4)) + # FC-OPC
-  annotate("text", x = 11.5, y = 2.75, label = "*", size = 7) 
+  annotate("text", x = 11.5, y = 2.77, label = "*", size = 7) 
 
 Hipp_schema_genes_wilcoxon_plot <- Hipp_schema_genes_wilcoxon_plot +
   geom_segment(aes(x = 11, y = 10.6, xend = 11, yend = 11.4)) + # Hipp-ExN-5
@@ -101,79 +101,79 @@ Hipp_schema_genes_wilcoxon_plot <- Hipp_schema_genes_wilcoxon_plot +
 # ASD
 Cer_asd_genes_wilcoxon_plot <- Cer_asd_genes_wilcoxon_plot +
   geom_segment(aes(x = 11, y = 19.6, xend = 11, yend = 20.4)) + # Cer-Endo
-  annotate("text", x = 11.5, y = 19.7, label = "*", size = 7) +
+  annotate("text", x = 11.5, y = 19.72, label = "*", size = 7) +
   geom_segment(aes(x = 11, y = 18.6, xend = 11, yend = 19.4)) + # Cer-ExN-1
-  annotate("text", x = 11.5, y = 18.7, label = "*", size = 7) +
+  annotate("text", x = 11.5, y = 18.72, label = "*", size = 7) +
   geom_segment(aes(x = 11, y = 17.6, xend = 11, yend = 18.4)) + # Cer-ExN-2
-  annotate("text", x = 11.5, y = 17.7, label = "*", size = 7) +
+  annotate("text", x = 11.5, y = 17.72, label = "*", size = 7) +
   geom_segment(aes(x = 11, y = 16.6, xend = 11, yend = 17.4)) + # Cer-ExN-3
-  annotate("text", x = 11.5, y = 16.7, label = "*", size = 7) +
+  annotate("text", x = 11.5, y = 16.72, label = "*", size = 7) +
   geom_segment(aes(x = 11, y = 10.6, xend = 11, yend = 11.4)) + # Cer-InN-4
-  annotate("text", x = 11.5, y = 10.7, label = "*", size = 7) +
+  annotate("text", x = 11.5, y = 10.72, label = "*", size = 7) +
   geom_segment(aes(x = 11, y = 9.6, xend = 11, yend = 10.4)) + # Cer-InN-5
-  annotate("text", x = 11.5, y = 9.7, label = "*", size = 7) +
+  annotate("text", x = 11.5, y = 9.72, label = "*", size = 7) +
   geom_segment(aes(x = 11, y = 8.6, xend = 11, yend = 9.4)) + # Cer-InN-6
-  annotate("text", x = 11.5, y = 8.7, label = "*", size = 7) +
+  annotate("text", x = 11.5, y = 8.72, label = "*", size = 7) +
   geom_segment(aes(x = 11, y = 7.6, xend = 11, yend = 8.4)) + # Cer-InN-7
-  annotate("text", x = 11.5, y = 7.7, label = "*", size = 7) +
+  annotate("text", x = 11.5, y = 7.72, label = "*", size = 7) +
   geom_segment(aes(x = 11, y = 6.6, xend = 11, yend = 7.4)) + # Cer-InN-8
-  annotate("text", x = 11.5, y = 6.7, label = "*", size = 7) +
+  annotate("text", x = 11.5, y = 6.72, label = "*", size = 7) +
   geom_segment(aes(x = 11, y = 5.6, xend = 11, yend = 6.4)) + # Cer-IP
-  annotate("text", x = 11.5, y = 5.7, label = "*", size = 7) +
+  annotate("text", x = 11.5, y = 5.72, label = "*", size = 7) +
   geom_segment(aes(x = 11, y = 4.6, xend = 11, yend = 5.4)) + # Cer-MG
-  annotate("text", x = 11.5, y = 4.7, label = "*", size = 7) 
+  annotate("text", x = 11.5, y = 4.72, label = "*", size = 7) 
 
 FC_asd_genes_wilcoxon_plot <- FC_asd_genes_wilcoxon_plot +
   geom_segment(aes(x = 11, y = 16.6, xend = 11, yend = 17.4)) + # FC-CycPro
-  annotate("text", x = 11.5, y = 16.75, label = "*", size = 7) +
+  annotate("text", x = 11.5, y = 16.77, label = "*", size = 7) +
   geom_segment(aes(x = 11, y = 14.6, xend = 11, yend = 15.4)) + # FC-ExN-1
-  annotate("text", x = 11.5, y = 14.75, label = "*", size = 7) +
+  annotate("text", x = 11.5, y = 14.77, label = "*", size = 7) +
   geom_segment(aes(x = 11, y = 13.6, xend = 11, yend = 14.4)) + # FC-ExN-2
-  annotate("text", x = 11.5, y = 13.75, label = "*", size = 7) +
+  annotate("text", x = 11.5, y = 13.77, label = "*", size = 7) +
   geom_segment(aes(x = 11, y = 12.6, xend = 11, yend = 13.4)) + # FC-ExN-3
-  annotate("text", x = 11.5, y = 12.75, label = "*", size = 7) +
+  annotate("text", x = 11.5, y = 12.77, label = "*", size = 7) +
   geom_segment(aes(x = 11, y = 11.6, xend = 11, yend = 12.4)) + # FC-ExN-4
-  annotate("text", x = 11.5, y = 11.75, label = "*", size = 7) +
+  annotate("text", x = 11.5, y = 11.77, label = "*", size = 7) +
   geom_segment(aes(x = 11, y = 10.6, xend = 11, yend = 11.4)) + # FC-ExN-5
-  annotate("text", x = 11.5, y = 10.75, label = "*", size = 7) +
+  annotate("text", x = 11.5, y = 10.77, label = "*", size = 7) +
   geom_segment(aes(x = 11, y = 9.6, xend = 11, yend = 10.4)) + # FC-InN-1
-  annotate("text", x = 11.5, y = 9.75, label = "*", size = 7) +
+  annotate("text", x = 11.5, y = 9.77, label = "*", size = 7) +
   geom_segment(aes(x = 11, y = 8.6, xend = 11, yend = 9.4)) + # FC-InN-2
-  annotate("text", x = 11.5, y = 8.75, label = "*", size = 7) +
+  annotate("text", x = 11.5, y = 8.77, label = "*", size = 7) +
   geom_segment(aes(x = 11, y = 7.6, xend = 11, yend = 8.4)) + # FC-InN-3
-  annotate("text", x = 11.5, y = 7.75, label = "*", size = 7) +
+  annotate("text", x = 11.5, y = 7.77, label = "*", size = 7) +
   geom_segment(aes(x = 11, y = 3.6, xend = 11, yend = 4.4)) + # FC-N-undef
-  annotate("text", x = 11.5, y = 3.75, label = "*", size = 7) +
+  annotate("text", x = 11.5, y = 3.77, label = "*", size = 7) +
   geom_segment(aes(x = 11, y = 2.6, xend = 11, yend = 3.4)) + # FC-OPC
-  annotate("text", x = 11.5, y = 2.75, label = "*", size = 7) 
+  annotate("text", x = 11.5, y = 2.77, label = "*", size = 7) 
 
 GE_asd_genes_wilcoxon_plot <- GE_asd_genes_wilcoxon_plot +
   geom_segment(aes(x = 11, y = 9.6, xend = 11, yend = 10.4)) + # FC-InN-1
-  annotate("text", x = 11.5, y = 9.8, label = "*", size = 7) +
+  annotate("text", x = 11.5, y = 9.85, label = "*", size = 7) +
   geom_segment(aes(x = 11, y = 8.6, xend = 11, yend = 9.4)) + # FC-InN-2
-  annotate("text", x = 11.5, y = 8.8, label = "*", size = 7) +
+  annotate("text", x = 11.5, y = 8.85, label = "*", size = 7) +
   geom_segment(aes(x = 11, y = 7.6, xend = 11, yend = 8.4)) + # FC-InN-3
-  annotate("text", x = 11.5, y = 7.8, label = "*", size = 7) +
+  annotate("text", x = 11.5, y = 7.85, label = "*", size = 7) +
   geom_segment(aes(x = 11, y = 6.6, xend = 11, yend = 7.4)) + # FC-InN-4
-  annotate("text", x = 11.5, y = 6.8, label = "*", size = 7) +
+  annotate("text", x = 11.5, y = 6.85, label = "*", size = 7) +
   geom_segment(aes(x = 11, y = 5.6, xend = 11, yend = 6.4)) + # FC-InN-5
-  annotate("text", x = 11.5, y = 5.8, label = "*", size = 7) +
+  annotate("text", x = 11.5, y = 5.85, label = "*", size = 7) +
   geom_segment(aes(x = 11, y = 4.6, xend = 11, yend = 5.4)) + # FC-InN-6
-  annotate("text", x = 11.5, y = 4.8, label = "*", size = 7) +
+  annotate("text", x = 11.5, y = 4.85, label = "*", size = 7) +
   geom_segment(aes(x = 11, y = 3.6, xend = 11, yend = 4.4)) + # FC-InN-7
-  annotate("text", x = 11.5, y = 3.8, label = "*", size = 7)
+  annotate("text", x = 11.5, y = 3.85, label = "*", size = 7)
 
 Hipp_asd_genes_wilcoxon_plot <- Hipp_asd_genes_wilcoxon_plot +
   geom_segment(aes(x = 11, y = 18.6, xend = 11, yend = 19.4)) + # Hipp-CR-1
-  annotate("text", x = 11.5, y = 18.75, label = "*", size = 7) +
+  annotate("text", x = 11.5, y = 18.77, label = "*", size = 7) +
   geom_segment(aes(x = 11, y = 15.6, xend = 11, yend = 16.4)) + # Hipp-Endo
-  annotate("text", x = 11.5, y = 15.75, label = "*", size = 7) +
+  annotate("text", x = 11.5, y = 15.77, label = "*", size = 7) +
   geom_segment(aes(x = 11, y = 12.6, xend = 11, yend = 13.4)) + # Hipp-3
-  annotate("text", x = 11.5, y = 12.75, label = "*", size = 7) +
+  annotate("text", x = 11.5, y = 12.77, label = "*", size = 7) +
   geom_segment(aes(x = 11, y = 10.6, xend = 11, yend = 11.4)) + # Hipp-5
-  annotate("text", x = 11.5, y = 10.75, label = "*", size = 7) +
+  annotate("text", x = 11.5, y = 10.77, label = "*", size = 7) +
   geom_segment(aes(x = 11, y = 4.6, xend = 11, yend = 5.4)) + # Hipp-6
-  annotate("text", x = 11.5, y = 4.75, label = "*", size = 7) 
+  annotate("text", x = 11.5, y = 4.77, label = "*", size = 7) 
 
 Thal_asd_genes_wilcoxon_plot <- Thal_asd_genes_wilcoxon_plot +
   geom_segment(aes(x = 11, y = 21.6, xend = 11, yend = 22.4)) + # Thal-Endo
