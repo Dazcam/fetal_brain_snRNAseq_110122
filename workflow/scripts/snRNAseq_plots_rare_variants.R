@@ -89,8 +89,8 @@ for (REGION in REGIONS) {
 FC_schema_genes_wilcoxon_plot <- FC_schema_genes_wilcoxon_plot +
   geom_segment(aes(x = 11, y = 13.6, xend = 11, yend = 14.4)) + # FC-ExN-2
   annotate("text", x = 11.5, y = 13.77, label = "*", size = 7) +
-  geom_segment(aes(x = 11, y = 8.6, xend = 11, yend = 9.4)) + # FC-InN-2
-  annotate("text", x = 11.5, y = 8.77, label = "*", size = 7) +
+  geom_segment(aes(x = 11, y = 6.6, xend = 11, yend = 7.4)) + # FC-InN-2
+  annotate("text", x = 11.5, y = 6.77, label = "*", size = 7) +
   geom_segment(aes(x = 11, y = 2.6, xend = 11, yend = 3.4)) + # FC-OPC
   annotate("text", x = 11.5, y = 2.77, label = "*", size = 7) 
 
