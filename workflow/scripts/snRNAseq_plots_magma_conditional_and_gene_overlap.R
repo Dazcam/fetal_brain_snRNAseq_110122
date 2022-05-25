@@ -61,6 +61,30 @@ fig_5A <- fig_5A_data %>%
   ylab("") +
   coord_equal(ratio = 1) 
 
+# Figure 5B - Adult mouse vs. fetal gene overlap grid  --------------------------------
+fig_5B_data <- reshape2::melt(skene_matrix) %>%
+  arrange(Var1) %>%
+  group_by(Var1) %>%
+  mutate(Var1 = R.utils::capitalize(Var1))
+
+fig_5B <- fig_5B_data %>%  
+  ggplot(aes(x=Var1, y=Var2, fill = 'white')) + 
+  geom_tile(color = "black", size = 0.5, fill = '#DBF3FA') +
+  geom_text(aes(label = value, size = 13)) +
+  theme(axis.text.x = element_text(angle = -90, hjust = TRUE)) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(colour = "#000000", size = 13, angle = 45, vjust = 1, hjust = 1),
+        axis.text.y  = element_text(colour = "#000000", size = 13),
+        legend.position = "none",
+        panel.grid = element_blank()) +
+  theme(legend.position = "none") +
+  theme(panel.grid = element_blank()) +
+  scale_x_discrete(labels = as.factor(gsub("_", "-", as.vector(unique(fig_5B_data$Var1))))) +
+  scale_y_discrete(limits = rev(levels(fig_5B_data$Var2)), labels = rev(gsub("_", "-", as.vector(unique(fig_5B_data$Var2))))) +
+  xlab("") + 
+  ylab("") +
+  coord_equal(ratio = 1) 
+
 
 for (CELL_TYPE in BRYOIS_CELL_TYPES) {
   
@@ -80,7 +104,7 @@ for (CELL_TYPE in BRYOIS_CELL_TYPES) {
 fetal_vs_adult_human <- rbind(bryois_exCA1, bryois_exCA3, bryois_exDG, bryois_exPFC1) 
 fetal_vs_adult_human$VARIABLE <- as.factor(fetal_vs_adult_human$VARIABLE)
 
-fig_5B <- fetal_vs_adult_human %>%
+fig_6A <- fetal_vs_adult_human %>%
   ggplot(aes(x = -log10(as.numeric(P)), y = factor(VARIABLE, rev(levels(factor(VARIABLE)))))) +
   geom_bar(stat = "identity", fill = '#F8766D', color = 'black') +
   geom_vline(xintercept=-log10(0.05), linetype = "dotted", color = "black") +
@@ -99,30 +123,6 @@ fig_5B <- fetal_vs_adult_human %>%
   ylab('Cell type')
 
 
-
-# Figure 6A - Adult mouse vs. fetal gene overlap grid  --------------------------------
-fig_6A_data <- reshape2::melt(skene_matrix) %>%
-  arrange(Var1) %>%
-  group_by(Var1) %>%
-  mutate(Var1 = R.utils::capitalize(Var1))
-
-fig_6A <- fig_6A_data %>%  
-  ggplot(aes(x=Var1, y=Var2, fill = 'white')) + 
-  geom_tile(color = "black", size = 0.5, fill = '#DBF3FA') +
-  geom_text(aes(label = value, size = 13)) +
-  theme(axis.text.x = element_text(angle = -90, hjust = TRUE)) +
-  theme_minimal() +
-  theme(axis.text.x = element_text(colour = "#000000", size = 13, angle = 45, vjust = 1, hjust = 1),
-        axis.text.y  = element_text(colour = "#000000", size = 13),
-        legend.position = "none",
-        panel.grid = element_blank()) +
-  theme(legend.position = "none") +
-  theme(panel.grid = element_blank()) +
-  scale_x_discrete(labels = as.factor(gsub("_", "-", as.vector(unique(fig_6A_data$Var1))))) +
-  scale_y_discrete(limits = rev(levels(fig_6A_data$Var2)), labels = rev(gsub("_", "-", as.vector(unique(fig_6A_data$Var2))))) +
-  xlab("") + 
-  ylab("") +
-  coord_equal(ratio = 1) 
 
 
 for (CELL_TYPE in SKENE_CELL_TYPES) {
