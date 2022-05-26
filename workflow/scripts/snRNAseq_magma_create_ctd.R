@@ -93,19 +93,12 @@ colnames(annotations) <- c('cell_id', 'level1class', 'level2class')
 rownames(annotations) <- NULL
 
 ##  Generate CTD object  --------------------------------------------------------------
-  
-  # Uses EWCE package - this creates an object called ctd 
-  # Note: option here to scTransform data to correct for cell size - not done this
-  # drop.uninformative.genes drops genes that do not show sig variance
-  # between level 2 celltypes (based on ANOVA) - not necessary as we are only using
-  # 1 level
-  # generate.celltype.data calculates the cell specific averages for each gene
-
 cat("Running ANOVA to drop uninformative genes ... \n")
 exp_DROPPED <- drop.uninformative.genes(exp = raw_counts_noMHC, 
                                             level2annot = annotations$level2class)
 cat('Uninformative genes dropped: ', dim(raw_counts_noMHC)[1] - dim(exp_DROPPED)[1], '\n\n')
 
+# Note same anns to both levels as we are not looking at more granular cell categorisations
 annotLevels <- list(level1class = annotations$level2class, 
                     level2class = annotations$level2class)
 
