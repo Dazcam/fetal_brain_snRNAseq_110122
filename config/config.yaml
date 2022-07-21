@@ -8,28 +8,21 @@
 # ------   CELL RANGER  ------
 
 SAMPLES_RNA:
-#    14510_Cerebellum_B2_RNA:
+#    14510_PFC_B1_RNA:
+#    14510_WGE_B1_RNA:
 #    14510_Hippocampus_B2_RNA:
-#    14510_Thalamus_B2_RNA:
-#    14611_Cerebellum_B2_RNA:
+#    14510_Thalamus_B3_RNA:
+#    14510_Cerebellum_B2_RNA:
+#    14611_PFC_B1_RNA:
+#    14611_WGE_B1_RNA:
 #    14611_Hippocampus_B2_RNA:
 #    14611_Thalamus_B2_RNA:
-#    14993_Cerebellum_B2_RNA:
-#    14993_Hippocampus_B2_RNA:
+#    14611_Cerebellum_B2_RNA:
 #    14993_PFC_B2_RNA:
-#    14993_Thalamus_B2_RNA:
 #    14993_WGE_B2_RNA:
-    14510_Cerebellum_B1_RNA:
-#    14510_PFC_B1_RNA: 
-    14510_Thalamus_B1_RNA:
-#    14510_WGE_B1_RNA:
-    14611_Cerebellum_B1_RNA:
-#    14611_PFC_B1_RNA:
-    14611_Thalamus_B1_RNA:
-#    14611_WGE_B1_RNA:
-    14993_Cerebellum_B1_RNA:
-    14993_Thalamus_B1_RNA:
-    14993_WGE_B1_RNA:
+#    14993_Hippocampus_B2_RNA:
+#    14993_Thalamus_B2_RNA:
+#    14993_Cerebellum_B3_RNA:
 
 FASTQ_DIR: ../resources/fq
 REFERENCE_RNA: /scratch/c.c1477909/cellRanger/refdata-gex-GRCh38-2020-A
@@ -174,6 +167,6 @@ MAGMA_CONDITIONS:
     bryois_exDG:
     bryois_exPFC1: 
 
-EXT_UP: 35000
-EXT_DOWN: 10000
+EXT_UP: 10000
+EXT_DOWN: 1500
     
