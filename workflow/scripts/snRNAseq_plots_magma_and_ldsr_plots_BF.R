@@ -149,39 +149,39 @@ legend <- get_legend(
 ## Add FDR significance lines
 FC_SCZ_magma_ldsr_plot <- FC_SCZ_magma_ldsr_plot +
   geom_segment(aes(x = 11, y = 13.6, xend = 11, yend = 14.4)) + # FC-ExN-2
-  annotate("text", x = 11.5, y = 13.85, label = "*", size = 5) +
+  annotate("text", x = 11.5, y = 13.8, label = "*", size = 7) +
   geom_segment(aes(x = 11, y = 12.6, xend = 11, yend = 13.4)) + # FC-ExN-3
-  annotate("text", x = 11.5, y = 12.85, label = "*", size = 5) +
+  annotate("text", x = 11.5, y = 12.8, label = "*", size = 7) +
   geom_segment(aes(x = 11, y = 11.6, xend = 11, yend = 12.4)) + # FC-ExN-4
-  annotate("text", x = 11.5, y = 11.85, label = "*", size = 5) +
+  annotate("text", x = 11.5, y = 11.8, label = "*", size = 7) +
   geom_segment(aes(x = 11, y = 10.6, xend = 11, yend = 11.4)) + # FC-ExN-5
-  annotate("text", x = 11.5, y = 10.85, label = "*", size = 5)  
+  annotate("text", x = 11.5, y = 10.8, label = "*", size = 7)  
   
 GE_SCZ_magma_ldsr_plot <- GE_SCZ_magma_ldsr_plot +
   geom_segment(aes(x = 11, y = 9.6, xend = 11, yend = 10.4)) + # GE-InN-1
-  annotate("text", x = 11.5, y = 9.9, label = "*", size = 5) +
+  annotate("text", x = 11.5, y = 9.9, label = "*", size = 7) +
   geom_segment(aes(x = 11, y = 8.6, xend = 11, yend = 9.4)) + # GE-InN-2
-  annotate("text", x = 11.5, y = 8.9, label = "*", size = 5) +
+  annotate("text", x = 11.5, y = 8.9, label = "*", size = 7) +
   geom_segment(aes(x = 11, y = 6.6, xend = 11, yend = 7.4)) + # GE-InN-4
-  annotate("text", x = 11.5, y = 6.9, label = "*", size = 5) +
+  annotate("text", x = 11.5, y = 6.9, label = "*", size = 7) +
   geom_segment(aes(x = 11, y = 5.6, xend = 11, yend = 6.4)) + # GE-InN-5
-  annotate("text", x = 11.5, y = 5.9, label = "*", size = 5) +
+  annotate("text", x = 11.5, y = 5.9, label = "*", size = 7) +
   geom_segment(aes(x = 11, y = 3.6, xend = 11, yend = 4.4)) + # GE-InN-7
-  annotate("text", x = 11.5, y = 3.9, label = "*", size = 5) 
+  annotate("text", x = 11.5, y = 3.9, label = "*", size = 7) 
 
 Hipp_SCZ_magma_ldsr_plot <- Hipp_SCZ_magma_ldsr_plot +
   geom_segment(aes(x = 11, y = 12.6, xend = 11, yend = 13.4)) + # Hipp-InN-3
-  annotate("text", x = 11.5, y = 12.85, label = "*", size = 5) +
+  annotate("text", x = 11.5, y = 12.8, label = "*", size = 7) +
   geom_segment(aes(x = 11, y = 10.6, xend = 11, yend = 11.4)) + # GE-InN-5
-  annotate("text", x = 11.5, y = 10.85, label = "*", size = 5)
+  annotate("text", x = 11.5, y = 10.8, label = "*", size = 7)
 
 Thal_SCZ_magma_ldsr_plot <- Thal_SCZ_magma_ldsr_plot +
   geom_segment(aes(x = 11, y = 20.6, xend = 11, yend = 21.4)) + # Thal-InN-1
-  annotate("text", x = 11.5, y = 20.8, label = "*", size = 5) +
+  annotate("text", x = 11.5, y = 20.7, label = "*", size = 7) +
   geom_segment(aes(x = 11, y = 18.6, xend = 11, yend = 19.4)) + # Thal-InN-3
-  annotate("text", x = 11.5, y = 18.8, label = "*", size = 5) +
+  annotate("text", x = 11.5, y = 18.7, label = "*", size = 7) +
   geom_segment(aes(x = 11, y = 11.6, xend = 11, yend = 12.4)) + # Thal-InN-7
-  annotate("text", x = 11.5, y = 11.8, label = "*", size = 5)
+  annotate("text", x = 11.5, y = 11.7, label = "*", size = 7)
 
 cat('\nCreating group plots ... \n')
 for (DISORDER in GWAS) {

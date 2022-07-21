@@ -66,6 +66,7 @@ for (STUDY in c('schema_genes', 'asd_genes')) {
     # Load regional specificity scores
     specificity_DF <- get(paste0(REGION, '_specificity')) %>%
       rownames_to_column(var = 'gene')
+    assign(paste0(REGION, '_specificity_df'), specificity_DF)
     
     for (CELL_TYPE in colnames(specificity_DF)) {
       
@@ -162,7 +163,12 @@ for (STUDY in c('schema_genes', 'asd_genes')) {
   
 }
 
-
+# Write cell specificity score tables
+write_tsv(pfc_specificity_df, paste0(FIG_DIR, 'Supplementary_table_8.txt'))
+write_tsv(wge_specificity_df, paste0(FIG_DIR, 'Supplementary_table_9.txt'))
+write_tsv(hip_specificity_df, paste0(FIG_DIR, 'Supplementary_table_10.txt'))
+write_tsv(tha_specificity_df, paste0(FIG_DIR, 'Supplementary_table_11.txt'))
+write_tsv(cer_specificity_df, paste0(FIG_DIR, 'Supplementary_table_12.txt'))
 
 
 

@@ -6,7 +6,7 @@
 
 ## Info  ------------------------------------------------------------------------------
 
-#  Code for figures 1, Supplemetry figure 6-9 - laptop
+#  Code for figures 1, Supplementary figure 6-9
 
 #  Nowakowski and Polioudakis for FC 
 #  Nowakowski for GE
@@ -19,7 +19,7 @@ library(cowplot)
 library(tidyverse)
 library(monocle3)
 library(Seurat)
-library(Matrix) # to load Polioudakis dataset
+library(Matrix) # to load Pouliodakis dataset
 library(clustifyr)
 
 
