@@ -3,6 +3,7 @@ resources/seurat.pfc.final.rds
 resources/seurat.tha.final.rds
 resources/seurat.wge.final.rds
 resources/seurat.hip.final.rds
+resources/figshare_files/
 results/GWAS_for_ldsc/
 results/LDSR_annotation_files/
 results/LDSR_part_herit/baseline_v1.2/
