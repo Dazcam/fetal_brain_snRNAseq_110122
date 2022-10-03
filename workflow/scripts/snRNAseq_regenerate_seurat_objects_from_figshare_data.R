@@ -66,7 +66,7 @@ for (REGION in REGIONS) {
   seurat.obj <- FindClusters(seurat.obj, resolution = RESOLUTION) 
   seurat.obj <- RunUMAP(seurat.obj, dims = 1:PCA_UPPER_DIM)
   
-  # Run basic Seurat pipelinecat
+  # Create UMAPs
   cat('\nGenerating UMAP:', REGION, '...')
   seurat.umap <- DimPlot(seurat.obj, pt.size = 0.2, reduction = "umap", group.by = 'cellIDs')
   
