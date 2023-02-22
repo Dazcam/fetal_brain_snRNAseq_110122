@@ -1,8 +1,6 @@
-# Cells of the prenatal brain mediating common variant genetic risk for schizophrenia (2022)
+# Single-Nuclei RNA Sequencing of 5 Regions of the Human Prenatal Brain Implicates Developing Neuron Populations in Genetic Risk for Schizophrenia (2023)
 
-TODO: Add abstract and Authors and link to paper
-
-This project was carried out in the Division of Psychological Medicine and Clinical Neurosciences (DPMCN). The workflow follows the the snakemake [distribution and reproducibility](https://snakemake.readthedocs.io/en/stable/snakefiles/deployment.html) recomendations.
+This project was carried out in the Division of Psychological Medicine and Clinical Neurosciences (DPMCN). The paper is [here](https://www.biologicalpsychiatryjournal.com/article/S0006-3223(22)01404-4/fulltext). The workflow follows the the snakemake [distribution and reproducibility](https://snakemake.readthedocs.io/en/stable/snakefiles/deployment.html) recommendations. 
 
 ***
 
@@ -23,12 +21,12 @@ A snakemake pipeline to process snRNAseq data. Utilising the following packages:
 
 ***
 
-Data
+**Data**
 
 This study:
 
-+ [FastQ]()
-+ [Seurat RDS]()
++ FASTQ files are available through the [European Genome-Phenome Archive](https://ega-archive.org/studies/EGAS00001006537) under study accession EGAS00001006537.
++ The gene expression matrix and metadata for each assayed brain region is provided through this [figshare repository](https://figshare.com/articles/dataset/11629311).
 
 Cluster Assignment:
 
