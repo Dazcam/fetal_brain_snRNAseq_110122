@@ -43,19 +43,7 @@ SCHEMA:
 
 + [SCHEMA](https://schema.broadinstitute.org/results)
 
-## Installation and usage
-Clone this project, or copy the files into an existing project and edit as needed. This includes:
-
-* LICENSE
-* CONTRIBUTING.md
-* CODE_OF_CONDUCT.md
-* and this README.md
-
-## Contributing
-Contributing issues, feature proposals or code is actively welcomed - please see the [CONTRIBUTING.md](CONTRIBUTING.md) file for more details.
-
-## Code of Conduct
-We want to create a welcoming environment for everyone who is interested in contributing. Please see the [Contributor Covenant Code of Conduct](CODE_OF_CONDUCT.md) file to learn more about our commitment to an open and welcoming environment.
+***
 
 ## Copyright and Licence Information
 
